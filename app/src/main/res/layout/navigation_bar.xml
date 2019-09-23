@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal"
+    android:weightSum="5">
+
+    <Button
+        android:id="@+id/weatherButton"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:textSize="10sp"
+        android:text="Weather" />
+
+    <Button
+        android:id="@+id/sunButton"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:textSize="10sp"
+        android:text="Sun" />
+
+    <Button
+        android:id="@+id/calcButton"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:textSize="10sp"
+
+        android:text="Camera" />
+
+    <Button
+        android:id="@+id/bodyButton"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:textSize="10sp"
+        android:text="Body" />
+
+    <Button
+        android:id="@+id/lensButton"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:textSize="10sp"
+        android:text="Lens" />
+</LinearLayout>
