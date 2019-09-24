@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:weightSum="4">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:weightSum="20"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/apertureTV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/outline_tv"
+            android:text="Aperture \n"
+            android:textSize="12sp"
+            android:layout_weight="19"/>
+
+        <SeekBar
+            android:id="@+id/ApetureRSB"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="10dp"
+            tools:layout_editor_absoluteY="-26dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:weightSum="20"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/ShutterSpeedTV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Shutter Speed"
+            android:textSize="12sp"
+            android:layout_weight="19"/>
+
+        <SeekBar
+            android:id="@+id/ShutterRSB"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="10dp"
+
+            tools:layout_editor_absoluteY="-26dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:weightSum="20"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/isoTV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="ISO"
+            android:textSize="12sp"
+            android:layout_weight="19"/>
+
+        <SeekBar
+            android:id="@+id/IsoRSB"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="10dp"
+            tools:layout_editor_absoluteY="-26dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_slider"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:weightSum="20">
+
+
+        <TextView
+            android:id="@+id/ZoomTV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="19"
+            android:text="Zoom"
+            android:textSize="12sp" />
+
+        <SeekBar
+            android:id="@+id/ZoomRSB"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            tools:layout_editor_absoluteY="-26dp" />
+
+    </LinearLayout>
+
+</LinearLayout>
