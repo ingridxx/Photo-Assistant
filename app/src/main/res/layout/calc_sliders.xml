@@ -6,119 +6,97 @@
     android:orientation="horizontal"
     android:weightSum="4">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:weightSum="20"
-        android:orientation="vertical">
+        android:layout_weight="1">
+
         <TextView
             android:id="@+id/apertureTV"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/outline_tv"
-            android:text="Aperture \n"
-            android:textSize="12sp"
-            android:layout_weight="19"/>
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Aperture "
+            android:textSize="12sp" />
 
         <SeekBar
-            android:id="@+id/ApetureRSB"
+            android:id="@+id/seekBar2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="10dp"
-            tools:layout_editor_absoluteY="-26dp"
-            android:layout_weight="1"/>
+            android:layout_below="@id/apertureTV"
+            android:rotation="270"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:weightSum="20"
-        android:orientation="vertical">
+        android:layout_weight="1">
+
         <TextView
             android:id="@+id/ShutterSpeedTV"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Shutter Speed"
-            android:textSize="12sp"
-            android:layout_weight="19"/>
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Shutter"
+            android:textSize="12sp" />
 
         <SeekBar
-            android:id="@+id/ShutterRSB"
+            android:id="@+id/seekBar3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="10dp"
+            android:layout_below="@id/ShutterSpeedTV"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="-2dp"
+            android:rotation="270" />
+    </RelativeLayout>
 
-            tools:layout_editor_absoluteY="-26dp"
-            android:layout_weight="1"/>
-
-    </LinearLayout>
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:weightSum="20"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/isoTV"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="ISO"
-            android:textSize="12sp"
-            android:layout_weight="19"/>
-
-        <SeekBar
-            android:id="@+id/IsoRSB"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="10dp"
-            tools:layout_editor_absoluteY="-26dp"
-            android:layout_weight="1"/>
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/ll_slider"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:weightSum="20">
-
+        android:layout_weight="1">
 
         <TextView
             android:id="@+id/ZoomTV"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="19"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
             android:text="Zoom"
             android:textSize="12sp" />
-
         <SeekBar
-            android:id="@+id/ZoomRSB"
+            android:id="@+id/seekBar4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="10dp"
-            android:layout_weight="1"
-            tools:layout_editor_absoluteY="-26dp" />
+            android:layout_below="@id/ZoomTV"
+            android:rotation="270"/>
 
-    </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        >
+
+        <TextView
+            android:id="@+id/isoTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="ISO"
+            android:textSize="12sp" />
+        <SeekBar
+            android:id="@+id/seekBar5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/isoTV"
+            android:rotation="270"/>
+    </RelativeLayout>
+
 
 </LinearLayout>

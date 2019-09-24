@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="20dp">
 
 
@@ -14,8 +15,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:background="@drawable/rounded_corners"
-        android:inputType="textPersonName"
-        android:text="camera shows here"
+        android:inputType="none"
+        android:text=""
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/LensTV"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,13 +30,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/LensTV"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/rounded_corners"
-        android:inputType="textPersonName"
-        android:text="Lens shows here"
+        android:inputType="none"
+        android:text=""
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.095"
+        app:layout_constraintHorizontal_bias="0.08"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/DesiredDisanceTV" />
 
@@ -88,10 +89,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/CameraTV"
-        android:layout_marginStart="76dp"
         android:layout_marginTop="28dp"
-        android:text="Lens:"
+        android:text="Lens :"
         app:layout_constraintEnd_toEndOf="@+id/CameraTV"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/CameraTV" />
 
@@ -110,7 +111,7 @@
         android:id="@+id/DesiredDisanceTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="2"
         app:layout_constraintBottom_toBottomOf="@+id/NearDistanceTV"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -120,20 +121,20 @@
         android:id="@+id/FarDistanceTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="3"
         app:layout_constraintBottom_toBottomOf="@+id/DesiredDisanceTV"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         tools:text="3" />
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.33" />
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
