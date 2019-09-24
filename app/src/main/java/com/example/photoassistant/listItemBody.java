@@ -1,6 +1,6 @@
 package com.example.photoassistant;
 
-public class listItem {
+public class listItemBody {
     private String minZoom;
     private String maxZoom;
     private String aperture;
@@ -8,13 +8,11 @@ public class listItem {
     private String shutterSpeed;
 
 
-    public listItem(String _minZoom, String _maxZoom, String _aperture, String _partName,String _shutterSpeed){
+    public listItemBody(String _minZoom, String _maxZoom, String _aperture, String _partName, String _shutterSpeed){
 
         minZoom = _minZoom;
         maxZoom = _maxZoom;
-        aperture = _aperture;
         partName =  _partName;
-        shutterSpeed = _shutterSpeed;
 
     }
 
@@ -26,15 +24,20 @@ public class listItem {
         return maxZoom;
     }
 
-    public String getAperture() {
-        return aperture;
-    }
-
     public String getPartName() {
         return partName;
     }
 
-    public String getShutterSpeed() {
-        return shutterSpeed;
+    public void setMinZoom(String minZoom) {
+        this.minZoom = minZoom;
     }
+
+    public void setMaxZoom(String maxZoom) {
+        this.maxZoom = maxZoom;
+    }
+
+    public void setPartName(String partName) {
+        this.partName = partName;
+    }
+
 }

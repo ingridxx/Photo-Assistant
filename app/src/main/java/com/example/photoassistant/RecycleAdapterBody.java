@@ -10,12 +10,12 @@ import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 
-public class RecyclerView extends androidx.recyclerview.widget.RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class RecycleAdapterBody extends androidx.recyclerview.widget.RecyclerView.Adapter<RecycleAdapterBody.ViewHolder> {
 
-    ArrayList<String> a_books;
+    ArrayList<listItemLens> list_item;
 
-    public RecyclerView(ArrayList<String> init_book_array) {
-        a_books = init_book_array;
+    public RecycleAdapterBody(ArrayList<listItemLens> init_list_array) {
+        list_item = init_list_array;
     }
 
     @NonNull
@@ -30,15 +30,15 @@ public class RecyclerView extends androidx.recyclerview.widget.RecyclerView.Adap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         //binds the data to the view.
-        viewHolder.Title.setText(a_books.get(i));
-        viewHolder.Author.setText(a_books.get(i));
-        viewHolder.Date.setText(a_books.get(i));
+        viewHolder.Title.setText(list_item.get(i).getPartName());
+        viewHolder.Author.setText("min : " + list_item.get(i).getMinZoom() + "max : " +  list_item.get(i).getMaxZoom());
+        viewHolder.Date.setText(list_item.get(i).getShutterSpeed() + " - " + list_item.get(i).getMaxZoom());
 
     }
 
     @Override
     public int getItemCount() {
-        return a_books.size();
+        return list_item.size();
     }
 
     public class ViewHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder{
