@@ -5,10 +5,95 @@
     android:layout_height="match_parent"
     tools:context=".calculator">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="calc" />
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        tools:layout_editor_absoluteX="512dp"
+        tools:layout_editor_absoluteY="181dp">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:weightSum="4">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:text="TextView" />
+
+                <SeekBar
+                    android:id="@+id/seekBar"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:text="TextView" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="Button" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="Button" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <SeekBar
+                android:id="@+id/seekBar2"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1" />
+
+            <SeekBar
+                android:id="@+id/seekBar3"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1" />
+
+            <SeekBar
+                android:id="@+id/seekBar4"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1" />
+
+            <SeekBar
+                android:id="@+id/seekBar5"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </LinearLayout>
 </FrameLayout>
