@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 
 
 
-public class lens extends Fragment {
+public class Lens extends Fragment {
 
-    public lens() {
+    public Lens() {
         // Required empty public constructor
     }
 

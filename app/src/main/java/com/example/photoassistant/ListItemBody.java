@@ -1,6 +1,6 @@
 package com.example.photoassistant;
 
-public class listItemBody {
+public class ListItemBody {
 
     private String aperture;
     private String partName;
@@ -15,7 +15,7 @@ public class listItemBody {
         this.iso = iso;
     }
 
-    public listItemBody(String aperture, String partName, String shutterSpeed,String iso) {
+    public ListItemBody(String aperture, String partName, String shutterSpeed, String iso) {
         this.aperture = aperture;
         this.partName = partName;
         this.shutterSpeed = shutterSpeed;

@@ -1,13 +1,13 @@
 package com.example.photoassistant;
 
-public class listItemLens {
+public class ListItemLens {
 
     private String minZoom;
     private String maxZoom;
     private String partName;
 
 
-    public listItemLens(String minZoom, String maxZoom, String partName) {
+    public ListItemLens(String minZoom, String maxZoom, String partName) {
         this.minZoom = minZoom;
         this.maxZoom = maxZoom;
         this.partName = partName;

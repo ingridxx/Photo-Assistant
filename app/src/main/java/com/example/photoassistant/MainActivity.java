@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         bodyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fl,new body()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Body()).commit();
             }
         });
 
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         lensButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fl,new lens()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Lens()).commit();
             }
         });
         weatherButton = findViewById(R.id.weatherButton);
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         calcButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fl,new calculator()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Calculator()).commit();
             }
         });
         sunButton = findViewById(R.id.sunButton);
@@ -74,14 +74,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void LoadLenses(){
 
-        listItemLens tempLens = null; // use to set array into a temp item
-        ArrayList<listItemLens> ar = new ArrayList<>();
+        ListItemLens tempLens = null; // use to set array into a temp item
+        ArrayList<ListItemLens> ar = new ArrayList<>();
         int i=0;
         //for each row in cvs
-        ar.add(new listItemLens("10","1000","cannon lens"));
+        ar.add(new ListItemLens("10","1000","cannon Lens"));
         while (i < ar.size()) {
 
-            ar.add(new listItemLens(ar.get(i).getMinZoom(), ar.get(i).getMaxZoom(), ar.get(i).getPartName()));
+            ar.add(new ListItemLens(ar.get(i).getMinZoom(), ar.get(i).getMaxZoom(), ar.get(i).getPartName()));
             i++;
             if (i==1000){
                 break;

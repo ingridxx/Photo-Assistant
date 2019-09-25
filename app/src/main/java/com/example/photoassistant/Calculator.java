@@ -11,20 +11,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
+public class Calculator extends Fragment {
 
-public class body extends Fragment {
-
-    public int h_;
-    public body() {
+    public Calculator() {
         // Required empty public constructor
-        h_ = MainActivity.h;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_body, container, false);
+        return inflater.inflate(R.layout.fragment_calculator, container, false);
     }
+
+
 
 }

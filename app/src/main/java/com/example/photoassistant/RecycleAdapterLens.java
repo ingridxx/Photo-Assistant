@@ -12,9 +12,9 @@ import java.util.ArrayList;
 
 public class RecycleAdapterLens extends androidx.recyclerview.widget.RecyclerView.Adapter<RecycleAdapterLens.ViewHolder> {
 
-    ArrayList<listItemLens> list_item;
+    ArrayList<ListItemLens> list_item;
 
-    public RecycleAdapterLens(ArrayList<listItemLens> init_list_array) {
+    public RecycleAdapterLens(ArrayList<ListItemLens> init_list_array) {
         list_item = init_list_array;
     }
 

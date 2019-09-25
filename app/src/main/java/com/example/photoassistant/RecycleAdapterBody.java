@@ -12,9 +12,9 @@ import java.util.ArrayList;
 
 public class RecycleAdapterBody extends androidx.recyclerview.widget.RecyclerView.Adapter<RecycleAdapterBody.ViewHolder> {
 
-    ArrayList<listItemBody> list_item;
+    ArrayList<ListItemBody> list_item;
 
-    public RecycleAdapterBody(ArrayList<listItemBody> init_list_array) {
+    public RecycleAdapterBody(ArrayList<ListItemBody> init_list_array) {
         list_item = init_list_array;
     }
 
