@@ -22,5 +22,6 @@
         android:id="@+id/nav_bar_inc"
         layout="@layout/navigation_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_weight="14.99"/>
 </LinearLayout>

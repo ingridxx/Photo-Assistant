@@ -5,9 +5,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,19 +23,13 @@ public class MainActivity extends AppCompatActivity {
     Button weatherButton;
     Button calcButton;
     Button sunButton;
-    RecyclerView recyclerView;
-    RecyclerView.LayoutManager layoutManager;
-    RecyclerView.Adapter adapter;
+    static ArrayList<ListItemLens> lens_al;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-//        recyclerView = findViewById(R.id.lens_rv);
-//        layoutManager = new LinearLayoutManager(this);
-//        recyclerView.setLayoutManager(layoutManager);
-
+        lens_al = new ArrayList<ListItemLens>();
         bodyButton = findViewById(R.id.bodyButton);
         bodyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,29 +67,33 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-
+        ProcessLensData();
     }
 
-    public void LoadLenses(){
+    public void ProcessLensData(){
+        //Lens lens = new Lens();
 
-        ListItemLens tempLens = null; // use to set array into a temp item
-        ArrayList<ListItemLens> ar = new ArrayList<>();
-        int i=0;
-        //for each row in cvs
-        ar.add(new ListItemLens("10","1000","cannon Lens"));
-        while (i < ar.size()) {
+        ListItemLens lens;
+        InputStream is = getResources().openRawResource(R.raw.lens);
+        BufferedReader br = new BufferedReader(
+                new InputStreamReader(is, Charset.forName("UTF-8"))
+        );
 
-            ar.add(new ListItemLens(ar.get(i).getMinZoom(), ar.get(i).getMaxZoom(), ar.get(i).getPartName()));
-            i++;
-            if (i==1000){
-                break;
+        String temp_line = "";
+        String[] temp_arr;
+
+        try {
+            while ((temp_line = br.readLine()) != null){
+                Log.d("myActivity", "line " + temp_line);
+                temp_arr = temp_line.split(",");
+
+                lens = new ListItemLens(temp_arr[1],temp_arr[2],temp_arr[0]);
+                lens_al.add(lens);
             }
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        adapter = new RecycleAdapterLens(ar);
-        recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
 
     }
 

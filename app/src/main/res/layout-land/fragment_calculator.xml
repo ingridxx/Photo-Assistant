@@ -6,17 +6,29 @@
     android:layout_height="match_parent"
     android:baselineAligned="false"
     android:layout_weight="2">
-    <FrameLayout
-        android:id="@+id/fl_calc_body"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
+    <FrameLayout
+        android:id="@+id/fl_calc_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <include
             layout="@layout/calc_body"
             android:layout_height="match_parent"
             android:layout_width="match_parent" />
-    </FrameLayout>
 
+    </FrameLayout>
+        <FrameLayout
+            android:id="@+id/frame_layout_1"
+            android:layout_below="@+id/fl_calc_body"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
+
+    </RelativeLayout>
     <FrameLayout
         android:id="@+id/fl_calc_sliders"
         android:layout_width="match_parent"
