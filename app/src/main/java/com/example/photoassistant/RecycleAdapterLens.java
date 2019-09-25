@@ -32,7 +32,7 @@ public class RecycleAdapterLens extends androidx.recyclerview.widget.RecyclerVie
         //binds the data to the view.
         viewHolder.Title.setText(list_item.get(i).getPartName());
         viewHolder.Author.setText("min : " + list_item.get(i).getMinZoom() + "max : " +  list_item.get(i).getMaxZoom());
-        viewHolder.Date.setText(list_item.get(i).getShutterSpeed() + " - " + list_item.get(i).getMaxZoom());
+        viewHolder.Date.setText("Lens");
 
     }
 

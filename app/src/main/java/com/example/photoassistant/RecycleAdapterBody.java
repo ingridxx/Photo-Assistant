@@ -12,9 +12,9 @@ import java.util.ArrayList;
 
 public class RecycleAdapterBody extends androidx.recyclerview.widget.RecyclerView.Adapter<RecycleAdapterBody.ViewHolder> {
 
-    ArrayList<listItemLens> list_item;
+    ArrayList<listItemBody> list_item;
 
-    public RecycleAdapterBody(ArrayList<listItemLens> init_list_array) {
+    public RecycleAdapterBody(ArrayList<listItemBody> init_list_array) {
         list_item = init_list_array;
     }
 
@@ -31,8 +31,8 @@ public class RecycleAdapterBody extends androidx.recyclerview.widget.RecyclerVie
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         //binds the data to the view.
         viewHolder.Title.setText(list_item.get(i).getPartName());
-        viewHolder.Author.setText("min : " + list_item.get(i).getMinZoom() + "max : " +  list_item.get(i).getMaxZoom());
-        viewHolder.Date.setText(list_item.get(i).getShutterSpeed() + " - " + list_item.get(i).getMaxZoom());
+        viewHolder.Author.setText("Aperture : " + list_item.get(i).getAperture() + " ISO : " + list_item.get(i).getIso());
+        viewHolder.Date.setText("Shutter Speed + " + list_item.get(i).getShutterSpeed());
 
     }
 

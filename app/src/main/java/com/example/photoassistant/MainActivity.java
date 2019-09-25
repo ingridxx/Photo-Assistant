@@ -1,10 +1,14 @@
 package com.example.photoassistant;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     public static final int h = 10;
@@ -13,11 +17,19 @@ public class MainActivity extends AppCompatActivity {
     Button weatherButton;
     Button calcButton;
     Button sunButton;
+    RecyclerView recyclerView;
+    RecyclerView.LayoutManager layoutManager;
+    RecyclerView.Adapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        recyclerView = findViewById(R.id.lens_rv);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
         bodyButton = findViewById(R.id.bodyButton);
         bodyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,14 +68,28 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-//            <fragment
-//        android:id="@+id/fragment"
-//        android:layout_width="match_parent"
-//        android:layout_height="match_parent" />
-
-        //Load csv into arrays
 
 
+    }
+
+    public void LoadLenses(){
+
+        listItemLens tempLens = null; // use to set array into a temp item
+        ArrayList<listItemLens> ar = new ArrayList<>();
+        int i=0;
+        //for each row in cvs
+        ar.add(new listItemLens("10","1000","cannon lens"));
+        while (i < ar.size()) {
+
+            ar.add(new listItemLens(ar.get(i).getMinZoom(), ar.get(i).getMaxZoom(), ar.get(i).getPartName()));
+            i++;
+            if (i==1000){
+                break;
+            }
+        }
+        adapter = new RecycleAdapterLens(ar);
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
     }
 
