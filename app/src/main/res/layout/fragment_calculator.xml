@@ -1,99 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Calculator">
-
-
-    <LinearLayout
+    android:baselineAligned="false"
+    android:layout_weight="2">
+    <FrameLayout
+        android:id="@+id/fl_calc_body"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:baselineAligned="false"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        tools:layout_editor_absoluteX="512dp"
-        tools:layout_editor_absoluteY="181dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        android:layout_weight="1">
+        <include
+            layout="@layout/calc_body"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:weightSum="4">
+            android:layout_width="match_parent" />
+    </FrameLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:weightSum="3">
+    <FrameLayout
+        android:id="@+id/fl_calc_sliders"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="0dp"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    android:text="TextView" />
-
-                <SeekBar
-                    android:id="@+id/seekBar"
-                    android:layout_width="0dp"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="0dp"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    android:text="TextView" />
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/button"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="Button" />
-
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="Button" />
-        </LinearLayout>
-
-        <LinearLayout
+        <include
+            layout="@layout/calc_sliders"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:layout_height="match_parent" />
+    </FrameLayout>
 
-            <SeekBar
-                android:id="@+id/seekBar2"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1" />
 
-            <SeekBar
-                android:id="@+id/seekBar3"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1" />
-
-            <SeekBar
-                android:id="@+id/seekBar4"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1" />
-
-            <SeekBar
-                android:id="@+id/seekBar5"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1" />
-        </LinearLayout>
-    </LinearLayout>
-</FrameLayout>
+</LinearLayout>
