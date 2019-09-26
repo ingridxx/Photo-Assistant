@@ -10,9 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="8dp"
-        android:elevation="3dp"
-        android:padding="10dp"
+        android:layout_margin="0dp"
+        android:elevation="0dp"
+        android:padding="0dp"
         card_view:cardCornerRadius="5dp">
 
         <RelativeLayout
@@ -23,22 +23,6 @@
                 android:id="@+id/titleLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/authorLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/titleLabel"
-                android:padding="10dp"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/dateLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/authorLabel"
                 android:padding="10dp"
                 android:textSize="15sp" />
 

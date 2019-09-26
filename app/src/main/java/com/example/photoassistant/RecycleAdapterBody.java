@@ -31,8 +31,8 @@ public class RecycleAdapterBody extends androidx.recyclerview.widget.RecyclerVie
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         //binds the data to the view.
         viewHolder.Title.setText(list_item.get(i).getPartName());
-        viewHolder.Author.setText("Aperture : " + list_item.get(i).getAperture() + " ISO : " + list_item.get(i).getIso());
-        viewHolder.Date.setText("Shutter Speed + " + list_item.get(i).getShutterSpeed());
+        //viewHolder.Author.setText("Aperture : " + list_item.get(i).getAperture() + " ISO : " + list_item.get(i).getIso());
+        //viewHolder.Date.setText("Shutter Speed + " + list_item.get(i).getShutterSpeed());
 
     }
 
@@ -43,14 +43,14 @@ public class RecycleAdapterBody extends androidx.recyclerview.widget.RecyclerVie
 
     public class ViewHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder{
         TextView Title;
-        TextView Author;
-        TextView Date;
+        //TextView Author;
+        //TextView Date;
         LinearLayout Parent_Layout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             Title = itemView.findViewById(R.id.titleLabel);
-            Author = itemView.findViewById(R.id.authorLabel);
-            Date = itemView.findViewById(R.id.dateLabel);
+            //Author = itemView.findViewById(R.id.authorLabel);
+            //Date = itemView.findViewById(R.id.dateLabel);
             Parent_Layout = itemView.findViewById(R.id.parent_layout);
         }
     }

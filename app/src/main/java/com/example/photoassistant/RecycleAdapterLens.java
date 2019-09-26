@@ -31,8 +31,8 @@ public class RecycleAdapterLens extends androidx.recyclerview.widget.RecyclerVie
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         //binds the data to the view.
         viewHolder.topLine.setText(list_item.get(i).getPartName());
-        viewHolder.middleLine.setText("min : " + list_item.get(i).getMinZoom() + "max : " +  list_item.get(i).getMaxZoom());
-        viewHolder.bottomLine.setText("Lens placeholder");
+        //viewHolder.middleLine.setText("min : " + list_item.get(i).getMinZoom() + "max : " +  list_item.get(i).getMaxZoom());
+        //viewHolder.bottomLine.setText("Lens placeholder");
 
     }
 
@@ -43,14 +43,14 @@ public class RecycleAdapterLens extends androidx.recyclerview.widget.RecyclerVie
 
     public class ViewHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder{
         TextView topLine;
-        TextView middleLine;
-        TextView bottomLine; // of the cardview layout
+        //TextView middleLine;
+        //TextView bottomLine; // of the cardview layout
         LinearLayout Parent_Layout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             topLine = itemView.findViewById(R.id.titleLabel);
-            middleLine = itemView.findViewById(R.id.authorLabel);
-            bottomLine = itemView.findViewById(R.id.dateLabel);
+            //middleLine = itemView.findViewById(R.id.authorLabel);
+            //bottomLine = itemView.findViewById(R.id.dateLabel);
             Parent_Layout = itemView.findViewById(R.id.parent_layout);
         }
     }
