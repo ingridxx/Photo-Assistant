@@ -1,79 +1,79 @@
-M42,45.46,36,24
-Canon EF,44,36,24
-Canon EF (APS-H),44,27.9,18.6
-Canon EF-S,44,22.3,14.9
-M39,45.2,36,24
-Nikon F (FX),46.5,36,24
-Nikon F (DX),46.5,23.7,15.6
-Sigma SA,44,23.7,15.6
-Sony A (FF),44.5,36,24
-Sony A (APS-C),44.5,23.7,15.6
-Pentax K,45.46,36,24
-Pentacon Six,74.1,60,60
-Olympus OM,46,36,24
-Minolta SR,43.72,36,24
-Kiev-88/Salut,82.1,60,60
-C/Y (contax/yashica),45.5,36,24
-4/3 (Four/Thirds),38.64,17.3,13
-Canon FD,42,36,24
-Sony E (FF),18,36,24
-Sony E (APS-C),18,23.7,15.6
-Contax I-III (CRM),34.85,36,24
-M39 Leica screw-mount (LSM),28.8,36,24
-Leica M,27.8,36,24
-Exakta,44.7,36,24
-Contax G,29,36,24
-Leica R,47,36,24
-Micro 4/3,19.25,17.3,13
-Fujica-X,43.5,36,24
-Konica AR,40.5,36,24
-Mamiya E (35mm),43.5,36,24
-Tamron Adaptall-2,50.7,36,24
-Yashica AF,45.8,36,24
-Contax N,48,36,24
-Canon FL,42,36,24
-Rollei 35mm,44.6,36,24
-Topcon,44.7,36,24
-Other mount,1000000,36,24
-Altix bayonet mount,45.46,36,24
-Samsung NX,25.5,23.7,15.6
-T2 mount,55,36,24
-Praktica B-System,44.4,36,24
-Canon S,35,36,24
-Nikon S,34.85,36,24
-C-mount (8mm),17.526,4.88,3.68
-C-mount (16mm),17.526,10.26,7.49
-"C-mount (1/3"")",17.526,4.8,3.6
-"C-mount (1/2"")",17.526,6.4,4.8
-"C-mount (2/3"")",17.526,8.8,6.6
-"C-mount (1"")",17.526,12.8,9.6
-"C-mount (4/3"")",17.526,17.3,13
-Mamiya 645,63.3,60,45
-Mamiya 645 AFD,63.3,60,45
-Minolta V,38,30.2,16.7
-М24 (narciss),28.8,10.26,7.49
-Miranda,41.5,36,24
-DKL / Deckel,45.7,36,24
-Tamron Adapt-A-Matic,50.7,36,24
-Nikon CX,17,13.2,8.8
-Large format,1000000,60,60
-Komura Uni-Dapt,55,36,24
-Konica F,40.5,36,24
-Contax 645,64,60,45
-Pentax 645,70.87,60,45
-Olympus Pen F,28.95,24,18
-Canon EF-M,18,22.3,14.9
-Petri FT,45.5,36,24
-FujiFilm XF,17.7,23.7,15.6
-Pentax 67,85,70,60
-Canon R,42,36,24
-Hasselblad,61.63,43.8,32.9
-Leica S,53,36,24
-Zenit 7,47.58,36,24
-Pentax Q/Q10,9.2,6.17,4.55
-Pentax Q7/Q-s1,9.2,7.44,5.58
-Pentax-110,27,17,13
-Pentaflex 16,44,10.26,7.49
-Mamiya RB,111,70,60
-Leica L (TL),20,23.7,15.6
-Leica L (SL),20,36,24
+M42,45.46,36,24,Digital SLR
+Canon EF,44,36,24,Digital SLR
+Canon EF (APS-H),44,27.9,18.6,Digital SLR
+Canon EF-S,44,22.3,14.9,Digital SLR
+M39,45.2,36,24,Digital SLR
+Nikon F (FX),46.5,36,24,Digital SLR
+Nikon F (DX),46.5,23.7,15.6,Digital SLR
+Sigma SA,44,23.7,15.6,Mirrorless
+Sony A (FF),44.5,36,24,Mirrorless
+Sony A (APS-C),44.5,23.7,15.6,Mirrorless
+Pentax K,45.46,36,24,Digital SLR
+Pentacon Six,74.1,60,60,SLR
+Olympus OM,46,36,24,Digital SLR
+Minolta SR,43.72,36,24,SLR
+Kiev-88/Salut,82.1,60,60,Medium Format
+C/Y (contax/yashica),45.5,36,24,SLR
+4/3 (Four/Thirds),38.64,17.3,13,Digital SLR
+Canon FD,42,36,24,SLR
+Sony E (FF),18,36,24,Mirrorless
+Sony E (APS-C),18,23.7,15.6,Mirrorless
+Contax I-III (CRM),34.85,36,24,Rangefinder
+M39 Leica screw-mount (LSM),28.8,36,24,Rangefinder
+Leica M,27.8,36,24,Rangefinder
+Exakta,44.7,36,24,SLR
+Contax G,29,36,24,Rangefinder
+Leica R,47,36,24,SLR
+Micro 4/3,19.25,17.3,13,Mirrorless
+Fujica-X,43.5,36,24,SLR
+Konica AR,40.5,36,24,SLR
+Mamiya E (35mm),43.5,36,24,SLR
+Tamron Adaptall-2,50.7,36,24,Other
+Yashica AF,45.8,36,24,SLR
+Contax N,48,36,24,Digital SLR
+Canon FL,42,36,24,SLR
+Rollei 35mm,44.6,36,24,Rangefinder
+Topcon,44.7,36,24,SLR
+Other mount,1000000,36,24,Other
+Altix bayonet mount,45.46,36,24,SLR
+Samsung NX,25.5,23.7,15.6,Mirrorless
+T2 mount,55,36,24,Other
+Praktica B-System,44.4,36,24,SLR
+Canon S,28.8,36,24,Rangefinder
+Nikon S,34.85,36,24,Rangefinder
+C-mount (8mm),17.526,4.88,3.68,Cine
+C-mount (16mm),17.526,10.26,7.49,Cine
+C-mount (1/3 inch),17.526,4.8,3.6,Cine
+C-mount (1/2 inch),17.526,6.4,4.8,Cine
+C-mount (2/3 inch),17.526,8.8,6.6,Cine
+C-mount (1 inch),17.526,12.8,9.6,Cine
+C-mount (4/3 inch),17.526,17.3,13,Cine
+Mamiya 645,63.3,60,45,Medium Format
+Mamiya 645 AFD,63.3,60,45,Medium Format
+Minolta V,38,30.2,16.7,SLR
+М24 (narciss),28.8,10.26,7.49,SLR
+Miranda,41.5,36,24,SLR
+DKL / Deckel,45.7,36,24,SLR
+Tamron Adapt-A-Matic,50.7,36,24,Other
+Nikon CX,17,13.2,8.8,Mirrorless
+Large format,1000000,127,102,Large Format
+Komura Uni-Dapt,55,36,24,Other
+Konica F,40.5,36,24,SLR
+Contax 645,64,60,45,Medium Format
+Pentax 645,70.87,60,45,Medium Format
+Olympus Pen F,28.95,24,18,SLR
+Canon EF-M,18,22.3,14.9,Mirrorless
+Petri FT,45.5,36,24,Rangefinder
+FujiFilm XF,17.7,23.7,15.6,Mirrorless
+Pentax 67,85,70,60,Medium Format
+Canon R,42,36,24,SLR
+Hasselblad,61.63,43.8,32.9,Medium Format
+Leica S,53,45,30,Medium Format
+Zenit 7,47.58,36,24,SLR
+Pentax Q/Q10,9.2,6.17,4.55,Mirrorless
+Pentax Q7/Q-s1,9.2,7.44,5.58,Mirrorless
+Pentax-110,27,17,13,SLR
+Pentaflex 16,44,10.26,7.49,Other
+Mamiya RB,111,70,60,Medium Format
+Leica L (TL),20,23.7,15.6,Rangefinder
+Leica L (SL),20,36,24,Rangefinder
