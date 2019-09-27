@@ -2,48 +2,40 @@ package com.example.photoassistant;
 
 public class ListItemBody {
 
-    private String aperture;
+    public static final int fullFrameSensorArea = 36*24;
     private String partName;
-    private String shutterSpeed;
-    private String iso;
+    private float ffd;
+    private float sensorSizeX;
+    private float sensorSizeY;
 
-    public String getIso() {
-        return iso;
-    }
-
-    public void setIso(String iso) {
-        this.iso = iso;
-    }
-
-    public ListItemBody(String aperture, String partName, String shutterSpeed, String iso) {
-        this.aperture = aperture;
+    public ListItemBody(String partName, String ffd, String sensorSizeX, String sensorSizeY) {
         this.partName = partName;
-        this.shutterSpeed = shutterSpeed;
-        this.iso = iso;
+        this.ffd = Float.valueOf(ffd);
+        this.sensorSizeX = Float.valueOf(sensorSizeX);
+        this.sensorSizeY = Float.valueOf(sensorSizeY);
     }
 
     public String getPartName() {
         return partName;
     }
 
-    public String getAperture() {
-        return aperture;
+    public String getFfd() {
+        return partName;
     }
-
-    public void setAperture(String aperture) {
-        this.aperture = aperture;
+    public float getSensorSizeX() {
+        return sensorSizeX;
     }
-
-    public String getShutterSpeed() {
-        return shutterSpeed;
+    public float getSensorSizeY() {
+        return sensorSizeY;
     }
-
-    public void setShutterSpeed(String shutterSpeed) {
-        this.shutterSpeed = shutterSpeed;
+    public float getCropFactor() {
+        return fullFrameSensorArea/this.getSensorArea();
     }
-
-    public void setPartName(String partName) {
-        this.partName = partName;
+    public float getSensorArea() {
+        return sensorSizeX*sensorSizeY;
+    }
+    public float getSensorAspectRatio() {
+        return (float)(1.0*sensorSizeY/sensorSizeX);
     }
 
 }

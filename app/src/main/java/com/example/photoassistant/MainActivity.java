@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
     public static final int h = 10;
@@ -86,9 +87,17 @@ public class MainActivity extends AppCompatActivity {
             while ((temp_line = br.readLine()) != null){
                 Log.d("myActivity", "line " + temp_line);
                 temp_arr = temp_line.split(",");
+                if(temp_arr.length==7)
+                {
+                    temp_arr = Arrays.copyOf(temp_arr, 8);
+                    temp_arr[7] = String.valueOf(Float.valueOf(temp_arr[2])/2000);
+                }
+                if(temp_arr.length==8)
+                {
+                    lens = new ListItemLens(temp_arr[0], temp_arr[1], temp_arr[2], temp_arr[3], temp_arr[4], temp_arr[5], temp_arr[6], temp_arr[7]);
+                    lens_al.add(lens);
+                }
 
-                lens = new ListItemLens(temp_arr[1],temp_arr[2],temp_arr[0]);
-                lens_al.add(lens);
             }
 
         } catch (IOException e) {
