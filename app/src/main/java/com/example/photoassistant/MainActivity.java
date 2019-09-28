@@ -125,11 +125,7 @@ public class MainActivity extends AppCompatActivity {
             while ((temp_line = br.readLine()) != null){
                 Log.d("myActivity", "body " + temp_line);
                 temp_arr = temp_line.split(",");
-                Log.d("myActivity", "body " + temp_arr[0].toString());
-                Log.d("myActivity", "body " + temp_arr[1].toString());
-                Log.d("myActivity", "body " + temp_arr[2].toString());
-                Log.d("myActivity", "body " + temp_arr[3].toString());
-                body = new ListItemBody(temp_arr[0], temp_arr[1], temp_arr[2], temp_arr[3], temp_arr[4]);
+                body = new ListItemBody(temp_arr[0], temp_arr[1], temp_arr[2], temp_arr[3], temp_arr[4], temp_arr[5]);
                 body_al.add(body);
             }
 

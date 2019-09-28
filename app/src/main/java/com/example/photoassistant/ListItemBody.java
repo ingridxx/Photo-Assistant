@@ -5,16 +5,18 @@ public class ListItemBody {
     public static final int fullFrameSensorArea = 36*24;
     private String partName;
     private String type;
+    private String hint;
     private float ffd;
     private float sensorSizeX;
     private float sensorSizeY;
 
-    public ListItemBody(String partName, String ffd, String sensorSizeX, String sensorSizeY, String type) {
+    public ListItemBody(String partName, String ffd, String sensorSizeX, String sensorSizeY, String type, String hint) {
         this.partName = partName;
         this.ffd = Float.valueOf(ffd);
         this.sensorSizeX = Float.valueOf(sensorSizeX);
         this.sensorSizeY = Float.valueOf(sensorSizeY);
         this.type = type;
+        this.hint = hint;
     }
 
     public String getPartName() {
@@ -33,5 +35,6 @@ public class ListItemBody {
     public float getSensorArea() { return sensorSizeX*sensorSizeY; }
     public float getSensorAspectRatio() { return (float)(1.0*sensorSizeY/sensorSizeX); }
     public String getType() { return type; }
+    public String getHint() { return hint; }
 
 }
