@@ -4,7 +4,8 @@ public class Intelligence {
 
     public static class Current
     {
-
+        ListItemBody body;
+        ListItemLens lens;
     }
     //CoCCalculator(SensorSize)
     //HyperfocalCalculator(CoC)
