@@ -1,44 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="20dp">
+    android:padding="0dp"
+    android:paddingBottom="20dp"
+    android:paddingEnd="0dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingStart="0dp"
+    android:paddingTop="0dp">
 
 
-    <EditText
-        android:id="@+id/CameraET"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/cameraSelectButton"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:background="@drawable/rounded_corners"
-        android:inputType="none"
-        android:text=""
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/LensTV"
+        android:layout_margin="0dp"
+        android:padding="0dp"
+        android:text="Camera"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.046"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/LenseET"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <EditText
-        android:id="@+id/LenseET"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/LensTV"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/rounded_corners"
-        android:inputType="none"
-        android:text=""
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.08"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/DesiredDisanceTV" />
+
+    <Button
+        android:id="@+id/lensSelectButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:padding="0dp"
+        android:text="Lens"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cameraSelectButton"
+        tools:layout_editor_absoluteX="9dp"
+        tools:layout_editor_absoluteY="112dp" />
 
     <TextView
         android:id="@+id/DesiredDistLabel"
@@ -72,29 +70,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@+id/NearDistanceLabel" />
-
-    <TextView
-        android:id="@+id/CameraTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="Camera :"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintHorizontal_bias="0.697"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NearDistanceLabel" />
-
-    <TextView
-        android:id="@+id/LensTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/CameraTV"
-        android:layout_marginTop="10dp"
-        android:text="Lens :"
-        app:layout_constraintEnd_toEndOf="@+id/CameraTV"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CameraTV" />
 
     <TextView
         android:id="@+id/NearDistanceTV"
