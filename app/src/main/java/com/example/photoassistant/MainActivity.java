@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Lens()).commit();
+                lens_al.toString();
             }
         });
         weatherButton = findViewById(R.id.weatherButton);
