@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         ProcessBodyData();
         ProcessCombinationData();
         Log.d("onCreate", "onCreate:" + lens_al.size());
+        Log.d("onCreate", "first array item:" + lens_al.get(0).getPartName());
 
 
 
@@ -96,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             while ((temp_line = br.readLine()) != null){
-                Log.d("myActivity", "line " + temp_line);
                 temp_arr = temp_line.split(",");
                 if(temp_arr.length==7)
                 {

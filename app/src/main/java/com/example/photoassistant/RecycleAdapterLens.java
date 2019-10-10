@@ -48,7 +48,7 @@ public class RecycleAdapterLens extends androidx.recyclerview.widget.RecyclerVie
 
                 for (ListItemLens list_item : copyList) {
 
-                    if (list_item.getPartName().contains(filtered)) {
+                    if (list_item.getPartName().toLowerCase().contains(filtered)) {
                         filteredList.add(list_item);
                     }
 
