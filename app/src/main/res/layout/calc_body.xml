@@ -25,6 +25,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/DesiredDisanceTV" />
 
+    <TextView
+        android:id="@+id/evTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="EV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lensSelectButton" />
+
     <Button
         android:id="@+id/lensSelectButton"
         android:layout_width="fill_parent"
@@ -115,4 +124,5 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.6689815" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
