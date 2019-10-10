@@ -29,7 +29,7 @@ public class RecycleAdapterLens extends androidx.recyclerview.widget.RecyclerVie
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        //binds the data to the view.
+        //binds the data to the view.*
         viewHolder.topLine.setText(list_item.get(i).getPartName());
         //viewHolder.middleLine.setText("min : " + list_item.get(i).getMinZoom() + "max : " +  list_item.get(i).getMaxZoom());
         //viewHolder.bottomLine.setText("Lens placeholder");

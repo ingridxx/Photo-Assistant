@@ -1,13 +1,19 @@
 package com.example.photoassistant;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.SeekBar;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,9 +30,10 @@ public class MainActivity extends AppCompatActivity {
     Button weatherButton;
     Button calcButton;
     Button sunButton;
-    static ArrayList<ListItemLens> lens_al = new ArrayList<ListItemLens>();
-    static ArrayList<ListItemBody> body_al = new ArrayList<ListItemBody>();
-    static ArrayList<ListItemCombination> combination_al = new ArrayList<ListItemCombination>();
+    public static ArrayList<ListItemLens> lens_al = new ArrayList<ListItemLens>();
+    public static ArrayList<ListItemBody> body_al = new ArrayList<ListItemBody>();
+    public static ArrayList<ListItemCombination> combination_al = new ArrayList<ListItemCombination>();
+    static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Lens()).commit();
-                lens_al.toString();
+
             }
         });
         weatherButton = findViewById(R.id.weatherButton);
@@ -60,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Calculator()).commit();
+                Calculator c = new Calculator();
             }
         });
         sunButton = findViewById(R.id.sunButton);
@@ -73,6 +81,15 @@ public class MainActivity extends AppCompatActivity {
         ProcessLensData();
         ProcessBodyData();
         ProcessCombinationData();
+
+        context = getApplicationContext();
+
+
+    }
+
+    static void toaster(@NonNull String text)
+    {
+        Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
     }
 
     public void ProcessLensData(){
