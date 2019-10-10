@@ -6,97 +6,151 @@
     android:orientation="horizontal"
     android:weightSum="4">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:weightSum="3">
+
+        <Button
+            android:id="@+id/aperturePlusButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="A+"
+            android:layout_weight="1"
+            android:layout_alignParentTop="true" />
 
         <TextView
             android:id="@+id/apertureTV"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="10dp"
             android:text="Aperture "
+            android:layout_weight="1"
+            android:layout_below="@id/aperturePlusButton"
             android:textSize="12sp" />
 
-        <SeekBar
-            android:id="@+id/apertureSeekbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <Button
+            android:id="@+id/apertureMinusButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@id/apertureTV"
-            android:rotation="270"/>
+            android:layout_alignParentBottom="true"
+            android:layout_weight="1"
+            android:text="A-" />
 
-    </RelativeLayout>
-
-    <RelativeLayout
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
-
-        <TextView
-            android:id="@+id/ShutterSpeedTV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="Shutter"
-            android:textSize="12sp" />
-
-        <SeekBar
-            android:id="@+id/shutterSeekBar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/ShutterSpeedTV"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="-2dp"
-            android:rotation="270" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
-
-        <TextView
-            android:id="@+id/ZoomTV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="Zoom"
-            android:textSize="12sp" />
-        <SeekBar
-            android:id="@+id/zoomSeekBar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/ZoomTV"
-            android:rotation="270"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:orientation="vertical"
         android:layout_weight="1"
-        >
+        android:weightSum="3">
+
+        <Button
+            android:id="@+id/shutterSpeedPlusButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_weight="1"
+            android:text="S+" />
 
         <TextView
-            android:id="@+id/isoTV"
-            android:layout_width="match_parent"
+            android:id="@+id/shutterSpeedTV"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="10dp"
-            android:text="ISO"
+            android:text="Aperture "
+            android:layout_weight="1"
+            android:layout_below="@id/aperturePlusButton"
             android:textSize="12sp" />
-        <SeekBar
-            android:id="@+id/isoSeekBar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/isoTV"
-            android:rotation="270"/>
-    </RelativeLayout>
 
+        <Button
+            android:id="@+id/shutterSpeedMinusButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/apertureTV"
+            android:layout_weight="1"
+            android:text="S-" />
+
+    </LinearLayout><LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:layout_weight="1"
+    android:weightSum="3">
+
+    <Button
+        android:id="@+id/zoomPlusButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_weight="1"
+        android:text="Z+" />
+
+    <TextView
+        android:id="@+id/zoomTV"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Aperture "
+        android:layout_weight="1"
+        android:layout_below="@id/aperturePlusButton"
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/zoomMinusButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/apertureTV"
+        android:layout_weight="1"
+        android:text="Z-" />
+
+</LinearLayout><LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:layout_weight="1"
+    android:weightSum="3">
+
+    <Button
+        android:id="@+id/isoPlusButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_weight="1"
+        android:text="I+" />
+
+    <TextView
+        android:id="@+id/isoTV"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Aperture "
+        android:layout_weight="1"
+        android:layout_below="@id/aperturePlusButton"
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/isoMinusButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/apertureTV"
+        android:layout_weight="1"
+        android:text="I-" />
+
+</LinearLayout>
 
 </LinearLayout>

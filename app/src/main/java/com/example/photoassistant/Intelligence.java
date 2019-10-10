@@ -17,7 +17,7 @@ public class Intelligence {
         static double distance = 0.28;
         static double previewISO = 400;
         static double previewSS = 1.0/125;
-        
+
     }
     //CoCCalculator(SensorSize)
     //HyperfocalCalculator(CoC)
