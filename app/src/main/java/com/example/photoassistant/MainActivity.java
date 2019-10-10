@@ -19,6 +19,7 @@ import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
     public static final int h = 10;
+    static RecycleAdapterLens adapter;
     Button bodyButton;
     Button lensButton;
     Button weatherButton;
@@ -73,6 +74,10 @@ public class MainActivity extends AppCompatActivity {
         ProcessLensData();
         ProcessBodyData();
         ProcessCombinationData();
+        Log.d("onCreate", "onCreate:" + lens_al.size());
+
+
+
     }
 
     public void ProcessLensData(){
@@ -81,7 +86,9 @@ public class MainActivity extends AppCompatActivity {
         ListItemLens lens;
         InputStream is = getResources().openRawResource(R.raw.lens);
         BufferedReader br = new BufferedReader(
+
                 new InputStreamReader(is, Charset.forName("UTF-8"))
+
         );
 
         String temp_line = "";
