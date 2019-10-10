@@ -74,10 +74,6 @@ public class MainActivity extends AppCompatActivity {
         ProcessLensData();
         ProcessBodyData();
         ProcessCombinationData();
-        Log.d("onCreate", "onCreate:" + lens_al.size());
-        Log.d("onCreate", "first array item:" + lens_al.get(0).getPartName());
-
-
 
     }
 
