@@ -56,6 +56,7 @@ public class Calculator extends Fragment {
             @Override public void onStartTrackingTouch(SeekBar seekBar) { }
             @Override public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
                 Intelligence.Current.aperture = progress;
+                Log.i("EV:",Double.toString(Intelligence.ExposureCalculator()));
             }});
 
         shutterSpeedSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -63,6 +64,7 @@ public class Calculator extends Fragment {
             @Override public void onStartTrackingTouch(SeekBar seekBar) { }
             @Override public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
                 Intelligence.Current.shutterSpeed = progress;
+                Log.i("EV:",Double.toString(Intelligence.ExposureCalculator()));
             }});
 
         isoSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -70,6 +72,7 @@ public class Calculator extends Fragment {
             @Override public void onStartTrackingTouch(SeekBar seekBar) { }
             @Override public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
                 Intelligence.Current.ISO = progress;
+                Log.i("EV:",Double.toString(Intelligence.ExposureCalculator()));
             }});
 
         zoomSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -78,8 +81,8 @@ public class Calculator extends Fragment {
 }
             @Override public void onStartTrackingTouch(SeekBar seekBar) {}
             @Override public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
-
-                Log.i("progress:",Double.toString(Intelligence.ExposureCalculator()));
+                Intelligence.Current.focalLength = progress;
+                Log.i("EV:",Double.toString(Intelligence.ExposureCalculator()));
             }});
         return rootView;
     }

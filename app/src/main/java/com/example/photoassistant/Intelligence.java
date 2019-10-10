@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 
 public class Intelligence {
 
-    public static class Current
+    static class Current
     {
         static ListItemBody body = MainActivity.body_al.get(1);
         static ListItemLens lens = MainActivity.lens_al.get(1);
@@ -17,6 +17,7 @@ public class Intelligence {
         static double distance = 0.28;
         static double previewISO = 400;
         static double previewSS = 1.0/125;
+        
     }
     //CoCCalculator(SensorSize)
     //HyperfocalCalculator(CoC)
