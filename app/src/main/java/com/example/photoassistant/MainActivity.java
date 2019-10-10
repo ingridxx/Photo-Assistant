@@ -2,17 +2,12 @@ package com.example.photoassistant;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.SeekBar;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -59,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         weatherButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fl, new weather()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Weather()).commit();
             }
         });
         calcButton = findViewById(R.id.calcButton);
@@ -74,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         sunButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fl, new sun()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Sun()).commit();
             }
         });
 
