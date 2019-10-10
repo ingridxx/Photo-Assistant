@@ -13,6 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class RecycleAdapterLens extends androidx.recyclerview.widget.RecyclerView.Adapter<RecycleAdapterLens.ViewHolder> implements Filterable {
 
@@ -31,7 +33,7 @@ public class RecycleAdapterLens extends androidx.recyclerview.widget.RecyclerVie
     public Filter getFilter() {
         return exampleFilter;
     }
-
+    boolean containsAll = true;
     private Filter exampleFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
@@ -43,17 +45,19 @@ public class RecycleAdapterLens extends androidx.recyclerview.widget.RecyclerVie
                 filteredList.addAll(copyList);
 
             } else {
-
                 String filtered = constraint.toString().toLowerCase().trim();
+                List<String> filterIndividualWords = Arrays.asList(filtered.split(" "));
 
                 for (ListItemLens list_item : copyList) {
-
-                    if (list_item.getPartName().toLowerCase().contains(filtered)) {
-                        filteredList.add(list_item);
+                    containsAll = true;
+                    for (String word:filterIndividualWords) {
+                        if (!list_item.getPartName().toLowerCase().contains(word)) {
+                            containsAll = false;
+                            break;
+                        }
                     }
-
+                    if(containsAll)filteredList.add(list_item);
                 }
-
             }
 
             FilterResults results = new FilterResults();
@@ -81,7 +85,7 @@ public class RecycleAdapterLens extends androidx.recyclerview.widget.RecyclerVie
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        //binds the data to the view.
+        //binds the data to the view.*
         viewHolder.topLine.setText(list_item.get(i).getPartName());
         //viewHolder.middleLine.setText("min : " + list_item.get(i).getMinZoom() + "max : " +  list_item.get(i).getMaxZoom());
         //viewHolder.bottomLine.setText("Lens placeholder");

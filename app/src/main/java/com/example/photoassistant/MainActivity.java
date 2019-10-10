@@ -1,13 +1,19 @@
 package com.example.photoassistant;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.SeekBar;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,15 +25,15 @@ import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
     public static final int h = 10;
-    static RecycleAdapterLens adapter;
     Button bodyButton;
     Button lensButton;
     Button weatherButton;
     Button calcButton;
     Button sunButton;
-    static ArrayList<ListItemLens> lens_al = new ArrayList<ListItemLens>();
-    static ArrayList<ListItemBody> body_al = new ArrayList<ListItemBody>();
-    static ArrayList<ListItemCombination> combination_al = new ArrayList<ListItemCombination>();
+    public static ArrayList<ListItemLens> lens_al = new ArrayList<>();
+    public static ArrayList<ListItemBody> body_al = new ArrayList<>();
+    public static ArrayList<ListItemCombination> combination_al = new ArrayList<>();
+    static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         bodyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Body()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body()).commit();
             }
         });
 
@@ -45,36 +51,41 @@ public class MainActivity extends AppCompatActivity {
         lensButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Lens()).commit();
-                lens_al.toString();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Lens()).commit();
+
             }
         });
         weatherButton = findViewById(R.id.weatherButton);
         weatherButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fl,new weather()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl, new weather()).commit();
             }
         });
         calcButton = findViewById(R.id.calcButton);
         calcButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Calculator()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Calculator()).commit();
+                Calculator c = new Calculator();
             }
         });
         sunButton = findViewById(R.id.sunButton);
         sunButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fl,new sun()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl, new sun()).commit();
             }
         });
 
         ProcessLensData();
         ProcessBodyData();
         ProcessCombinationData();
+    }
 
+    static void toaster(@NonNull String text)
+    {
+        Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
     }
 
     public void ProcessLensData(){
@@ -83,9 +94,7 @@ public class MainActivity extends AppCompatActivity {
         ListItemLens lens;
         InputStream is = getResources().openRawResource(R.raw.lens);
         BufferedReader br = new BufferedReader(
-
                 new InputStreamReader(is, Charset.forName("UTF-8"))
-
         );
 
         String temp_line = "";
@@ -93,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             while ((temp_line = br.readLine()) != null){
+                Log.d("myActivity", "line " + temp_line);
                 temp_arr = temp_line.split(",");
                 if(temp_arr.length==7)
                 {
