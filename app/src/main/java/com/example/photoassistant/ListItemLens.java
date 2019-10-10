@@ -27,31 +27,31 @@ public class ListItemLens {
         return partName;
     }
 
-    public float getMinZoom() {
+    public double getMinZoom() {
         return minZoom;
     }
 
-    public float getMaxZoom() {
+    public double getMaxZoom() {
         return maxZoom;
     }
 
-    public float getApertureMinWide() {
+    public double getApertureMinWide() {
         return apertureMinWide;
     }
 
-    public float getApertureMinTele() {
+    public double getApertureMinTele() {
         return apertureMinTele;
     }
 
-    public float getApertureMaxWide() {
+    public double getApertureMaxWide() {
         return apertureMaxWide;
     }
 
-    public float getApertureMaxTele() {
+    public double getApertureMaxTele() {
         return apertureMaxTele;
     }
 
-    public float getMinFocusDistance() {
+    public double getMinFocusDistance() {
         return minFocusDistance;
     }
 }

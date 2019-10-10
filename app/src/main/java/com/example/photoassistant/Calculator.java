@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +24,10 @@ public class Calculator extends Fragment {
 
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
-    SeekBar apertureSeekBar, shutterSpeedSeekBar, zoomSeekBar, isoSeekBar;
+    Button aperturePlusButton, shutterSpeedPlusButton, isoPlusButton, zoomPlusButton;
+    Button apertureMinusButton, shutterSpeedMinusButton, isoMinusButton, zoomMinusButton;
+    TextView apertureTV, shutterSpeedTV, isoTV, zoomTV;
+
     Activity activity;
     public Calculator() {
 
@@ -43,51 +47,28 @@ public class Calculator extends Fragment {
         // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.fragment_calculator, container, false);
         Bundle bundle = getArguments();
+        aperturePlusButton = rootView.findViewById(R.id.aperturePlusButton);
+        shutterSpeedPlusButton = rootView.findViewById(R.id.shutterSpeedPlusButton);
+        zoomPlusButton = rootView.findViewById(R.id.zoomPlusButton);
+        isoPlusButton = rootView.findViewById(R.id.isoPlusButton);
+        apertureMinusButton= rootView.findViewById(R.id.apertureMinusButton);
+        shutterSpeedMinusButton = rootView.findViewById(R.id.shutterSpeedMinusButton);
+        zoomMinusButton = rootView.findViewById(R.id.zoomMinusButton);
+        isoMinusButton = rootView.findViewById(R.id.isoMinusButton);
+        apertureTV = rootView.findViewById(R.id.apertureTV);
+        shutterSpeedTV = rootView.findViewById(R.id.shutterSpeedTV);
+        zoomTV = rootView.findViewById(R.id.zoomTV);
+        isoTV = rootView.findViewById(R.id.isoTV);
+        Intelligence.Current.setBody(MainActivity.body_al.get(1));
+        Intelligence.Current.setLens(MainActivity.lens_al.get(1));
 
-        //myLayout = LayoutInflater.from(getContext()).inflate(R.layout.activity_main,null);
-
-        apertureSeekBar = (SeekBar)rootView.findViewById(R.id.apertureSeekbar);
-        shutterSpeedSeekBar = (SeekBar)rootView.findViewById(R.id.shutterSeekBar);
-        isoSeekBar = (SeekBar)rootView.findViewById(R.id.isoSeekBar);
-        zoomSeekBar = (SeekBar)rootView.findViewById(R.id.zoomSeekBar);
-
-        apertureSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override public void onStopTrackingTouch(SeekBar seekBar) { }
-            @Override public void onStartTrackingTouch(SeekBar seekBar) { }
-            @Override public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
-                Intelligence.Current.aperture = progress;
-                Log.i("EV:",Double.toString(Intelligence.ExposureCalculator()));
-            }});
-
-        shutterSpeedSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override public void onStopTrackingTouch(SeekBar seekBar) { }
-            @Override public void onStartTrackingTouch(SeekBar seekBar) { }
-            @Override public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
-                Intelligence.Current.shutterSpeed = progress;
-                Log.i("EV:",Double.toString(Intelligence.ExposureCalculator()));
-            }});
-
-        isoSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override public void onStopTrackingTouch(SeekBar seekBar) { }
-            @Override public void onStartTrackingTouch(SeekBar seekBar) { }
-            @Override public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
-                Intelligence.Current.ISO = progress;
-                Log.i("EV:",Double.toString(Intelligence.ExposureCalculator()));
-            }});
-
-        zoomSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override public void onStopTrackingTouch(SeekBar seekBar) {Intelligence.Current.focalLength = seekBar.getProgress();
-                //Log.i("progress:",Double.toString(Intelligence.ExposureCalculator())); }
-}
-            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
-            @Override public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
-                Intelligence.Current.focalLength = progress;
-                Log.i("EV:",Double.toString(Intelligence.ExposureCalculator()));
-            }});
+        aperturePlusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intelligence.Current.aperturePlus();
+                apertureTV.setText(Double.toString(Intelligence.Current.getAperture()));
+            }
+        });
         return rootView;
     }
-
-
-
-
 }
