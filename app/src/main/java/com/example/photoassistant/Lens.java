@@ -75,10 +75,10 @@ public class Lens extends Fragment{
             @Override
             public boolean onQueryTextChange(String newText) {
 
-                if (newText.length() == 0 || newText.isEmpty()){}else {
+                if (false);//(newText.length() == 0 || newText.isEmpty()){}
+                else {
 
                     ra.getFilter().filter(newText.toLowerCase().trim());
-
                 }
                 return true;
             }
