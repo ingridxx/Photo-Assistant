@@ -1,8 +1,12 @@
 package com.example.photoassistant;
 
+import android.content.ClipData;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -10,13 +14,61 @@ import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 
-public class RecycleAdapterLens extends androidx.recyclerview.widget.RecyclerView.Adapter<RecycleAdapterLens.ViewHolder> {
+public class RecycleAdapterLens extends androidx.recyclerview.widget.RecyclerView.Adapter<RecycleAdapterLens.ViewHolder> implements Filterable {
 
     ArrayList<ListItemLens> list_item;
+    ArrayList<ListItemLens> copyList;
+    Context context;
 
-    public RecycleAdapterLens(ArrayList<ListItemLens> init_list_array) {
+    public RecycleAdapterLens(Context context,ArrayList<ListItemLens> init_list_array) {
+        this.context = context;
         list_item = init_list_array;
+        copyList = new ArrayList<ListItemLens>();
+        copyList.addAll(init_list_array);
     }
+
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
+
+    private Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            ArrayList<ListItemLens> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+
+                filteredList.addAll(copyList);
+
+            } else {
+
+                String filtered = constraint.toString().toLowerCase().trim();
+
+                for (ListItemLens list_item : copyList) {
+
+                    if (list_item.getPartName().toLowerCase().contains(filtered)) {
+                        filteredList.add(list_item);
+                    }
+
+                }
+
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            list_item.clear();
+            list_item.addAll((ArrayList)results.values);
+            notifyDataSetChanged();
+
+        }
+    };
 
     @NonNull
     @Override
@@ -40,6 +92,7 @@ public class RecycleAdapterLens extends androidx.recyclerview.widget.RecyclerVie
     public int getItemCount() {
         return list_item.size();
     }
+
 
     public class ViewHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder{
         TextView topLine;
