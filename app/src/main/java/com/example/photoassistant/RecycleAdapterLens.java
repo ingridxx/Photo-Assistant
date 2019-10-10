@@ -27,6 +27,7 @@ public class RecycleAdapterLens extends androidx.recyclerview.widget.RecyclerVie
         list_item = init_list_array;
         copyList = new ArrayList<ListItemLens>();
         copyList.addAll(init_list_array);
+
     }
 
     @Override

@@ -16,10 +16,13 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 import android.widget.Toast;
+
+import static android.content.ContentValues.TAG;
 
 public class Lens extends Fragment{
 
@@ -50,6 +53,26 @@ public class Lens extends Fragment{
         ra = new RecycleAdapterLens(getContext(),MainActivity.lens_al);
         recyclerView.setAdapter(ra);
         ra.notifyDataSetChanged();
+
+        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+
+            @Override
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                Log.d(TAG, "www");
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+        });
+
 
         super.onViewCreated(view, savedInstanceState);
 
