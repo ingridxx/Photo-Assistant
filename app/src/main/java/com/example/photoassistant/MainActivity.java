@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -33,8 +37,6 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<ListItemLens> lens_al = new ArrayList<ListItemLens>();
     public static ArrayList<ListItemBody> body_al = new ArrayList<ListItemBody>();
     public static ArrayList<ListItemCombination> combination_al = new ArrayList<ListItemCombination>();
-    static Context context;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,14 +84,7 @@ public class MainActivity extends AppCompatActivity {
         ProcessBodyData();
         ProcessCombinationData();
 
-        context = getApplicationContext();
 
-
-    }
-
-    static void toaster(@NonNull String text)
-    {
-        Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
     }
 
     public void ProcessLensData(){

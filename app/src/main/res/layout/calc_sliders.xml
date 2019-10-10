@@ -63,11 +63,11 @@
             android:id="@+id/shutterSpeedTV"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/aperturePlusButton"
+            android:layout_weight="1"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Aperture "
-            android:layout_weight="1"
-            android:layout_below="@id/aperturePlusButton"
+            android:text="ShutterSpd"
             android:textSize="12sp" />
 
         <Button
@@ -97,13 +97,13 @@
 
     <TextView
         android:id="@+id/zoomTV"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/aperturePlusButton"
+        android:layout_weight="1"
         android:gravity="center"
         android:padding="10dp"
-        android:text="Aperture "
-        android:layout_weight="1"
-        android:layout_below="@id/aperturePlusButton"
+        android:text="Zoom"
         android:textSize="12sp" />
 
     <Button
@@ -135,11 +135,11 @@
         android:id="@+id/isoTV"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/aperturePlusButton"
+        android:layout_weight="1"
         android:gravity="center"
         android:padding="10dp"
-        android:text="Aperture "
-        android:layout_weight="1"
-        android:layout_below="@id/aperturePlusButton"
+        android:text="ISO"
         android:textSize="12sp" />
 
     <Button

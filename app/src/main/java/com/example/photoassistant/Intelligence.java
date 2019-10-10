@@ -1,19 +1,35 @@
 package com.example.photoassistant;
 
+import android.app.Activity;
+import android.content.Context;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
-public class Intelligence {
+
+public class Intelligence extends Fragment {
 
     static class Current
     {
+
+
         private static Integer[] isoRange = {50,64,80,100,125,160,200,250,320,400,500,640,800,1000,1250,1600,2000,2500,3200,4000,5000,6400,8000,10000,12800};
         private static Double[] shutterSpeedRange ={1.0/8000,1.0/6400,1.0/5000,1.0/4000,1.0/3200,1.0/2500,1.0/2000,1.0/1600,1.0/1250,1.0/1000,1.0/800,1.0/640,1.0/500,1.0/400,1.0/320,1.0/250,1.0/200,1.0/160,1.0/125,1.0/100,1.0/80,1.0/60,1.0/50,1.0/40,1.0/30,1.0/25,1.0/20,1.0/15,1.0/13,1.0/10,1.0/8,1.0/6,1.0/5,1.0/4,1.0/3,1.0/2.5,1.0/2,1.0/1.6,1.0/1.3,1.0,1.3,1.6,2.0,2.5,3.0,4.0,5.0,6.0,8.0,10.0,13.0,15.0,20.0,25.0,30.0};
         private static Double[] apertureRange ={40.0,36.0,32.0,29.0,25.0,22.0,20.0,18.0,16.0,14.0,13.0,11.0,10.0,9.0,8.0,7.1,6.3,5.6,5.0,4.5,4.0,3.5,3.2,2.8,2.5,2.2,2.0,1.8,1.6,1.4,1.2,1.1,1.0,0.95,0.85,0.75};
@@ -43,15 +59,15 @@ public class Intelligence {
         public static void setLens(ListItemLens l){lens = l;
         currentApertureRange = new ArrayList<Double>();
 
-        currentApertureRange.add(lens.getApertureMaxWide());
+        currentApertureRange.add(Math.round(lens.getApertureMinTele()*10)/10.0);
         for (int i = 0;i<apertureRange.length;i++)
         {
-            if(apertureRange[i]>lens.getApertureMaxWide() && apertureRange[i]<lens.getApertureMinTele())
+            if(apertureRange[i]>Math.round(lens.getApertureMaxWide()*10)/10.0 && apertureRange[i]<Math.round(lens.getApertureMinTele()*10)/10.0)
             {
                 currentApertureRange.add(apertureRange[i]);
             }
         }
-        currentApertureRange.add(lens.getApertureMinTele());
+        currentApertureRange.add(Math.round(lens.getApertureMaxWide()*10)/10.0);
 
         currentFocalLengthRange = new ArrayList<Double>();
         currentFocalLengthRange.add(lens.getMinZoom());
@@ -71,15 +87,20 @@ public class Intelligence {
         public static int getISO(){return isoRange[isoStep];}
         public static double getDistnace(){return distance;}
 
-        public static void focalLengthPlus(){focalLength = currentFocalLengthRange.get(++focalLengthStep);}
-        public static void aperturePlus(){aperture = currentApertureRange.get(++apertureStep);}
-        public static void shutterSpeedPlus(){shutterSpeed = currentshutterSpeedRange.get(++shutterSpeedStep);}
-        public static void isoPlus(){ISO = currentIsoRange.get(++isoStep);}
+        static DecimalFormat format = new DecimalFormat();
+        public static String getFocalLengthString() { format.setDecimalSeparatorAlwaysShown(false); return format.format(getFocalLength()); }
+        public static String getApertureString() { format.setDecimalSeparatorAlwaysShown(false); return format.format(getAperture()); }
+        public static String getShutterSpeedString() { format.setDecimalSeparatorAlwaysShown(false); format.setGroupingUsed(false);if(getShutterSpeed()>=1) return format.format(getShutterSpeed());else return "1/"+format.format(1/getShutterSpeed());}
+        public static String getISOString() { return Integer.toString(getISO()); }
+        public static String focalLengthPlus(){focalLengthStep++;if(focalLengthStep>currentFocalLengthRange.size()-2){focalLengthStep = currentFocalLengthRange.size()-1;}focalLength = currentFocalLengthRange.get(focalLengthStep); return getFocalLengthString();}
+        public static String aperturePlus(){apertureStep++; if(apertureStep>currentApertureRange.size()-2){apertureStep = currentApertureRange.size()-1;}aperture = currentApertureRange.get(apertureStep); return getApertureString();}
+        public static String shutterSpeedPlus(){shutterSpeedStep++; if(shutterSpeedStep>currentshutterSpeedRange.size()-2){shutterSpeedStep = currentshutterSpeedRange.size()-1;}shutterSpeed = currentshutterSpeedRange.get(shutterSpeedStep);return getShutterSpeedString();}
+        public static String isoPlus(){isoStep++; if(isoStep>currentIsoRange.size()-2){isoStep = currentIsoRange.size()-1;}ISO = currentIsoRange.get(isoStep);return getISOString();}
 
-        public static void focalLengthMinus(){focalLength = currentFocalLengthRange.get(--focalLengthStep);}
-        public static void apertureMinus(){aperture = currentApertureRange.get(--apertureStep);}
-        public static void shutterSpeedMinus(){shutterSpeed = currentshutterSpeedRange.get(--shutterSpeedStep);}
-        public static void isoMinus(){ISO = currentIsoRange.get(--isoStep);}
+        public static String focalLengthMinus(){focalLengthStep--; if(focalLengthStep<1){focalLengthStep = 0;}focalLength = currentFocalLengthRange.get(focalLengthStep);return getFocalLengthString();}
+        public static String apertureMinus(){apertureStep--; if(apertureStep<1){apertureStep = 0;}aperture = currentApertureRange.get(apertureStep); return getApertureString();}
+        public static String shutterSpeedMinus(){shutterSpeedStep--; if(shutterSpeedStep<1){shutterSpeedStep = 0;}shutterSpeed = currentshutterSpeedRange.get(shutterSpeedStep);return getShutterSpeedString();}
+        public static String isoMinus(){isoStep--;if(isoStep<1){isoStep = 0;}ISO = currentIsoRange.get(isoStep);return getISOString();}
 
     }
     //CoCCalculator(SensorSize)
@@ -126,4 +147,6 @@ public class Intelligence {
         return exposure;
 
     }
+
+
 }

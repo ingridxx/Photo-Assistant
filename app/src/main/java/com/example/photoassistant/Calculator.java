@@ -62,13 +62,17 @@ public class Calculator extends Fragment {
         Intelligence.Current.setBody(MainActivity.body_al.get(1));
         Intelligence.Current.setLens(MainActivity.lens_al.get(1));
 
-        aperturePlusButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intelligence.Current.aperturePlus();
-                apertureTV.setText(Double.toString(Intelligence.Current.getAperture()));
-            }
-        });
+
+
+        aperturePlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { apertureTV.setText(Intelligence.Current.aperturePlus()); }});
+        shutterSpeedPlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { shutterSpeedTV.setText(Intelligence.Current.shutterSpeedPlus()); }});
+        zoomPlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { zoomTV.setText(Intelligence.Current.focalLengthPlus()); }});
+        isoPlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { isoTV.setText(Intelligence.Current.isoPlus()); }});
+        apertureMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { apertureTV.setText(Intelligence.Current.apertureMinus()); }});
+        shutterSpeedMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { shutterSpeedTV.setText(Intelligence.Current.shutterSpeedMinus()); }});
+        zoomMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { zoomTV.setText(Intelligence.Current.focalLengthMinus()); }});
+        isoMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { isoTV.setText(Intelligence.Current.isoMinus()); }});
+
         return rootView;
     }
 }
