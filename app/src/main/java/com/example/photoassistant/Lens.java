@@ -17,9 +17,12 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import static android.content.ContentValues.TAG;
 
 public class Lens extends Fragment{
 
@@ -51,6 +54,26 @@ public class Lens extends Fragment{
         recyclerView.setAdapter(ra);
         ra.notifyDataSetChanged();
 
+        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+
+            @Override
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                Log.d(TAG, "www");
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+        });
+
+
         super.onViewCreated(view, savedInstanceState);
 
     }
@@ -75,10 +98,10 @@ public class Lens extends Fragment{
             @Override
             public boolean onQueryTextChange(String newText) {
 
-                if (newText.length() == 0 || newText.isEmpty()){}else {
+                if (false);//(newText.length() == 0 || newText.isEmpty()){}
+                else {
 
                     ra.getFilter().filter(newText.toLowerCase().trim());
-
                 }
                 return true;
             }

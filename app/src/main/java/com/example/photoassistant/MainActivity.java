@@ -2,12 +2,21 @@ package com.example.photoassistant;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -25,11 +34,9 @@ public class MainActivity extends AppCompatActivity {
     Button weatherButton;
     Button calcButton;
     Button sunButton;
-    public static ArrayList<ListItemLens> lens_al = new ArrayList<>();
-    public static ArrayList<ListItemBody> body_al = new ArrayList<>();
-    public static ArrayList<ListItemCombination> combination_al = new ArrayList<>();
-    static Context context;
-
+    public static ArrayList<ListItemLens> lens_al = new ArrayList<ListItemLens>();
+    public static ArrayList<ListItemBody> body_al = new ArrayList<ListItemBody>();
+    public static ArrayList<ListItemCombination> combination_al = new ArrayList<ListItemCombination>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         bodyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Body()).commit();
             }
         });
 
@@ -46,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         lensButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Lens()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Lens()).commit();
 
             }
         });
@@ -54,14 +61,14 @@ public class MainActivity extends AppCompatActivity {
         weatherButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Weather()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl,new weather()).commit();
             }
         });
         calcButton = findViewById(R.id.calcButton);
         calcButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Calculator()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Calculator()).commit();
                 Calculator c = new Calculator();
             }
         });
@@ -69,18 +76,15 @@ public class MainActivity extends AppCompatActivity {
         sunButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Sun()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl,new sun()).commit();
             }
         });
 
         ProcessLensData();
         ProcessBodyData();
         ProcessCombinationData();
-    }
 
-    static void toaster(@NonNull String text)
-    {
-        Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+
     }
 
     public void ProcessLensData(){
