@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         weatherButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fl,new weather()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Weather()).commit();
             }
         });
         calcButton = findViewById(R.id.calcButton);
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         sunButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fl,new sun()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Sun()).commit();
             }
         });
 
