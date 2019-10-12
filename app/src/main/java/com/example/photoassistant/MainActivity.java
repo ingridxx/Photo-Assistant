@@ -101,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             while ((temp_line = br.readLine()) != null){
-                Log.d("myActivity", "line " + temp_line);
                 temp_arr = temp_line.split(",");
                 if(temp_arr.length==7)
                 {
@@ -136,7 +135,6 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             while ((temp_line = br.readLine()) != null){
-                Log.d("myActivity", "body " + temp_line);
                 temp_arr = temp_line.split(",");
                 body = new ListItemBody(temp_arr[0], temp_arr[1], temp_arr[2], temp_arr[3], temp_arr[4], temp_arr[5]);
                 body_al.add(body);
@@ -161,7 +159,6 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             while ((temp_line = br.readLine()) != null){
-                Log.d("myActivity", "combo " + temp_line);
                 temp_arr = temp_line.split(",");
                 if(temp_arr.length==2)
                 {
