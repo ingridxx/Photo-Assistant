@@ -7,8 +7,17 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/sunTextView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clickable="false"
         android:text="sun" />
+
+    <Button
+        android:id="@+id/getSunriseSunsetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="GET LOCATION" />
 
 </FrameLayout>
