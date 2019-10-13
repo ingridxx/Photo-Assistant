@@ -22,9 +22,9 @@ import android.widget.Toast;
 
 public class Calculator extends Fragment {
 
-    RecyclerView recyclerView;
-    RecyclerView.Adapter adapter;
-    Button aperturePlusButton, shutterSpeedPlusButton, isoPlusButton, zoomPlusButton;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+    private Button aperturePlusButton, shutterSpeedPlusButton, isoPlusButton, zoomPlusButton;
     Button apertureMinusButton, shutterSpeedMinusButton, isoMinusButton, zoomMinusButton;
     TextView apertureTV, shutterSpeedTV, isoTV, zoomTV;
     Button bodyButton, lensButton;

@@ -2,6 +2,7 @@ package com.example.photoassistant;
 
 import android.content.ClipData;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,6 +98,7 @@ public class RecycleAdapterLens extends androidx.recyclerview.widget.RecyclerVie
                 int adapterPos = viewHolder.getAdapterPosition();
 
                 Lens.addLensToArrays(list_item.get(adapterPos));
+                Log.d("DebuggingTag", "onClick: " + list_item.get(adapterPos).getPartName().toString());
                 Lens.updateArrayAdapter();
             }
         });
