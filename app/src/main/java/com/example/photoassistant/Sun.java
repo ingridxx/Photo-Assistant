@@ -80,7 +80,7 @@ public class Sun extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_sun, container, false);
 
         //CIRCLE PARAMETERS
-        int margin = 50; int thickness = 75, topMargin = 25;
+        int margin = 50,thickness = 75, topMargin = 25;
         //POSITION CIRCLE
         ImageView whiteCircle = rootView.findViewById(R.id.whiteCircle);
         ImageView sunCircle = rootView.findViewById(R.id.gradientRing);
