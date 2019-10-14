@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 prevFrag = currFrag;
                 currFrag = "calc";
 
-                getSupportFragmentManager().beginTransaction().add(R.id.fl,new Calculator()).addToBackStack("calc_fragment").commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Calculator()).addToBackStack("calc_fragment").commit();
             }
         });
         sunButton = findViewById(R.id.sunButton);
@@ -124,11 +124,13 @@ public class MainActivity extends AppCompatActivity {
                    currFrag = "lens";
                    getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Lens()).commit();
                    break;
-
-
            }
-            super.onBackPressed();
+            View tempView = this.getWindow().getDecorView();
+           // int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE;
+            tempView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+
         }
+        super.onBackPressed();
     }
 
     private class ProcessDataFromArrays extends AsyncTask <ArrayList<ListItemLens>,Integer,ArrayList<ListItemLens>>{
