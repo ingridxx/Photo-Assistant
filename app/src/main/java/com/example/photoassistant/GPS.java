@@ -23,6 +23,7 @@ public class GPS extends Service implements LocationListener {
 
 
     boolean checkGPS = false;
+    int hello;
 
 
     boolean checkNetwork = false;
