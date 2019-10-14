@@ -2,6 +2,7 @@ package com.example.photoassistant;
 
 import android.content.ClipData;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -85,11 +87,21 @@ public class RecycleAdapterLens extends androidx.recyclerview.widget.RecyclerVie
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
         //binds the data to the view.*
         viewHolder.topLine.setText(list_item.get(i).getPartName());
         //viewHolder.middleLine.setText("min : " + list_item.get(i).getMinZoom() + "max : " +  list_item.get(i).getMaxZoom());
         //viewHolder.bottomLine.setText("Lens placeholder");
+
+        viewHolder.topLine.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                int adapterPos = viewHolder.getAdapterPosition();
+
+                Lens.addLensToArrays(list_item.get(adapterPos));
+                Log.d("DebuggingTag", "onClick: " + list_item.get(adapterPos).getPartName().toString());
+                Lens.updateArrayAdapter();
+            }
+        });
 
     }
 

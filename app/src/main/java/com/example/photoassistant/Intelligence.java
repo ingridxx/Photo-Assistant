@@ -24,9 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 
-public class Intelligence extends Fragment {
-
-
+public class Intelligence{
 
     static class Current
     {
@@ -97,11 +95,6 @@ public class Intelligence extends Fragment {
         public static String isoMinus(){isoStep--;if(isoStep<1){isoStep = 0;}ISO = currentIsoRange.get(isoStep);return getISOString();}
 
     }
-    //CoCCalculator(SensorSize)
-    //HyperfocalCalculator(CoC)
-    //DoFNearCalculator(Hyperfocal, subjectDistance, focalLength)
-    //DoFFarCalculator(Hyperfocal, subjectDistance, focalLength)
-    //EVCalculator(aperture, ss, ISO, previewSS, previewISO)
 
     public static double CoCCalculator()
     {
