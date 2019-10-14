@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 
-public class GPS extends  Service implements LocationListener {
+public class GPS extends Service implements LocationListener {
 
     private final Context mContext;
 
