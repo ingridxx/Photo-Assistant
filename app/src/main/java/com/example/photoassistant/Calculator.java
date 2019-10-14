@@ -91,4 +91,5 @@ public class Calculator extends Fragment {
         lensButton.setText(Intelligence.Current.getLens().getPartName());
         evTextView.setText(Double.toString(Intelligence.ExposureCalculator()));
     }
+
 }
