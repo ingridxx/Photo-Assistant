@@ -23,10 +23,13 @@
 
             <TextView
                 android:id="@+id/Location"
-                android:textSize="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="Location" />
+                android:text="Location"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textColor="#D5363535"
+                android:textSize="20dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -46,17 +49,22 @@
                         android:id="@+id/WeatherIcon"
                         android:layout_width="20dp"
                         android:layout_height="match_parent"
+                        android:layout_gravity="center"
                         android:layout_weight="1.5"
                         android:baselineAligned="false"
                         tools:src="@tools:sample/avatars" />
 
                     <TextView
                         android:id="@+id/currentTemp"
-                        android:textSize="32dp"
                         android:layout_width="0dp"
                         android:layout_height="fill_parent"
+                        android:layout_gravity="center"
                         android:layout_weight="1.5"
-                        android:text="Temperature" />
+                        android:gravity="center_vertical"
+                        android:text="Temperature"
+                        android:textAlignment="gravity"
+                        android:textColor="#F1F1F1"
+                        android:textSize="32dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -69,11 +77,15 @@
 
                     <TextView
                         android:id="@+id/Description"
-                        android:textSize="25dp"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:text="Description" />
+                        android:gravity="center_vertical"
+                        android:text="Description"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textColor="#FCFAFA"
+                        android:textSize="22dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -84,17 +96,25 @@
 
                         <TextView
                             android:id="@+id/Humidity"
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_gravity="center"
                             android:layout_weight="1"
-                            android:text="Humidity" />
+                            android:text="Humidity"
+                            android:textAlignment="center"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
 
                         <TextView
                             android:id="@+id/PSI"
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_gravity="center"
                             android:layout_weight="1"
-                            android:text="PSI" />
+                            android:text="PSI"
+                            android:textAlignment="center"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
 
                     </LinearLayout>
 
@@ -117,15 +137,19 @@
 
                         <TextView
                             android:id="@+id/Hour1"
-                            android:layout_width="50dp"
+                            android:layout_width="125dp"
                             android:layout_height="fill_parent"
+                            android:layout_gravity="center_vertical"
                             android:layout_weight="1"
-                            android:text="Hour1" />
+                            android:text="Hour1"
+                            android:textAlignment="center"
+                            android:textSize="18sp" />
 
                         <ImageView
                             android:id="@+id/H1Icon"
                             android:layout_width="40dp"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center|fill_vertical"
                             android:layout_weight="1"
                             tools:src="@tools:sample/avatars" />
 
@@ -133,8 +157,11 @@
                             android:id="@+id/H1Temp"
                             android:layout_width="0dp"
                             android:layout_height="fill_parent"
+                            android:layout_gravity="center_vertical"
                             android:layout_weight="2"
-                            android:text="Hour1Temp" />
+                            android:text="Hour1Temp"
+                            android:textAlignment="inherit"
+                            android:textSize="18sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -146,15 +173,19 @@
 
                         <TextView
                             android:id="@+id/Hour2"
-                            android:layout_width="50dp"
+                            android:layout_width="125dp"
                             android:layout_height="fill_parent"
+                            android:layout_gravity="center_vertical"
                             android:layout_weight="1"
-                            android:text="Hour2" />
+                            android:text="Hour2"
+                            android:textAlignment="center"
+                            android:textSize="18sp" />
 
                         <ImageView
                             android:id="@+id/H2Icon"
                             android:layout_width="40dp"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center|fill_vertical"
                             android:layout_weight="1"
                             tools:src="@tools:sample/avatars" />
 
@@ -162,8 +193,11 @@
                             android:id="@+id/H2Temp"
                             android:layout_width="0dp"
                             android:layout_height="fill_parent"
+                            android:layout_gravity="center_vertical"
                             android:layout_weight="2"
-                            android:text="Hour2Temp" />
+                            android:text="Hour2Temp"
+                            android:textAlignment="inherit"
+                            android:textSize="18sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -175,15 +209,19 @@
 
                         <TextView
                             android:id="@+id/Hour3"
-                            android:layout_width="50dp"
+                            android:layout_width="125dp"
                             android:layout_height="fill_parent"
+                            android:layout_gravity="center_vertical"
                             android:layout_weight="1"
-                            android:text="Hour3" />
+                            android:text="Hour3"
+                            android:textAlignment="center"
+                            android:textSize="18sp" />
 
                         <ImageView
                             android:id="@+id/H3Icon"
                             android:layout_width="40dp"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center|fill_vertical"
                             android:layout_weight="1"
                             tools:src="@tools:sample/avatars" />
 
@@ -191,8 +229,11 @@
                             android:id="@+id/H3Temp"
                             android:layout_width="0dp"
                             android:layout_height="fill_parent"
+                            android:layout_gravity="center_vertical"
                             android:layout_weight="2"
-                            android:text="Hour3Temp" />
+                            android:text="Hour3Temp"
+                            android:textAlignment="inherit"
+                            android:textSize="18sp" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

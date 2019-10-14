@@ -161,9 +161,9 @@ public class Weather extends Fragment {
                 index++;
             }
             // 3h forecast temperature
-            Hour1Temp.setText("" + tempVals[0]);
-            Hour2Temp.setText("" + tempVals[1]);
-            Hour3Temp.setText("" + tempVals[2]);
+            Hour1Temp.setText("" + tempVals[0] + "℃");
+            Hour2Temp.setText("" + tempVals[1] + "℃");
+            Hour3Temp.setText("" + tempVals[2] + "℃");
 
             // 3h forecast icons
             getHourlyIcon(icons[0], H1Icon);
