@@ -106,7 +106,7 @@ public class Calculator extends Fragment {
         bodyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                MainActivity.fragmentStack.push(new Body());
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Body()).commit();
 
             }
@@ -115,6 +115,7 @@ public class Calculator extends Fragment {
         lensButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MainActivity.fragmentStack.push(new Lens());
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Lens()).commit();
             }
         });

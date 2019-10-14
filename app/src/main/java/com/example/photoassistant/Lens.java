@@ -1,6 +1,7 @@
 package com.example.photoassistant;
 
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -123,6 +124,7 @@ public class Lens extends Fragment{
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         lens_spinner = view.findViewById(R.id.spinner1);
         arrayAdapterString = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1,favouritesString);

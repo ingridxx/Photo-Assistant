@@ -1,5 +1,6 @@
 package com.example.photoassistant;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -82,6 +83,7 @@ public class Weather extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         updateWeather();
         super.onViewCreated(view, savedInstanceState);
@@ -231,13 +233,13 @@ public class Weather extends Fragment {
     }
 
     private void getWeatherIcon(String icon) {
-        String iconUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png"; //large icon for current
+        String iconUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png"; //large icon for current
         Picasso.get().load(iconUrl).into(weatherIcon); //add picasso to build.gradle
     }
 
     private void getHourlyIcon(String icon, ImageView hourly) {
         Log.d("DebugTag", "getHourlyIcon: " + icon);
-        String iconUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png"; //small icons for forecast
+        String iconUrl = "https://openweathermap.org/img/wn/" + icon + "@2x.png"; //small icons for forecast
         Picasso.get().load(iconUrl).into(hourly);
 
     }

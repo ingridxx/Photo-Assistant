@@ -1,8 +1,8 @@
 package com.example.photoassistant;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity {
     public static final int h = 10;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<ListItemCombination> combination_al = new ArrayList<ListItemCombination>();
     public static String currFrag = "sun";
     public static String prevFrag;
+    public static Stack fragmentStack = new Stack();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +42,7 @@ public class MainActivity extends AppCompatActivity {
         bodyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                prevFrag = currFrag;
-                currFrag = "body";
+                fragmentStack.push(new Body());
                 getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Body()).commit();
             }
         });
@@ -50,9 +51,7 @@ public class MainActivity extends AppCompatActivity {
         lensButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                prevFrag = currFrag;
-                currFrag = "lens";
-
+                fragmentStack.push(new Lens());
                 getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Lens()).commit();
 
             }
@@ -61,9 +60,7 @@ public class MainActivity extends AppCompatActivity {
         weatherButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                prevFrag = currFrag;
-                currFrag = "weather";
-
+                fragmentStack.push(new Weather());
                 getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Weather()).commit();
             }
         });
@@ -71,18 +68,15 @@ public class MainActivity extends AppCompatActivity {
         calcButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                prevFrag = currFrag;
-                currFrag = "calc";
-
-                getSupportFragmentManager().beginTransaction().add(R.id.fl,new Calculator()).addToBackStack("calc_fragment").commit();
+                fragmentStack.push(new Calculator());
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Calculator()).commit();
             }
         });
         sunButton = findViewById(R.id.sunButton);
         sunButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                prevFrag = currFrag;
-                currFrag = "sun";
+                fragmentStack.push(new Sun());
                 getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Sun()).commit();
             }
         });
@@ -90,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
         ProcessBodyData();
         ProcessCombinationData();
 
+        if(fragmentStack.empty()) fragmentStack.push(new Sun());
+        //getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Sun()).commit();
 
     }
 
@@ -98,27 +94,16 @@ public class MainActivity extends AppCompatActivity {
         Log.d("myDebugTag", "onBackPressed:");
 
 
-
-        // Check if that Fragment is currently visible
-        boolean myFragXwasVisible = false;
-        try{
-            Calculator myFragment = (Calculator) getSupportFragmentManager().findFragmentByTag("calc_fragment");
-            myFragXwasVisible = myFragment.isVisible();
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
-        }
-
-
         // Let the Activity pop the BackStack as normal
 
 
         // If it was your particular Fragment that was visible...
-        if (myFragXwasVisible) {
-         //   switch (prevFrag) {
-                Log.d("myDebugTag", "FragVisible");
-
+        if (true)//(fragmentStack.size()>=1)//(currFrag == "calc")
+        {
+            fragmentStack.pop();
+            if(!fragmentStack.empty())getSupportFragmentManager().beginTransaction().replace(R.id.fl,(Fragment)fragmentStack.peek()).commit();
+            else System.exit(1);
+//            switch (prevFrag) {
 //               case "weather":
 //                   prevFrag = currFrag;
 //                   currFrag = "weather";
@@ -128,6 +113,11 @@ public class MainActivity extends AppCompatActivity {
 //                   prevFrag = currFrag;
 //                   currFrag = "sun";
 //                   getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Sun()).commit();
+//                   break;
+//               case "calc":
+//                   prevFrag = currFrag;
+//                   currFrag = "calc";
+//                   getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Calculator()).commit();
 //                   break;
 //               case "body":
 //                   prevFrag = currFrag;
@@ -139,11 +129,17 @@ public class MainActivity extends AppCompatActivity {
 //                   currFrag = "lens";
 //                   getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Lens()).commit();
 //                   break;
-//
 //           }
-          //  }
-            super.onBackPressed();
+            //View tempView = this.getWindow().getDecorView();
+           // int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE;
+            //tempView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+
         }
+        else
+        {
+            System.exit(1);
+        }
+
     }
 
     private class ProcessDataFromArrays extends AsyncTask <ArrayList<ListItemLens>,Integer,ArrayList<ListItemLens>>{
