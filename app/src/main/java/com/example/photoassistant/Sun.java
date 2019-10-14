@@ -1,6 +1,10 @@
 package com.example.photoassistant;
 
 import android.content.Context;
+import android.graphics.Shader;
+import android.graphics.SweepGradient;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -30,6 +34,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,72 +80,92 @@ public class Sun extends Fragment {
         Button getSunriseSunsetButton = (Button)getView().findViewById(R.id.getSunriseSunsetButton);
         final TextView sunTextView = (TextView)getView().findViewById(R.id.sunTextView);
 
-        getSunriseSunsetButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                //String url="https://api.sunrise-sunset.org/json?lat=37.421&lng=-122.084&date=today";
-                String url="https://api.sunrise-sunset.org/json?";
-                GPS gps=new GPS(getActivity().getApplicationContext());
-                if (gps.canGetLocation()) {
+        //String url="https://api.sunrise-sunset.org/json?lat=37.421&lng=-122.084&date=today";
+        String url="https://api.sunrise-sunset.org/json?";
+        GPS gps=new GPS(getActivity().getApplicationContext());
+        if (gps.canGetLocation()) {
 
 
-                    double longitude = gps.getLongitude();
-                    double latitude = gps.getLatitude();
+            double longitude = gps.getLongitude();
+            double latitude = gps.getLatitude();
 
-                    Toast.makeText(getActivity().getApplicationContext(), "Longitude:" + Double.toString(longitude) + "\nLatitude:" + Double.toString(latitude), Toast.LENGTH_SHORT).show();
-                    sunTextView.setText("Longitude:" + Double.toString(longitude) + "\nLatitude:" + Double.toString(latitude));
-                    url=url+"lat="+latitude+"&lng="+longitude+"&date=today";
-                    // Add the request to the RequestQueue.
-                    sunTextView.append("\n"+url+"\n");
-
-
-                } else {
-
-                    gps.showSettingsAlert();
-                }
-                // Request a string response from the provided URL.
-                final StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                // Display the first 500 characters of the response string.
+            Toast.makeText(getActivity().getApplicationContext(), "Longitude:" + Double.toString(longitude) + "\nLatitude:" + Double.toString(latitude), Toast.LENGTH_SHORT).show();
+            sunTextView.setText("Longitude:" + Double.toString(longitude) + "\nLatitude:" + Double.toString(latitude));
+            url=url+"lat="+latitude+"&lng="+longitude+"&date=today";
+            // Add the request to the RequestQueue.
+            sunTextView.append("\n"+url+"\n");
 
 
-                                String a="";
-                                try{
-                                    JSONObject reader = new JSONObject(response);
-                                    JSONObject extract = reader.getJSONObject("results");
-                                    a+="astronomical sunrise"+extract.getString("astronomical_twilight_begin")+"\n";
-                                    a+="nautical sunrise"+extract.getString("nautical_twilight_begin")+"\n";
-                                    a+="civil sunrise"+extract.getString("civil_twilight_begin")+"\n";
-                                    a+="sunrise"+extract.getString("sunrise")+"\n";
-                                    a+="sunset"+extract.getString("sunset")+"\n";
-                                    a+="civil sunset"+extract.getString("civil_twilight_end")+"\n";
-                                    a+="nautical sunset"+extract.getString("nautical_twilight_end")+"\n";
-                                    a+="astronomical sunset"+extract.getString("astronomical_twilight_end")+"\n";
+        } else {
 
-                                }catch (JSONException e){
-
-                                }finally {
-                                    sunTextView.append("Response is: "+ a+"\n" );
-                                }
-
-
-
-                            }
-                        }, new Response.ErrorListener() {
+            gps.showSettingsAlert();
+        }
+        // Request a string response from the provided URL.
+        final StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
-                        sunTextView.append("That didn't work!");
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+
+
+                        String a="";
+                        try{
+                            JSONObject reader = new JSONObject(response);
+                            JSONObject extract = reader.getJSONObject("results");
+                            a+="astronomical sunrise"+extract.getString("astronomical_twilight_begin")+"\n";
+                            a+="nautical sunrise"+extract.getString("nautical_twilight_begin")+"\n";
+                            a+="civil sunrise"+extract.getString("civil_twilight_begin")+"\n";
+                            a+="sunrise"+extract.getString("sunrise")+"\n";
+                            a+="sunset"+extract.getString("sunset")+"\n";
+                            a+="civil sunset"+extract.getString("civil_twilight_end")+"\n";
+                            a+="nautical sunset"+extract.getString("nautical_twilight_end")+"\n";
+                            a+="astronomical sunset"+extract.getString("astronomical_twilight_end")+"\n";
+
+                        }catch (JSONException e){
+
+                        }finally {
+                            sunTextView.append("Response is: "+ a+"\n" );
+                        }
+
+
+
                     }
-                });
-                queue.add(stringRequest);
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                sunTextView.append("That didn't work!");
+            }
+        });
+        queue.add(stringRequest);
+
+
+                final ShapeDrawable circle = new ShapeDrawable(new OvalShape());
+
+                ShapeDrawable.ShaderFactory shaderFactory = new ShapeDrawable.ShaderFactory() {
+
+                    @Override
+                    public Shader resize(int width, int height) {
+                        int mWidth= circle.getBounds().width()/2;
+                        int mHeight= circle.getBounds().height()/2;
+                        SweepGradient sweepGradient = new SweepGradient(mWidth,mHeight,
+                                new int[]{
+                                        0xFF1e5799,
+                                        0xFFeeeeee,
+                                        0xFF111111,
+                                        0xFFeeeeee,}, //substitute the correct colors for these
+                                new float[]{
+                                        0, 0.40f, 0.60f, 1});
+                        return sweepGradient;
+                    }
+                };circle.setShaderFactory(shaderFactory);
+                ImageView iv = (ImageView)(getView().findViewById(R.id.gradientRing));
+                iv.setBackground(circle);
+
+
+
 
 
             }
-        });
-    }
 
 }
 

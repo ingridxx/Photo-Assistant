@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,9 +15,31 @@
 
     <Button
         android:id="@+id/getSunriseSunsetButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_width="109dp"
+        android:layout_height="37dp"
+        android:layout_above="@+id/gradientRing"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="127dp"
+        android:layout_marginBottom="77dp"
         android:text="GET LOCATION" />
 
-</FrameLayout>
+    <ImageView android:layout_height="313dp"
+        android:layout_width="275dp"
+        android:text="ring" android:clickable="false"
+        android:id="@+id/gradientRing"
+        android:layout_marginEnd="66dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="178dp"
+        android:layout_alignParentBottom="true"
+        />
+
+    <ImageView
+        android:layout_width="135dp"
+        android:layout_height="126dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="139dp"
+        android:layout_marginBottom="264dp"
+        android:background="@drawable/white_circle" />
+
+</RelativeLayout>
