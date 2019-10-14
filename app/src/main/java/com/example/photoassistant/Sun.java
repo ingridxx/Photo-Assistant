@@ -2,6 +2,7 @@ package com.example.photoassistant;
 
 import android.content.Context;
 
+import android.graphics.Point;
 import android.graphics.Shader;
 import android.graphics.SweepGradient;
 import android.graphics.drawable.ShapeDrawable;
@@ -20,7 +21,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,6 +42,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -73,16 +78,45 @@ public class Sun extends Fragment {
 
         setHasOptionsMenu(true);
         View rootView = inflater.inflate(R.layout.fragment_sun, container, false);
+
+        //CIRCLE PARAMETERS
+        int margin = 50; int thickness = 75, topMargin = 25;
+        //POSITION CIRCLE
+        ImageView whiteCircle = rootView.findViewById(R.id.whiteCircle);
+        ImageView sunCircle = rootView.findViewById(R.id.gradientRing);
+        Display display = ((Activity)getContext()).getWindowManager().getDefaultDisplay();
+        DisplayMetrics outMetrics = new DisplayMetrics ();
+        display.getMetrics(outMetrics);
+        float density  = getResources().getDisplayMetrics().density;
+        float dpHeight = outMetrics.heightPixels / density;
+        float dpWidth  = outMetrics.widthPixels / density;
+        float shorter = outMetrics.heightPixels<outMetrics.widthPixels ? outMetrics.heightPixels : outMetrics.widthPixels;
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams((int)(shorter-convertDpToPixel(margin,getContext())), (int)(shorter-convertDpToPixel(margin,getContext())));
+        layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        layoutParams.setMargins(0,(int)convertDpToPixel(topMargin,getContext()),0,0);
+        sunCircle.setLayoutParams(layoutParams);
+        layoutParams = new RelativeLayout.LayoutParams((int)(layoutParams.width-convertDpToPixel(thickness,getContext())), (int)(layoutParams.height-convertDpToPixel(thickness,getContext())));
+        layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        layoutParams.setMargins(0,(int)convertDpToPixel(topMargin+thickness/2.0f,getContext()),0,0);
+        whiteCircle.setLayoutParams(layoutParams);
+
         return rootView;
 
 }
-
+    public static float convertDpToPixel(float dp, Context context){
+        return dp * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+    }
+    public static float convertPixelsToDp(float px, Context context){
+        return px / ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+    }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         final RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         Button getSunriseSunsetButton = (Button)getView().findViewById(R.id.getSunriseSunsetButton);
         final TextView sunTextView = (TextView)getView().findViewById(R.id.sunTextView);
+
+
 
         //String url="https://api.sunrise-sunset.org/json?lat=37.421&lng=-122.084&date=today";
         String url="https://api.sunrise-sunset.org/json?";

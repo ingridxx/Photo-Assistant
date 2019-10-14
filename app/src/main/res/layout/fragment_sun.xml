@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
     tools:context=".Sun">
 
     <!-- TODO: Update blank fragment layout -->
@@ -10,36 +12,34 @@
         android:id="@+id/sunTextView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="false"
-        android:text="sun" />
+        android:clickable="false" />
 
     <Button
         android:id="@+id/getSunriseSunsetButton"
         android:layout_width="109dp"
         android:layout_height="37dp"
-        android:layout_above="@+id/gradientRing"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="127dp"
-        android:layout_marginBottom="77dp"
+        android:layout_marginBottom="143dp"
+        android:layout_marginEnd="243dp"
         android:text="GET LOCATION" />
 
-    <ImageView android:layout_height="313dp"
-        android:layout_width="275dp"
-        android:text="ring" android:clickable="false"
+    <ImageView
         android:id="@+id/gradientRing"
-        android:layout_marginEnd="66dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="178dp"
-        android:layout_alignParentBottom="true"
-        />
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+        android:clickable="false"
+        android:text="ring" />
 
     <ImageView
-        android:layout_width="135dp"
-        android:layout_height="126dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="139dp"
-        android:layout_marginBottom="264dp"
-        android:background="@drawable/white_circle" />
+        android:id="@+id/whiteCircle"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+
+        android:background="@drawable/white_circle"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
+
+
 
 </RelativeLayout>
