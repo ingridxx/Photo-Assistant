@@ -1,34 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_weight="2"
     android:baselineAligned="false"
-    android:layout_weight="2">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
-    <FrameLayout
-        android:id="@+id/fl_calc_body"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <include
-            layout="@layout/calc_body"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent" />
+    android:orientation="horizontal">
 
-    </FrameLayout>
-        <FrameLayout
-            android:id="@+id/frame_layout_1"
-            android:layout_below="@+id/fl_calc_body"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </FrameLayout>
-
-    </RelativeLayout>
     <FrameLayout
         android:id="@+id/fl_calc_sliders"
         android:layout_width="match_parent"
@@ -40,4 +18,47 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <FrameLayout
+            android:id="@+id/fl_calc_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                layout="@layout/calc_body"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/frame_layout_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/fl_calc_body"
+            android:layout_marginTop="-2dp">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatingActionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="end|bottom"
+                android:backgroundTint="@color/colorPrimary"
+                android:clickable="true"
+                app:backgroundTint="#00000000"
+                app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
+
+        </FrameLayout>
+
+    </RelativeLayout>
+
 </LinearLayout>
+

@@ -7,6 +7,7 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,13 +29,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 
 public class Calculator extends Fragment {
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
+    FloatingActionButton fab;
     private Button aperturePlusButton, shutterSpeedPlusButton, isoPlusButton, zoomPlusButton;
-    Toolbar customToolbar;
     Button apertureMinusButton, shutterSpeedMinusButton, isoMinusButton, zoomMinusButton;
     TextView apertureTV, shutterSpeedTV, isoTV, zoomTV;
     Button bodyButton, lensButton;
@@ -57,31 +60,29 @@ public class Calculator extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.fragment_calculator, container, false);
-        setHasOptionsMenu(true);
+        fab = rootView.findViewById(R.id.floatingActionButton);
+
         return rootView;
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
-        super.onCreateOptionsMenu(menu, inflater);
-        getActivity().getMenuInflater().inflate(R.menu.back_button, menu);
-
-    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         //hide notification bar
         View tempView = getActivity().getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+        int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE;
         tempView.setSystemUiVisibility(uiOptions);
 
-        customToolbar = view.findViewById(R.id.toolbar_top);
-        getActivity().setActionBar(customToolbar);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("myDebugTag", "onClickOfFAB:");
+                getActivity().onBackPressed();
+            }
+        });
         //force landscape
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        //set custom action bar
-        getActivity().setActionBar(customToolbar);
 
         //bind ui elements to java objects
         aperturePlusButton = view.findViewById(R.id.aperturePlusButton);
@@ -129,6 +130,11 @@ public class Calculator extends Fragment {
 
         updateUI();
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     public void updateUI()

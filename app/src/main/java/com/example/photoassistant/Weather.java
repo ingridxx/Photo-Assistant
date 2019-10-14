@@ -2,6 +2,8 @@ package com.example.photoassistant;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -73,12 +75,17 @@ public class Weather extends Fragment {
         // Check Internet Connectivity?
 
 
-        updateWeather();
 
         return view;
 
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        updateWeather();
+        super.onViewCreated(view, savedInstanceState);
+    }
 
     private void updateWeather(){
         new Thread(){
@@ -229,6 +236,7 @@ public class Weather extends Fragment {
     }
 
     private void getHourlyIcon(String icon, ImageView hourly) {
+        Log.d("DebugTag", "getHourlyIcon: " + icon);
         String iconUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png"; //small icons for forecast
         Picasso.get().load(iconUrl).into(hourly);
 
