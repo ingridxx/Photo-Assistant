@@ -23,6 +23,7 @@
         <activity android:name=".Calculator"
             android:configChanges="orientation"
             android:screenOrientation="landscape"/>
+        <uses-library android:name="org.apache.http.legacy" android:required="false" />
     </application>
 
 </manifest>
