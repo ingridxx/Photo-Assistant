@@ -1,6 +1,7 @@
 package com.example.photoassistant;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -70,7 +71,7 @@ public class Sun extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         final RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         Button getSunriseSunsetButton = (Button)getView().findViewById(R.id.getSunriseSunsetButton);
         final TextView sunTextView = (TextView)getView().findViewById(R.id.sunTextView);

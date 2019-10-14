@@ -1,8 +1,8 @@
 package com.example.photoassistant;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -98,50 +98,35 @@ public class MainActivity extends AppCompatActivity {
         Log.d("myDebugTag", "onBackPressed:");
 
 
-
-        // Check if that Fragment is currently visible
-        boolean myFragXwasVisible = false;
-        try{
-            Calculator myFragment = (Calculator) getSupportFragmentManager().findFragmentByTag("calc_fragment");
-            myFragXwasVisible = myFragment.isVisible();
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
-        }
-
-
         // Let the Activity pop the BackStack as normal
 
 
         // If it was your particular Fragment that was visible...
-        if (myFragXwasVisible) {
-         //   switch (prevFrag) {
-                Log.d("myDebugTag", "FragVisible");
+        if (currFrag == "calc") {
+            switch (prevFrag) {
+               case "weather":
+                   prevFrag = currFrag;
+                   currFrag = "weather";
+                   getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Weather()).commit();
+                   break;
+               case "sun":
+                   prevFrag = currFrag;
+                   currFrag = "sun";
+                   getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Sun()).commit();
+                   break;
+               case "body":
+                   prevFrag = currFrag;
+                   currFrag = "body";
+                   getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Body()).commit();
+                   break;
+               case "lens":
+                   prevFrag = currFrag;
+                   currFrag = "lens";
+                   getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Lens()).commit();
+                   break;
 
-//               case "weather":
-//                   prevFrag = currFrag;
-//                   currFrag = "weather";
-//                   getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Weather()).commit();
-//                   break;
-//               case "sun":
-//                   prevFrag = currFrag;
-//                   currFrag = "sun";
-//                   getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Sun()).commit();
-//                   break;
-//               case "body":
-//                   prevFrag = currFrag;
-//                   currFrag = "body";
-//                   getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Body()).commit();
-//                   break;
-//               case "lens":
-//                   prevFrag = currFrag;
-//                   currFrag = "lens";
-//                   getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Lens()).commit();
-//                   break;
-//
-//           }
-          //  }
+
+           }
             super.onBackPressed();
         }
     }

@@ -1,5 +1,6 @@
 package com.example.photoassistant;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -82,6 +83,7 @@ public class Weather extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         updateWeather();
         super.onViewCreated(view, savedInstanceState);
