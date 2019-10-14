@@ -60,10 +60,9 @@ public class Lens extends Fragment{
         arrayAdapterString.notifyDataSetChanged();
 
     }
+
+
     public static void addLensToArrays(ListItemLens lensToAdd){
-
-
-
 
         if(favourites.size() < 5 ){
             favourites.add(0,lensToAdd);
