@@ -28,7 +28,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
 import org.json.JSONArray;
@@ -126,11 +128,8 @@ public class Weather extends Fragment {
     }
     List<Location> locations = new ArrayList<Location>();
 
-    private int returnClosestIndex(JSONArray a, Location curr)
-    {
-        return 0;
-    }
     private void renderWeatherScreen(JSONObject currentTemp, JSONObject OWForecast, JSONObject PSI, JSONObject Humidity){
+        String locationString;
         try {
             GPS gps = new GPS(getContext());
             Location current = new Location("");
@@ -151,15 +150,17 @@ public class Weather extends Fragment {
             double shortestDistance = Double.MAX_VALUE; int targetIndex=0;
             for (int i=0;i<locations.size();i++) {
                 int R = 6371; // km
-                double x = (locations.get(i).getLongitude() - current.getLongitude()) * Math.cos((current.getLatitude() + locations.get(i).getLatitude()) / 2);
-                double y = (locations.get(i).getLatitude() - current.getLatitude());
+                double x = (Math.toRadians(locations.get(i).getLongitude()) - Math.toRadians(current.getLongitude())) * Math.cos((Math.toRadians(current.getLatitude()) + Math.toRadians(locations.get(i).getLatitude())) / 2);
+                double y = (Math.toRadians(locations.get(i).getLatitude()) - Math.toRadians(current.getLatitude()));
                 double distance = Math.sqrt(x * x + y * y) * R;
                 if(distance<shortestDistance)
                 {
                     shortestDistance = distance;
                     targetIndex = i;
+
                 }
             }
+            locationString =  metadata.getJSONObject(targetIndex).getString("name");
 
             int currentTempData = currentTemp.getJSONArray("items").getJSONObject(0).getJSONArray("readings").getJSONObject(targetIndex).getInt("value"); // index 1 for Clementi Road
             JSONArray forecastData = OWForecast.getJSONArray("list");
@@ -222,8 +223,30 @@ public class Weather extends Fragment {
             // Time values:
             setTimeStrings();
 
-            // Location (hardcoded for now)
-            location.setText("Singapore");
+            // Location
+
+            Map<String, String> simpleLocationNames = new HashMap<String, String>();
+            simpleLocationNames.put("Banyan Road", "Jurong Island");
+            simpleLocationNames.put("Clementi Road", "Clementi");
+            simpleLocationNames.put("East Coast Parkway", "East Coast");
+            simpleLocationNames.put("Kim Chuan Road", "Bartley");
+            simpleLocationNames.put("Nanyang Avenue", "Nanyang Avenue");
+            simpleLocationNames.put("Old Choa Chu Kang Road", "Tengah");
+            simpleLocationNames.put("Pulau Ubin", "Pulau Ubin");
+            simpleLocationNames.put("Sembawang Road", "Khatib");
+            simpleLocationNames.put("Sentosa", "Sentosa");
+            simpleLocationNames.put("Tuas South Avenue 3", "Tuas");
+            simpleLocationNames.put("West Coast Highway", "West Coast");
+            simpleLocationNames.put("Woodlands Avenue 9", "Woodlands");
+            simpleLocationNames.put("Woodlands Road", "Sungei Kadut");
+            if(simpleLocationNames.containsKey(locationString))
+            {
+                location.setText(simpleLocationNames.get(locationString));
+            }
+            else
+            {
+                location.setText(locationString);
+            }
 
         } catch (Exception e) {
             Log.e("MainActivity", "renderWeatherScreen(): One or more fields not found in the JSON data.");
