@@ -233,7 +233,7 @@ public class Weather extends Fragment {
             simpleLocationNames.put("Nanyang Avenue", "Nanyang Avenue");
             simpleLocationNames.put("Old Choa Chu Kang Road", "Tengah");
             simpleLocationNames.put("Pulau Ubin", "Pulau Ubin");
-            simpleLocationNames.put("Sembawang Road", "Khatib");
+            simpleLocationNames.put("Sembawang Road", "Yishun");
             simpleLocationNames.put("Sentosa", "Sentosa");
             simpleLocationNames.put("Tuas South Avenue 3", "Tuas");
             simpleLocationNames.put("West Coast Highway", "West Coast");
