@@ -110,8 +110,8 @@ public class Sun extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         final RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        Button getSunriseSunsetButton = (Button)getView().findViewById(R.id.getSunriseSunsetButton);
-        final TextView sunTextView = (TextView)getView().findViewById(R.id.sunTextView);
+        final TextView sunriseTextView = (TextView)getView().findViewById(R.id.sunriseTextView);
+        final TextView sunsetTextView = (TextView)getView().findViewById(R.id.sunsetTextView);
 
 
 
@@ -124,11 +124,8 @@ public class Sun extends Fragment {
             double longitude = gps.getLongitude();
             double latitude = gps.getLatitude();
 
-            Toast.makeText(getActivity().getApplicationContext(), "Longitude:" + Double.toString(longitude) + "\nLatitude:" + Double.toString(latitude), Toast.LENGTH_SHORT).show();
-            sunTextView.setText("Longitude:" + Double.toString(longitude) + "\nLatitude:" + Double.toString(latitude));
             url=url+"lat="+latitude+"&lng="+longitude+"&date=today";
             // Add the request to the RequestQueue.
-            sunTextView.append("\n"+url+"\n");
 
 
         } else {
@@ -143,23 +140,25 @@ public class Sun extends Fragment {
                         // Display the first 500 characters of the response string.
 
 
-                        String a="";
+                        String sunrise="";
+                        String sunset="";
                         try{
                             JSONObject reader = new JSONObject(response);
                             JSONObject extract = reader.getJSONObject("results");
-                            a+="astronomical sunrise"+extract.getString("astronomical_twilight_begin")+"\n";
-                            a+="nautical sunrise"+extract.getString("nautical_twilight_begin")+"\n";
-                            a+="civil sunrise"+extract.getString("civil_twilight_begin")+"\n";
-                            a+="sunrise"+extract.getString("sunrise")+"\n";
-                            a+="sunset"+extract.getString("sunset")+"\n";
-                            a+="civil sunset"+extract.getString("civil_twilight_end")+"\n";
-                            a+="nautical sunset"+extract.getString("nautical_twilight_end")+"\n";
-                            a+="astronomical sunset"+extract.getString("astronomical_twilight_end")+"\n";
+                            sunrise+="astronomical sunrise"+extract.getString("astronomical_twilight_begin")+"\n";
+                            sunrise+="nautical sunrise"+extract.getString("nautical_twilight_begin")+"\n";
+                            sunrise+="civil sunrise"+extract.getString("civil_twilight_begin")+"\n";
+                            sunrise+="sunrise"+extract.getString("sunrise")+"\n";
+                            sunset+="sunset"+extract.getString("sunset")+"\n";
+                            sunset+="civil sunset"+extract.getString("civil_twilight_end")+"\n";
+                            sunset+="nautical sunset"+extract.getString("nautical_twilight_end")+"\n";
+                            sunset+="astronomical sunset"+extract.getString("astronomical_twilight_end")+"\n";
 
                         }catch (JSONException e){
 
                         }finally {
-                            sunTextView.append("Response is: "+ a+"\n" );
+                            sunriseTextView.append("Sunrise: \n"+sunrise);
+                            sunsetTextView.append("Sunset: \n"+sunset);
                         }
 
 
@@ -168,7 +167,7 @@ public class Sun extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                sunTextView.append("That didn't work!");
+                sunriseTextView.append("That didn't work!");
             }
         });
         queue.add(stringRequest);
