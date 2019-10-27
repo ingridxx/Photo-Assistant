@@ -60,11 +60,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
@@ -88,7 +95,7 @@ public class Sun extends Fragment {
         //CIRCLE PARAMETERS
         int margin = 50,thickness = 75, topMargin = 25;
         //POSITION CIRCLE
-        ImageView whiteCircle = rootView.findViewById(R.id.whiteCircle);
+        ImageView blackCircle = rootView.findViewById(R.id.black_circle);
         ImageView sunCircle = rootView.findViewById(R.id.gradientRing);
         Display display = ((Activity)getContext()).getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics ();
@@ -101,7 +108,8 @@ public class Sun extends Fragment {
         layoutParams = new RelativeLayout.LayoutParams((int)(layoutParams.width-convertDpToPixel(thickness,getContext())), (int)(layoutParams.height-convertDpToPixel(thickness,getContext())));
         layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
         layoutParams.setMargins(0,(int)convertDpToPixel(topMargin+thickness/2.0f,getContext()),0,0);
-        whiteCircle.setLayoutParams(layoutParams);
+
+        blackCircle.setLayoutParams(layoutParams);
 
         return rootView;
 
@@ -112,7 +120,7 @@ public class Sun extends Fragment {
     public static float convertPixelsToDp(float px, Context context){
         return px / ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
-   static float asr, nsr, csr, sr, ss, css, nss, ass;
+    static double asr, nsr, csr, sr, ss, css, nss, ass;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -151,41 +159,44 @@ public class Sun extends Fragment {
                         String sunset="";
                         String temp="";
                         LocalTime lt;
+                        //long offSet = TimeUnit.HOURS.convert(TimeZone.getDefault().getRawOffset(), TimeUnit.MILLISECONDS);
 
                         try{
                             JSONObject reader = new JSONObject(response);
                             JSONObject extract = reader.getJSONObject("results");
                             temp=extract.getString("astronomical_twilight_begin");
-                           lt = time(temp);
-                           asr = lt.getHour()/8.0f*0.3333f;
+                            lt = time(temp);
+                            asr = lt.getHour()/24.0+lt.getMinute()/1440.0;
                             sunrise+="astronomical sunrise: "+lt+"\n";
                             temp=extract.getString("nautical_twilight_begin");
                             lt = time(temp);
-                            nsr=lt.getHour()/8.0f*0.3333f;
+                            nsr=lt.getHour()/24.0+lt.getMinute()/1440.0;
                             sunrise+="nautical sunrise: "+lt+"\n";
                             temp=extract.getString("civil_twilight_begin");
-                            lt=time(temp);
-                            csr=lt.getHour()/8.0f*0.3333f;
+                            lt = time(temp);
+                            csr=lt.getHour()/24.0+lt.getMinute()/1440.0;
                             sunrise+="civil sunrise: "+lt+"\n";
                             temp=extract.getString("sunrise");
-                            lt=time(temp);
-                            sr=lt.getHour()/8.0f*0.3333f;
+                            lt = time(temp);
+                            sr=lt.getHour()/24.0+lt.getMinute()/1440.0;
                             sunrise+="sunrise: "+lt+"\n";
                             temp=extract.getString("sunset");
-                            lt=time(temp);
-                            ss=lt.getHour()/8.0f*0.3333f;
+                            lt = time(temp);
+                            ss=lt.getHour()/24.0+lt.getMinute()/1440.0;
                             sunrise+="sunset: "+lt+"\n";
                             temp=extract.getString("civil_twilight_end");
-                            lt=time(temp);
-                            css=lt.getHour()/8.0f*0.3333f;
+                            lt = time(temp);
+                            css=lt.getHour()/24.0+lt.getMinute()/1440.0;
                             sunrise+="civil sunset: "+lt+"\n";
                             temp=extract.getString("nautical_twilight_end");
-                            lt=time(temp);
-                            nss=lt.getHour()/8.0f*0.3333f;
+                            lt = time(temp);
+                            nss=lt.getHour()/24.0+lt.getMinute()/1440.0;
                             sunrise+="nautical sunset: "+lt+"\n";
+
                             temp=extract.getString("astronomical_twilight_end");
-                            lt=time(temp);
-                            ass=lt.getHour()/8.0f*0.3333f;
+                            lt = time(temp);
+                            ass=lt.getHour()/24.0+lt.getMinute()/1440.0;
+                            //lt = time(temp);
                             sunrise+="astronomical sunset: "+lt+"\n";
                             sunset+="asr: "+asr+"\n nsr: "+nsr+"\n csr: "+ csr+"\n sr :"+ sr
                                     +"\n ss: "+ss+"\n css: "+css+"\n nss: "+nss+"\n ass: "+ass;
@@ -194,6 +205,41 @@ public class Sun extends Fragment {
                         }finally {
                             sunriseTextView.append("Sunrise: \n"+sunrise);
                             sunsetTextView.append("Sunset: \n"+sunset);
+
+
+
+                            final ShapeDrawable circle = new ShapeDrawable(new OvalShape());
+
+                            ShapeDrawable.ShaderFactory shaderFactory = new ShapeDrawable.ShaderFactory() {
+
+                                @Override
+                                public Shader resize(int width, int height) {
+                                    int mWidth= circle.getBounds().width()/2;
+                                    int mHeight= circle.getBounds().height()/2;
+
+                                    long offSet = TimeUnit.HOURS.convert(TimeZone.getDefault().getRawOffset(), TimeUnit.MILLISECONDS);
+                                    SweepGradient sweepGradient = new SweepGradient(mWidth,mHeight,
+                                            new int[]{
+                                                    0xFF40284A,
+                                                    0xFF73434B,
+                                                    0xFFB34D25,
+                                                    0xFFF07E07,
+                                                    0xFFF07E07,
+                                                    0xFFB34D25,
+                                                    0xFF73434B,
+                                                    0xFF40284A,
+                                                    0xFF40284A,
+                                            }, //substitute the correct colors for these
+                                            new float[]{
+                                                    (float)(1-ass), (float)(1-nss), (float)(1-css), (float)(1-ss), (float)(1-sr), (float)(1-csr), (float)(1-nsr), (float)(1-asr),1});
+                                                    //(float)asr, (float)nsr, (float)csr, (float)sr, (float)ss, (float)css,(float)nss,(float)ass,1});
+
+                                    return sweepGradient;
+                                }
+                            };circle.setShaderFactory(shaderFactory);
+                            ImageView iv = (ImageView)(getView().findViewById(R.id.gradientRing));
+                            iv.setBackground(circle);
+                            iv.setRotation(90);
                         }
 
 
@@ -208,57 +254,20 @@ public class Sun extends Fragment {
         queue.add(stringRequest);
 
 
-                final ShapeDrawable circle = new ShapeDrawable(new OvalShape());
-
-                ShapeDrawable.ShaderFactory shaderFactory = new ShapeDrawable.ShaderFactory() {
-
-                    @Override
-                    public Shader resize(int width, int height) {
-                        int mWidth= circle.getBounds().width()/2;
-                        int mHeight= circle.getBounds().height()/2;
-                        SweepGradient sweepGradient = new SweepGradient(mWidth,mHeight,
-                                new int[]{
-                                        0xFF40284A,
-                                        0xFF73434B,
-                                        0xFFB34D25,
-                                        0xFFF07E07,
-                                        0xFFF7DE55,
-                                        0xFF40284A,
-                                        0xFF73434B,
-                                        0xFFB34D25,
-                                        0xFF40284A,
-                                        }, //substitute the correct colors for these
-                                new float[]{
-                                        asr, nsr, csr, sr, ss,
-                                        css,nss,ass,1});
-
-// every 8 hrs = 0.3333
-
-                        return sweepGradient;
-                    }
-                };circle.setShaderFactory(shaderFactory);
-                ImageView iv = (ImageView)(getView().findViewById(R.id.gradientRing));
-                iv.setBackground(circle);
-
         //#40284A,#73434B,#B34D25,#F07E07,#F7DE55,#40284A,#73434B,#B34D25
 
 
 
             }
 
-    public static LocalTime time(String a){
-        String rawTime=a.substring(0,8);
-       if (Character.isWhitespace(rawTime.charAt(rawTime.length() - 1))){
-         rawTime  = rawTime.substring(0, 0) + "0" + rawTime.substring(0,7);
-        }
-        LocalTime t = LocalTime.parse(rawTime, DateTimeFormatter.ofPattern("HH:mm:ss"));
-        String pm = a.substring(a.length()-2);
-        if(pm.equals("PM")){
-            t=t.plusHours(12);
-        }
+    public static LocalTime time(String a) throws ParseException {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ss aa");
+        Date date = dateFormat.parse(a);
         int add= TimeZone.getDefault().getRawOffset();
-        t=t.plusHours(8);
-        return t;
+        date.setTime(date.getTime()+add);
+        //ZoneId.systemDefault();
+        return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()).toLocalTime();
     }
 
 

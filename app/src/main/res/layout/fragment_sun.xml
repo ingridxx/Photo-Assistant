@@ -18,10 +18,10 @@
         android:text="ring" />
 
     <ImageView
-        android:id="@+id/whiteCircle"
+        android:id="@+id/black_circle"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@drawable/white_circle"
+        android:background="@drawable/black_circle"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" />
 
