@@ -157,37 +157,38 @@ public class Sun extends Fragment {
                             JSONObject extract = reader.getJSONObject("results");
                             temp=extract.getString("astronomical_twilight_begin");
                            lt = time(temp);
-                           asr = lt.getHour()/8*(float)0.3333;
+                           asr = lt.getHour()/8.0f*0.3333f;
                             sunrise+="astronomical sunrise: "+lt+"\n";
                             temp=extract.getString("nautical_twilight_begin");
                             lt = time(temp);
-                            nsr=lt.getHour()/8*(float)0.3333;
+                            nsr=lt.getHour()/8.0f*0.3333f;
                             sunrise+="nautical sunrise: "+lt+"\n";
                             temp=extract.getString("civil_twilight_begin");
                             lt=time(temp);
-                            csr=lt.getHour()/8*(float)0.3333;
+                            csr=lt.getHour()/8.0f*0.3333f;
                             sunrise+="civil sunrise: "+lt+"\n";
                             temp=extract.getString("sunrise");
                             lt=time(temp);
-                            sr=lt.getHour()/8*(float)0.3333;
+                            sr=lt.getHour()/8.0f*0.3333f;
                             sunrise+="sunrise: "+lt+"\n";
                             temp=extract.getString("sunset");
                             lt=time(temp);
-                            ss=lt.getHour()/8*(float)0.3333;
-                            sunset+="sunset: "+lt+"\n";
+                            ss=lt.getHour()/8.0f*0.3333f;
+                            sunrise+="sunset: "+lt+"\n";
                             temp=extract.getString("civil_twilight_end");
                             lt=time(temp);
-                            css=lt.getHour()/8*(float)0.3333;
-                            sunset+="civil sunset: "+lt+"\n";
+                            css=lt.getHour()/8.0f*0.3333f;
+                            sunrise+="civil sunset: "+lt+"\n";
                             temp=extract.getString("nautical_twilight_end");
                             lt=time(temp);
-                            nss=lt.getHour()/8*(float)0.3333;
-                            sunset+="nautical sunset: "+lt+"\n";
+                            nss=lt.getHour()/8.0f*0.3333f;
+                            sunrise+="nautical sunset: "+lt+"\n";
                             temp=extract.getString("astronomical_twilight_end");
                             lt=time(temp);
-                            ass=lt.getHour()/8*(float)0.3333;
-                            sunset+="astronomical sunset: "+lt+"\n";
-
+                            ass=lt.getHour()/8.0f*0.3333f;
+                            sunrise+="astronomical sunset: "+lt+"\n";
+                            sunset+="asr: "+asr+"\n nsr: "+nsr+"\n csr: "+ csr+"\n sr :"+ sr
+                                    +"\n ss: "+ss+"\n css: "+css+"\n nss: "+nss+"\n ass: "+ass;
                         }catch (Exception e){
                             sunriseTextView.append(e.toString());
                         }finally {
