@@ -112,6 +112,7 @@ public class Sun extends Fragment {
     public static float convertPixelsToDp(float px, Context context){
         return px / ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
+   static float asr, nsr, csr, sr, ss, css, nss, ass;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -150,31 +151,42 @@ public class Sun extends Fragment {
                         String sunset="";
                         String temp="";
                         LocalTime lt;
+
                         try{
                             JSONObject reader = new JSONObject(response);
                             JSONObject extract = reader.getJSONObject("results");
-                            temp=extract.getString("astronomical_twilight_end");
+                            temp=extract.getString("astronomical_twilight_begin");
                            lt = time(temp);
+                           asr = lt.getHour()/8*(float)0.3333;
                             sunrise+="astronomical sunrise: "+lt+"\n";
                             temp=extract.getString("nautical_twilight_begin");
                             lt = time(temp);
+                            nsr=lt.getHour()/8*(float)0.3333;
                             sunrise+="nautical sunrise: "+lt+"\n";
                             temp=extract.getString("civil_twilight_begin");
                             lt=time(temp);
+                            csr=lt.getHour()/8*(float)0.3333;
                             sunrise+="civil sunrise: "+lt+"\n";
                             temp=extract.getString("sunrise");
                             lt=time(temp);
+                            sr=lt.getHour()/8*(float)0.3333;
                             sunrise+="sunrise: "+lt+"\n";
                             temp=extract.getString("sunset");
                             lt=time(temp);
+                            ss=lt.getHour()/8*(float)0.3333;
                             sunset+="sunset: "+lt+"\n";
                             temp=extract.getString("civil_twilight_end");
                             lt=time(temp);
+                            css=lt.getHour()/8*(float)0.3333;
                             sunset+="civil sunset: "+lt+"\n";
                             temp=extract.getString("nautical_twilight_end");
-                            sunset+="nautical sunset"+lt+"\n";
+                            lt=time(temp);
+                            nss=lt.getHour()/8*(float)0.3333;
+                            sunset+="nautical sunset: "+lt+"\n";
                             temp=extract.getString("astronomical_twilight_end");
-                            sunset+="astronomical sunset"+lt+"\n";
+                            lt=time(temp);
+                            ass=lt.getHour()/8*(float)0.3333;
+                            sunset+="astronomical sunset: "+lt+"\n";
 
                         }catch (Exception e){
                             sunriseTextView.append(e.toString());
@@ -205,7 +217,6 @@ public class Sun extends Fragment {
                         int mHeight= circle.getBounds().height()/2;
                         SweepGradient sweepGradient = new SweepGradient(mWidth,mHeight,
                                 new int[]{
-                                        0xFF1e5799,
                                         0xFF40284A,
                                         0xFF73434B,
                                         0xFFB34D25,
@@ -214,20 +225,14 @@ public class Sun extends Fragment {
                                         0xFF40284A,
                                         0xFF73434B,
                                         0xFFB34D25,
-                                        0xFFB34D25,
-                                        0xFF73434B,
                                         0xFF40284A,
-                                        0xFFF7DE55,
-                                        0xFFF07E07,
-                                        0xFFB34D25,
-                                        0xFF73434B,
-                                        0xFF40284A,
-                                        0xFF1e5799,}, //substitute the correct colors for these
+                                        }, //substitute the correct colors for these
                                 new float[]{
-                                        0, 0.050f, 0.10f, 0.15f, 0.20f,
-                                        0.25f,0.30f,0.35f,0.40f,0.45f,
-                                        0.50f,0.55f,0.60f,0.65f,0.70f,
-                                        0.75f,0.80f,1});
+                                        asr, nsr, csr, sr, ss,
+                                        css,nss,ass,1});
+
+// every 8 hrs = 0.3333
+
                         return sweepGradient;
                     }
                 };circle.setShaderFactory(shaderFactory);

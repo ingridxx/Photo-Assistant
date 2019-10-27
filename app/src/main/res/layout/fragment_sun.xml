@@ -21,7 +21,6 @@
         android:id="@+id/whiteCircle"
         android:layout_width="50dp"
         android:layout_height="50dp"
-
         android:background="@drawable/white_circle"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" />
@@ -32,8 +31,8 @@
         android:layout_height="198dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="126dp"
-        android:layout_marginEnd="42dp"
+        android:layout_marginTop="457dp"
+        android:layout_marginEnd="143dp"
         android:clickable="false" />
 
     <TextView
@@ -42,8 +41,8 @@
         android:layout_height="191dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="108dp"
-        android:layout_marginBottom="19dp"
+        android:layout_marginEnd="-21dp"
+        android:layout_marginBottom="21dp"
         android:clickable="false" />
 
 </RelativeLayout>
