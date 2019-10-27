@@ -55,10 +55,16 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Time;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.ArrayList;
+import java.util.TimeZone;
 
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
@@ -142,20 +148,36 @@ public class Sun extends Fragment {
 
                         String sunrise="";
                         String sunset="";
+                        String temp="";
+                        LocalTime lt;
                         try{
                             JSONObject reader = new JSONObject(response);
                             JSONObject extract = reader.getJSONObject("results");
-                            sunrise+="astronomical sunrise"+extract.getString("astronomical_twilight_begin")+"\n";
-                            sunrise+="nautical sunrise"+extract.getString("nautical_twilight_begin")+"\n";
-                            sunrise+="civil sunrise"+extract.getString("civil_twilight_begin")+"\n";
-                            sunrise+="sunrise"+extract.getString("sunrise")+"\n";
-                            sunset+="sunset"+extract.getString("sunset")+"\n";
-                            sunset+="civil sunset"+extract.getString("civil_twilight_end")+"\n";
-                            sunset+="nautical sunset"+extract.getString("nautical_twilight_end")+"\n";
-                            sunset+="astronomical sunset"+extract.getString("astronomical_twilight_end")+"\n";
+                            temp=extract.getString("astronomical_twilight_end");
+                           lt = time(temp);
+                            sunrise+="astronomical sunrise: "+lt+"\n";
+                            temp=extract.getString("nautical_twilight_begin");
+                            lt = time(temp);
+                            sunrise+="nautical sunrise: "+lt+"\n";
+                            temp=extract.getString("civil_twilight_begin");
+                            lt=time(temp);
+                            sunrise+="civil sunrise: "+lt+"\n";
+                            temp=extract.getString("sunrise");
+                            lt=time(temp);
+                            sunrise+="sunrise: "+lt+"\n";
+                            temp=extract.getString("sunset");
+                            lt=time(temp);
+                            sunset+="sunset: "+lt+"\n";
+                            temp=extract.getString("civil_twilight_end");
+                            lt=time(temp);
+                            sunset+="civil sunset: "+lt+"\n";
+                            temp=extract.getString("nautical_twilight_end");
+                            sunset+="nautical sunset"+lt+"\n";
+                            temp=extract.getString("astronomical_twilight_end");
+                            sunset+="astronomical sunset"+lt+"\n";
 
-                        }catch (JSONException e){
-
+                        }catch (Exception e){
+                            sunriseTextView.append(e.toString());
                         }finally {
                             sunriseTextView.append("Sunrise: \n"+sunrise);
                             sunsetTextView.append("Sunset: \n"+sunset);
@@ -184,22 +206,55 @@ public class Sun extends Fragment {
                         SweepGradient sweepGradient = new SweepGradient(mWidth,mHeight,
                                 new int[]{
                                         0xFF1e5799,
-                                        0xFFeeeeee,
-                                        0xFF111111,
-                                        0xFFeeeeee,}, //substitute the correct colors for these
+                                        0xFF40284A,
+                                        0xFF73434B,
+                                        0xFFB34D25,
+                                        0xFFF07E07,
+                                        0xFFF7DE55,
+                                        0xFF40284A,
+                                        0xFF73434B,
+                                        0xFFB34D25,
+                                        0xFFB34D25,
+                                        0xFF73434B,
+                                        0xFF40284A,
+                                        0xFFF7DE55,
+                                        0xFFF07E07,
+                                        0xFFB34D25,
+                                        0xFF73434B,
+                                        0xFF40284A,
+                                        0xFF1e5799,}, //substitute the correct colors for these
                                 new float[]{
-                                        0, 0.40f, 0.60f, 1});
+                                        0, 0.050f, 0.10f, 0.15f, 0.20f,
+                                        0.25f,0.30f,0.35f,0.40f,0.45f,
+                                        0.50f,0.55f,0.60f,0.65f,0.70f,
+                                        0.75f,0.80f,1});
                         return sweepGradient;
                     }
                 };circle.setShaderFactory(shaderFactory);
                 ImageView iv = (ImageView)(getView().findViewById(R.id.gradientRing));
                 iv.setBackground(circle);
 
-
+        //#40284A,#73434B,#B34D25,#F07E07,#F7DE55,#40284A,#73434B,#B34D25
 
 
 
             }
+
+    public static LocalTime time(String a){
+        String rawTime=a.substring(0,8);
+       if (Character.isWhitespace(rawTime.charAt(rawTime.length() - 1))){
+         rawTime  = rawTime.substring(0, 0) + "0" + rawTime.substring(0,7);
+        }
+        LocalTime t = LocalTime.parse(rawTime, DateTimeFormatter.ofPattern("HH:mm:ss"));
+        String pm = a.substring(a.length()-2);
+        if(pm.equals("PM")){
+            t=t.plusHours(12);
+        }
+        int add= TimeZone.getDefault().getRawOffset();
+        t=t.plusHours(8);
+        return t;
+    }
+
 
 }
 
