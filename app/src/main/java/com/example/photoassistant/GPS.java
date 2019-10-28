@@ -101,16 +101,16 @@ public class GPS extends Service implements LocationListener {
     }
 
     public double getLongitude() {
-        if (loc != null) {
-            longitude = loc.getLongitude();
+            if (loc != null) {
+                longitude = loc.getLongitude();
+            }
+            return longitude;
         }
-        return longitude;
-    }
 
-    public double getLatitude() {
-        if (loc != null) {
-            latitude = loc.getLatitude();
-        }
+        public double getLatitude() {
+            if (loc != null) {
+                latitude = loc.getLatitude();
+            }
         return latitude;
     }
 
