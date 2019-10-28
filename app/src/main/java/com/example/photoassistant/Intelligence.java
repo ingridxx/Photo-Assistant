@@ -2,9 +2,11 @@ package com.example.photoassistant;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,7 +96,7 @@ public class Intelligence{
 
     }
 
-    public static double CoCCalculator()
+    private static double CoCCalculator()
     {
         //CoC (mm) = viewing distance (cm) / desired final-image resolution (lp/mm) for a 25 cm viewing distance / enlargement / 25
         //assuming worst case 60cm viewing distance on a 27inch 4k monitor

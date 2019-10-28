@@ -3,43 +3,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
     tools:context=".Sun">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/sunTextView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="false"
-        android:text="sun" />
-
-    <Button
-        android:id="@+id/getSunriseSunsetButton"
-        android:layout_width="109dp"
-        android:layout_height="37dp"
-        android:layout_above="@+id/gradientRing"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="127dp"
-        android:layout_marginBottom="77dp"
-        android:text="GET LOCATION" />
-
-    <ImageView android:layout_height="313dp"
-        android:layout_width="275dp"
-        android:text="ring" android:clickable="false"
-        android:id="@+id/gradientRing"
-        android:layout_marginEnd="66dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="178dp"
-        android:layout_alignParentBottom="true"
-        />
 
     <ImageView
-        android:layout_width="135dp"
-        android:layout_height="126dp"
+        android:id="@+id/gradientRing"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+        android:clickable="false"
+        android:text="ring" />
+
+    <ImageView
+        android:id="@+id/black_circle"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/black_circle"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
+
+    <TextView
+        android:id="@+id/sunriseTextView"
+        android:layout_width="255dp"
+        android:layout_height="198dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="340dp"
+        android:layout_marginEnd="166dp"
+        android:clickable="false" />
+
+    <TextView
+        android:id="@+id/sunsetTextView"
+        android:layout_width="244dp"
+        android:layout_height="191dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="139dp"
-        android:layout_marginBottom="264dp"
-        android:background="@drawable/white_circle" />
+        android:layout_marginEnd="-21dp"
+        android:layout_marginBottom="21dp"
+        android:clickable="false" />
 
 </RelativeLayout>
