@@ -22,6 +22,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id= "@+id/rightSideLayout"
         android:layout_weight="1">
 
         <FrameLayout
@@ -55,8 +56,8 @@
                 android:clickable="true"
                 app:backgroundTint="#00000000"
                 app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
-
         </FrameLayout>
+
 
     </RelativeLayout>
 

@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!--<?xml version="1.0" encoding="utf-8"?>-->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     android:orientation="vertical"
     android:padding="0dp"
     android:paddingBottom="20dp"
@@ -25,15 +26,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/DesiredDisanceTV" />
 
-    <TextView
-        android:id="@+id/evTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="EV"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lensSelectButton" />
-
     <Button
         android:id="@+id/lensSelectButton"
         android:layout_width="fill_parent"
@@ -47,69 +39,77 @@
         tools:layout_editor_absoluteX="9dp"
         tools:layout_editor_absoluteY="112dp" />
 
-    <TextView
-        android:id="@+id/DesiredDistLabel"
+    <Button
+        android:id="@+id/buttonwww"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/NearDistanceLabel"
-        android:text="Desired Distance"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/NearDistanceLabel" />
-
-    <TextView
-        android:id="@+id/NearDistanceLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="Near Distance"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/FarDistanceLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/DesiredDistLabel"
-        android:text="Far Distance"
-        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toTopOf="@+id/NearDistanceLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/textureview" />
+
+    <TextView
+        android:id="@+id/evTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="EV"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lensSelectButton" />
 
     <TextView
         android:id="@+id/NearDistanceTV"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_height="30dp"
+        android:gravity="center"
         android:text="1"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        android:textAlignment="gravity"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NearDistanceLabel" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteY="10dp" />
+    <!--        app:layout_constraintStart_toStartOf="@+id/guideline"-->
+
 
     <TextView
         android:id="@+id/DesiredDisanceTV"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
+        android:gravity="center_vertical"
         android:text="2"
+        android:textAlignment="gravity"
         app:layout_constraintBottom_toBottomOf="@+id/NearDistanceTV"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="2" />
 
     <TextView
         android:id="@+id/FarDistanceTV"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
+        android:gravity="center_vertical"
         android:text="3"
+        android:textAlignment="gravity"
         app:layout_constraintBottom_toBottomOf="@+id/DesiredDisanceTV"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="3" />
+
+    <TextureView
+        android:id="@+id/textureview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        app:layout_constraintDimensionRatio="3:2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lensSelectButton" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="left" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -124,5 +124,4 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.6689815" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
