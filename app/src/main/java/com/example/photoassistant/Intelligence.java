@@ -75,10 +75,14 @@ public class Intelligence{
         currentFocalLengthRange.add(lens.getMaxZoom());
         }
 
-        public static double getFocalLength(){return focalLength;}
-        public static double getAperture(){return aperture;}
-        public static double getShutterSpeed(){return shutterSpeed;}
-        public static int getISO(){return isoRange[isoStep];}
+        public static double getPreviewSS(){return previewSS;}
+        public static double getPreviewISO(){return previewISO;}
+        public static void setPreviewSS(double ss){previewSS = ss;}
+        public static void setPreviewISO(double iso){previewISO = iso;}
+        public static double getFocalLength(){focalLength = currentFocalLengthRange.get(focalLengthStep); return focalLength;}
+        public static double getAperture(){aperture = currentApertureRange.get(apertureStep); return aperture;}
+        public static double getShutterSpeed(){shutterSpeed = currentshutterSpeedRange.get(shutterSpeedStep); return shutterSpeed;}
+        public static int getISO(){ISO = currentIsoRange.get(isoStep); return ISO;}
         public static double getDistnace(){return distance;}
         public static String getFocalLengthString() { format.setDecimalSeparatorAlwaysShown(false); return format.format(getFocalLength()); }
         public static String getApertureString() { format.setDecimalSeparatorAlwaysShown(false); return format.format(getAperture()); }
@@ -127,7 +131,9 @@ public class Intelligence{
         return Current.getDistnace()*(HyperfocalCalculator()-Current.getFocalLength())/(HyperfocalCalculator()+Current.getDistnace());
     }
     public static double ExposureCalculator(){
-        return (1/0.44)*Math.log10((1.0/Current.getAperture())*(1.0/Current.getAperture())*Current.getShutterSpeed()*Current.getISO())/Math.log(2);
+        return (1/0.44)*Math.log10((1.0/Current.getAperture())*(1.0/Current.getAperture())*Current.getShutterSpeed()*Current.getISO())/Math.log(2)
+        //return 0
+        -(1/0.44)*Math.log10(Current.getPreviewSS()*Current.getPreviewISO())/Math.log(2)+30;
     }
 
 

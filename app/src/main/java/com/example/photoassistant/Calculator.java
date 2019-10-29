@@ -117,7 +117,7 @@ public class Calculator extends Fragment {
         View rootView =  inflater.inflate(R.layout.fragment_calculator, container, false);
         fab = rootView.findViewById(R.id.floatingActionButton);
         mTextureView = (TextureView) rootView.findViewById(R.id.textureview);
-        button = rootView.findViewById(R.id.buttonwww);
+
         //createCameraPreviewSession();
         final Handler handler=new Handler();
         handler.post(new Runnable(){
@@ -125,10 +125,15 @@ public class Calculator extends Fragment {
             public void run() {
                 if(mCaptureResult!=null) {
 
-                    button.setText("ISO:"+mCaptureResult.get(TotalCaptureResult.SENSOR_SENSITIVITY).toString()+
-                            " SPD:"+mCaptureResult.get(TotalCaptureResult.SENSOR_EXPOSURE_TIME)+
-                            " DIST:"+0.61/mCaptureResult.get(TotalCaptureResult.LENS_FOCUS_DISTANCE)+
-                            " MM:"+mCaptureResult.get(TotalCaptureResult.LENS_FOCAL_LENGTH));
+//                    lensButton.setText("ISO:"+mCaptureResult.get(TotalCaptureResult.SENSOR_SENSITIVITY).toString()+
+//                            " SPD:"+mCaptureResult.get(TotalCaptureResult.SENSOR_EXPOSURE_TIME)+
+//                            " DIST:"+0.61/mCaptureResult.get(TotalCaptureResult.LENS_FOCUS_DISTANCE)+
+//                            " MM:"+mCaptureResult.get(TotalCaptureResult.LENS_FOCAL_LENGTH));
+                    Intelligence.Current.setPreviewSS(mCaptureResult.get(TotalCaptureResult.SENSOR_EXPOSURE_TIME));
+                    Intelligence.Current.setPreviewISO(mCaptureResult.get(TotalCaptureResult.SENSOR_SENSITIVITY));
+//                    lensButton.setText(String.valueOf(Intelligence.ExposureCalculator())+"ISO:"+mCaptureResult.get(TotalCaptureResult.SENSOR_SENSITIVITY).toString()+
+//                            " SPD:"+mCaptureResult.get(TotalCaptureResult.SENSOR_EXPOSURE_TIME));
+                    updateUI();
                 }
                 handler.postDelayed(this,250); // set time here to refresh textView
             }
@@ -213,13 +218,15 @@ public class Calculator extends Fragment {
 
     public void updateUI()
     {
+        //Intelligence.Current.setBody(Intelligence.Current.getBody());
+        //Intelligence.Current.setLens(Intelligence.Current.getLens());
         apertureTV.setText(Intelligence.Current.getApertureString());
         shutterSpeedTV.setText(Intelligence.Current.getShutterSpeedString());
         zoomTV.setText(Intelligence.Current.getFocalLengthString());
         isoTV.setText(Intelligence.Current.getISOString());
         bodyButton.setText(Intelligence.Current.getBody().getPartName());
-        lensButton.setText(Intelligence.Current.getLens().getPartName());
-        evTextView.setText(Double.toString(Intelligence.ExposureCalculator()));
+        lensButton.setText(Intelligence.Current.getLens().getSimpleName());
+        evTextView.setText(String.format("%.02f", Intelligence.ExposureCalculator()));
     }
 
 

@@ -14,47 +14,15 @@
     android:paddingStart="0dp"
     android:paddingTop="0dp">
 
-
-    <Button
-        android:id="@+id/cameraSelectButton"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="0dp"
-        android:padding="0dp"
-        android:text="Camera"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DesiredDisanceTV" />
-
-    <Button
-        android:id="@+id/lensSelectButton"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="0dp"
-        android:padding="0dp"
-        android:text="Lens"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cameraSelectButton"
-        tools:layout_editor_absoluteX="9dp"
-        tools:layout_editor_absoluteY="112dp" />
-
-    <Button
-        android:id="@+id/buttonwww"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textureview" />
-
-    <TextView
-        android:id="@+id/evTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="EV"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lensSelectButton" />
+<!--    <TextView-->
+<!--        android:id="@+id/evTextView"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="EV"-->
+<!--        android:textAlignment="center"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/equipmentRelativeLayout" />-->
 
     <TextView
         android:id="@+id/NearDistanceTV"
@@ -103,7 +71,48 @@
         app:layout_constraintDimensionRatio="3:2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lensSelectButton" />
+        app:layout_constraintTop_toBottomOf="@id/equipmentRelativeLayout" />
+
+    <TextView
+        android:id="@+id/evTextView"
+        android:layout_width="55dp"
+        android:layout_height="wrap_content"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:textAlignment="gravity"
+        app:layout_constraintBottom_toTopOf="@id/textureview"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/FarDistanceTV" />
+    <LinearLayout
+        android:id="@+id/equipmentRelativeLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/evTextView"
+        app:layout_constraintTop_toBottomOf="@+id/FarDistanceTV"
+        android:weightSum="4"
+        >
+
+        <Button
+            android:id="@+id/cameraSelectButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="0dp"
+            android:layout_weight="2"
+            android:minHeight="0dp"
+            android:padding="0dp"
+            android:text="Camera" />
+
+        <Button
+            android:id="@+id/lensSelectButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="0dp"
+            android:layout_weight="2"
+            android:minHeight="0dp"
+            android:padding="0dp"
+            android:text="Lens" />
+    </LinearLayout>
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier2"
@@ -124,4 +133,5 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.6689815" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

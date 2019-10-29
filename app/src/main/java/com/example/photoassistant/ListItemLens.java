@@ -26,6 +26,49 @@ public class ListItemLens {
     public String getPartName() {
         return partName;
     }
+    public String getSimpleName() {
+        String finalString = "";
+        if(apertureMaxWide==apertureMaxTele)
+        {
+            finalString = finalString+apertureMaxWide;
+        }
+        else
+        {
+            finalString = apertureMaxWide+"-"+apertureMaxTele;
+        }
+        finalString = finalString+"/";
+        double minZoomDisplay, maxZoomDisplay;
+        if(Math.ceil(minZoom) == Math.floor(minZoom))
+        {
+
+        }
+        String minZoomStr, maxZoomStr;
+        if(Math.ceil(minZoom) == Math.floor(minZoom))
+        {
+            minZoomStr = String.valueOf((int)minZoom);
+        }
+        else
+        {
+            minZoomStr =  String.format( "%.1f", minZoom );
+
+        }if(Math.ceil(maxZoom) == Math.floor(maxZoom))
+        {
+            maxZoomStr = String.valueOf((int)maxZoom);
+        }
+        else
+        {
+            maxZoomStr =  String.format( "%.1f", maxZoom );
+        }
+        if(minZoomStr.equals(maxZoomStr))
+        {
+                finalString = finalString+minZoomStr;
+        }
+        else
+        {
+            finalString = minZoomStr+"-"+maxZoomStr;
+        }
+        return finalString;
+    }
 
     public double getMinZoom() {
         return minZoom;
