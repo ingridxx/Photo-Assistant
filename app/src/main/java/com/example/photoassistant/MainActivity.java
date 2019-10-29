@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         ProcessBodyData();
         ProcessCombinationData();
 
-        if(fragmentStack.empty()) fragmentStack.push(new Sun());
+        if(fragmentStack.empty()) {fragmentStack.push(new Sun());getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Sun()).commit();}
         //getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Sun()).commit();
 
     }
@@ -127,54 +127,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Log.d("myDebugTag", "onBackPressed:");
-
-
-        // Let the Activity pop the BackStack as normal
-
-
-        // If it was your particular Fragment that was visible...
-        if (true)//(fragmentStack.size()>=1)//(currFrag == "calc")
-        {
-            fragmentStack.pop();
-            if(!fragmentStack.empty())getSupportFragmentManager().beginTransaction().replace(R.id.fl,(Fragment)fragmentStack.peek()).commit();
-            else System.exit(1);
-//            switch (prevFrag) {
-//               case "weather":
-//                   prevFrag = currFrag;
-//                   currFrag = "weather";
-//                   getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Weather()).commit();
-//                   break;
-//               case "sun":
-//                   prevFrag = currFrag;
-//                   currFrag = "sun";
-//                   getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Sun()).commit();
-//                   break;
-//               case "calc":
-//                   prevFrag = currFrag;
-//                   currFrag = "calc";
-//                   getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Calculator()).commit();
-//                   break;
-//               case "body":
-//                   prevFrag = currFrag;
-//                   currFrag = "body";
-//                   getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Body()).commit();
-//                   break;
-//               case "lens":
-//                   prevFrag = currFrag;
-//                   currFrag = "lens";
-//                   getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Lens()).commit();
-//                   break;
-//           }
-            //View tempView = this.getWindow().getDecorView();
-           // int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE;
-            //tempView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-
-        }
-        else
-        {
-            System.exit(1);
-        }
-
+        fragmentStack.pop();
+        if(!fragmentStack.empty())getSupportFragmentManager().beginTransaction().replace(R.id.fl,(Fragment)fragmentStack.peek()).commit();
+        else System.exit(1);
     }
 
     private class ProcessDataFromArrays extends AsyncTask <ArrayList<ListItemLens>,Integer,ArrayList<ListItemLens>>{

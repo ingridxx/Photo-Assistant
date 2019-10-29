@@ -90,7 +90,7 @@ public class Sun extends Fragment {
                              Bundle savedInstanceState) {
 
         setHasOptionsMenu(true);
-        View rootView = inflater.inflate(R.layout.fragment_sun, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_sun, container, false);
 
         //CIRCLE PARAMETERS
         int margin = 50,thickness = 75, topMargin = 25;
@@ -111,25 +111,13 @@ public class Sun extends Fragment {
 
         blackCircle.setLayoutParams(layoutParams);
 
-        return rootView;
 
-}
-    public static float convertDpToPixel(float dp, Context context){
-        return dp * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
-    }
-    public static float convertPixelsToDp(float px, Context context){
-        return px / ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
-    }
-    static double asr, nsr, csr, sr, ss, css, nss, ass;
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        final TextView sunriseTextView = rootView.findViewById(R.id.sunriseTextView);
+        final TextView sunsetTextView = rootView.findViewById(R.id.sunsetTextView);
+
+
+
         final RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        final TextView sunriseTextView = (TextView)getView().findViewById(R.id.sunriseTextView);
-        final TextView sunsetTextView = (TextView)getView().findViewById(R.id.sunsetTextView);
-
-
-
         //String url="https://api.sunrise-sunset.org/json?lat=37.421&lng=-122.084&date=today";
         String url="https://api.sunrise-sunset.org/json?";
         GPS gps=new GPS(getActivity().getApplicationContext());
@@ -232,12 +220,12 @@ public class Sun extends Fragment {
                                             }, //substitute the correct colors for these
                                             new float[]{
                                                     (float)(1-ass), (float)(1-nss), (float)(1-css), (float)(1-ss), (float)(1-sr), (float)(1-csr), (float)(1-nsr), (float)(1-asr),1});
-                                                    //(float)asr, (float)nsr, (float)csr, (float)sr, (float)ss, (float)css,(float)nss,(float)ass,1});
+                                    //(float)asr, (float)nsr, (float)csr, (float)sr, (float)ss, (float)css,(float)nss,(float)ass,1});
 
                                     return sweepGradient;
                                 }
                             };circle.setShaderFactory(shaderFactory);
-                            ImageView iv = (ImageView)(getView().findViewById(R.id.gradientRing));
+                            ImageView iv = (ImageView)(rootView.findViewById(R.id.gradientRing));
                             iv.setBackground(circle);
                             iv.setRotation(90);
                         }
@@ -252,6 +240,21 @@ public class Sun extends Fragment {
             }
         });
         queue.add(stringRequest);
+        return rootView;
+
+}
+    public static float convertDpToPixel(float dp, Context context){
+        return dp * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+    }
+    public static float convertPixelsToDp(float px, Context context){
+        return px / ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+    }
+    static double asr, nsr, csr, sr, ss, css, nss, ass;
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
 
 
         //#40284A,#73434B,#B34D25,#F07E07,#F7DE55,#40284A,#73434B,#B34D25

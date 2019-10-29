@@ -24,6 +24,81 @@
 <!--        app:layout_constraintStart_toStartOf="parent"-->
 <!--        app:layout_constraintTop_toBottomOf="@id/equipmentRelativeLayout" />-->
 
+    <TextureView
+        android:id="@+id/textureview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="3:2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/frame_layout_1"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:paddingLeft="5dp"
+        app:layout_constraintBottom_toTopOf="@id/textureview"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_vertical|center_horizontal"
+            android:backgroundTint="@color/colorPrimary"
+            android:clickable="true"
+            app:backgroundTint="#00000000"
+            app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/evTextView"
+        android:layout_width="55dp"
+        android:layout_height="30dp"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:textAlignment="gravity"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/textureview"
+        app:layout_constraintEnd_toStartOf="@id/frame_layout_1" />
+    <LinearLayout
+        android:id="@+id/equipmentRelativeLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/evTextView"
+        app:layout_constraintBottom_toTopOf="@id/textureview"
+        android:weightSum="4"
+        >
+
+        <Button
+            android:id="@+id/cameraSelectButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:layout_weight="2"
+            android:background="?attr/selectableItemBackground"
+            android:minHeight="30dp"
+            android:padding="0dp"
+            android:text="Camera"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/lensSelectButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:layout_weight="2"
+            android:background="?attr/selectableItemBackground"
+            android:minHeight="30dp"
+            android:padding="0dp"
+            android:text="Lens"
+            android:textSize="18sp" />
+
+    </LinearLayout>
     <TextView
         android:id="@+id/NearDistanceTV"
         android:layout_width="wrap_content"
@@ -34,6 +109,7 @@
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/equipmentRelativeLayout"
         tools:layout_editor_absoluteY="10dp" />
     <!--        app:layout_constraintStart_toStartOf="@+id/guideline"-->
 
@@ -45,10 +121,10 @@
         android:gravity="center_vertical"
         android:text="2"
         android:textAlignment="gravity"
-        app:layout_constraintBottom_toBottomOf="@+id/NearDistanceTV"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintEnd_toStartOf="@+id/FarDistanceTV"
+        app:layout_constraintStart_toEndOf="@+id/NearDistanceTV"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/equipmentRelativeLayout"
         tools:text="2" />
 
     <TextView
@@ -58,64 +134,13 @@
         android:gravity="center_vertical"
         android:text="3"
         android:textAlignment="gravity"
-        app:layout_constraintBottom_toBottomOf="@+id/DesiredDisanceTV"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/equipmentRelativeLayout"
+        app:layout_constraintEnd_toStartOf="@id/frame_layout_1"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="3" />
 
-    <TextureView
-        android:id="@+id/textureview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        app:layout_constraintDimensionRatio="3:2"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/equipmentRelativeLayout" />
 
-    <TextView
-        android:id="@+id/evTextView"
-        android:layout_width="55dp"
-        android:layout_height="wrap_content"
-        android:gravity="center|center_horizontal|center_vertical"
-        android:textAlignment="gravity"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@id/textureview"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/FarDistanceTV" />
-    <LinearLayout
-        android:id="@+id/equipmentRelativeLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/evTextView"
-        app:layout_constraintTop_toBottomOf="@+id/FarDistanceTV"
-        android:weightSum="4"
-        >
 
-        <Button
-            android:id="@+id/cameraSelectButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="0dp"
-            android:layout_weight="2"
-            android:padding="0dp"
-            android:text="Camera"
-            android:textSize="18sp"
-            android:background="?attr/selectableItemBackground" />
-
-        <Button
-            android:id="@+id/lensSelectButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:layout_margin="0dp"
-            android:padding="0dp"
-            android:text="Lens"
-            android:textSize="18sp"
-            android:background="?attr/selectableItemBackground"/>
-    </LinearLayout>
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier2"

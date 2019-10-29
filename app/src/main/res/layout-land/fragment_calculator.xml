@@ -37,26 +37,7 @@
 
         </FrameLayout>
 
-        <FrameLayout
-            android:id="@+id/frame_layout_1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/fl_calc_body"
-            android:layout_marginTop="-2dp">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/floatingActionButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_gravity="end|bottom"
-                android:backgroundTint="@color/colorPrimary"
-                android:clickable="true"
-                app:backgroundTint="#00000000"
-                app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
-        </FrameLayout>
 
 
     </RelativeLayout>
