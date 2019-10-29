@@ -86,7 +86,7 @@ public class Intelligence{
         public static double getDistnace(){return distance;}
         public static String getFocalLengthString() { format.setDecimalSeparatorAlwaysShown(false); return format.format(getFocalLength()); }
         public static String getApertureString() { format.setDecimalSeparatorAlwaysShown(false); return format.format(getAperture()); }
-        public static String getShutterSpeedString() { format.setDecimalSeparatorAlwaysShown(false); format.setGroupingUsed(false);if(getShutterSpeed()>=1) return format.format(getShutterSpeed());else return "1/"+format.format(1/getShutterSpeed());}
+        public static String getShutterSpeedString() { format.setDecimalSeparatorAlwaysShown(false); format.setGroupingUsed(false);if(getShutterSpeed()>=1) return format.format(getShutterSpeed())+"\"";else return format.format(1/getShutterSpeed());}
         public static String getISOString() { return Integer.toString(getISO());}
 
         public static String focalLengthPlus(){focalLengthStep++;if(focalLengthStep>currentFocalLengthRange.size()-1){focalLengthStep = currentFocalLengthRange.size()-1;}focalLength = currentFocalLengthRange.get(focalLengthStep); return getFocalLengthString();}

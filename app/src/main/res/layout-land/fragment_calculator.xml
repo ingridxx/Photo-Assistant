@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="2"
+    android:layout_weight="10"
     android:baselineAligned="false"
     android:orientation="horizontal">
 
@@ -11,7 +11,7 @@
         android:id="@+id/fl_calc_sliders"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_weight="6">
 
         <include
             layout="@layout/calc_sliders"
@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id= "@+id/rightSideLayout"
-        android:layout_weight="1">
+        android:layout_weight="4">
 
         <FrameLayout
             android:id="@+id/fl_calc_body"
