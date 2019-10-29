@@ -91,23 +91,21 @@ public class Intelligence{
         public static String getISOString() { return Integer.toString(getISO());}
 
         public static String focalLengthPlus(){focalLengthStep++;if(focalLengthStep>currentFocalLengthRange.size()-1){focalLengthStep = currentFocalLengthRange.size()-1;}focalLength = currentFocalLengthRange.get(focalLengthStep); return getFocalLengthString();}
-        public static String aperturePlus(){apertureStep++; if(apertureStep>currentApertureRange.size()-1){apertureStep = currentApertureRange.size()-1;}aperture = currentApertureRange.get(apertureStep); return getApertureString();}
+        public static String aperturePlus(){apertureStep++; if(apertureStep>currentApertureRange.size()-1){apertureStep = currentApertureRange.size()-1;}aperture = currentApertureRange.get(apertureStep); focusRefresh(); return getApertureString();}
         public static String shutterSpeedPlus(){shutterSpeedStep++; if(shutterSpeedStep>currentshutterSpeedRange.size()-1){shutterSpeedStep = currentshutterSpeedRange.size()-1;}shutterSpeed = currentshutterSpeedRange.get(shutterSpeedStep);return getShutterSpeedString();}
         public static String isoPlus(){isoStep++; if(isoStep>currentIsoRange.size()-1){isoStep = currentIsoRange.size()-1;}ISO = currentIsoRange.get(isoStep);return getISOString();}
         public static String focalLengthMinus(){focalLengthStep--; if(focalLengthStep<1){focalLengthStep = 0;}focalLength = currentFocalLengthRange.get(focalLengthStep);return getFocalLengthString();}
-        public static String apertureMinus(){apertureStep--; if(apertureStep<1){apertureStep = 0;}aperture = currentApertureRange.get(apertureStep); return getApertureString();}
+        public static String apertureMinus(){apertureStep--; if(apertureStep<1){apertureStep = 0;}aperture = currentApertureRange.get(apertureStep); focusRefresh(); return getApertureString();}
         public static String shutterSpeedMinus(){shutterSpeedStep--; if(shutterSpeedStep<1){shutterSpeedStep = 0;}shutterSpeed = currentshutterSpeedRange.get(shutterSpeedStep);return getShutterSpeedString();}
         public static String isoMinus(){isoStep--;if(isoStep<1){isoStep = 0;}ISO = currentIsoRange.get(isoStep);return getISOString();}
-        public static String focusPlus(){distance = distance * 1.5;
-        if(distance>HyperfocalCalculator()){distance=HyperfocalCalculator();}
-        if(distance<lens.getMinFocusDistance()){distance=lens.getMinFocusDistance();}
-        dofNear = DofNearCalculator();dofFar = DofFarCalculator();
-        return String.valueOf(distance);
-        } public static String focusMinus(){distance = distance / 1.5;
-        if(distance>HyperfocalCalculator()){distance=HyperfocalCalculator();}
-        if(distance<lens.getMinFocusDistance()){distance=lens.getMinFocusDistance();}
-        dofNear = DofNearCalculator();dofFar = DofFarCalculator();
-        return String.valueOf(distance);
+        public static String focusPlus(){distance = distance * 1.25; if(distance>HyperfocalCalculator()){distance=HyperfocalCalculator();}return focusRefresh();}
+        public static String focusMinus(){distance = distance / 1.25;return focusRefresh(); }
+        public static String focusRefresh()
+        {
+            if(distance>HyperfocalCalculator()){distance=HyperfocalCalculator();}
+            if(distance<lens.getMinFocusDistance()){distance=lens.getMinFocusDistance();}
+            dofNear = DofNearCalculator();dofFar = DofFarCalculator();
+            return String.valueOf(distance);
         }
         public static String getDofNear(){return String.format("%.02f", dofNear);}
         public static String getDofFar(){return String.format("%.02f", dofFar);}

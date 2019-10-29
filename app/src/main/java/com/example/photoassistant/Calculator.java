@@ -144,7 +144,7 @@ public class Calculator extends Fragment {
         rootView.setOnTouchListener(new View.OnTouchListener() {
             private long startClickTime;
             float offsetY, offsetX, currentPosY, currentPosX;
-            float initialY,initialX, sensitivityX = 50, sensitivityY = 50;
+            float initialY,initialX, sensitivityX = 75, sensitivityY = 50;
             float moverX, moverY;
             boolean tracking = true;
             int box;
@@ -337,9 +337,9 @@ public class Calculator extends Fragment {
         lensButton.setText(Intelligence.Current.getLens().getSimpleName());
         evTextView.setText(String.format("%.02f", Intelligence.ExposureCalculator()));
         desiredDistanceTV.setText(String.format("%.02f", Intelligence.Current.getDistance()));
+        Intelligence.Current.focusRefresh();
         nearDistanceTV.setText(Intelligence.Current.getDofNear());
         farDistanceTV.setText(Intelligence.Current.getDofFar());
-        lensButton.setText(Intelligence.Current.getLens().getSimpleName());
     }
 
 
