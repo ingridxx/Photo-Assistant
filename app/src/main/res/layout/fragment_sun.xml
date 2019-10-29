@@ -11,38 +11,56 @@
 
     <ImageView
         android:id="@+id/gradientRing"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:clickable="false"
         android:text="ring" />
 
     <ImageView
         android:id="@+id/black_circle"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@drawable/black_circle"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/black_circle" />
 
-    <TextView
-        android:id="@+id/sunriseTextView"
-        android:layout_width="255dp"
-        android:layout_height="198dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="340dp"
-        android:layout_marginEnd="166dp"
-        android:clickable="false" />
+    <LinearLayout
+        android:id="@+id/sunDetailsLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:layout_alignParentBottom="true">
 
-    <TextView
-        android:id="@+id/sunsetTextView"
-        android:layout_width="244dp"
-        android:layout_height="191dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="-21dp"
-        android:layout_marginBottom="21dp"
-        android:clickable="false" />
+        <TextView
+            android:id="@+id/sunriseTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="false"
+            android:gravity="left|center_vertical"
+            android:textAlignment="gravity"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/fourTimesTextView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="false"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:text="\nAstronomical\nNautical\nCivil\nHorizon"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/sunsetTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="false"
+            android:gravity="right|center_vertical"
+            android:textAlignment="gravity"
+            android:textSize="18sp" />
+    </LinearLayout>
 
 </RelativeLayout>

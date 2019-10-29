@@ -140,61 +140,59 @@ public class Sun extends Fragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-
-
                         String sunrise="";
                         String sunset="";
                         String temp="";
                         LocalTime lt;
-                        //long offSet = TimeUnit.HOURS.convert(TimeZone.getDefault().getRawOffset(), TimeUnit.MILLISECONDS);
-
                         try{
                             JSONObject reader = new JSONObject(response);
                             JSONObject extract = reader.getJSONObject("results");
+
                             temp=extract.getString("astronomical_twilight_begin");
                             lt = time(temp);
                             asr = lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunrise+="astronomical sunrise: "+lt+"\n";
+                            sunrise+=lt+"\n";
+
                             temp=extract.getString("nautical_twilight_begin");
                             lt = time(temp);
                             nsr=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunrise+="nautical sunrise: "+lt+"\n";
+                            sunrise+=lt+"\n";
+
                             temp=extract.getString("civil_twilight_begin");
                             lt = time(temp);
                             csr=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunrise+="civil sunrise: "+lt+"\n";
+                            sunrise+=lt+"\n";
+
                             temp=extract.getString("sunrise");
                             lt = time(temp);
                             sr=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunrise+="sunrise: "+lt+"\n";
+                            sunrise+=lt;
+
                             temp=extract.getString("sunset");
                             lt = time(temp);
                             ss=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunrise+="sunset: "+lt+"\n";
+                            sunset+=lt+"\n";
+
                             temp=extract.getString("civil_twilight_end");
                             lt = time(temp);
                             css=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunrise+="civil sunset: "+lt+"\n";
+                            sunset+=lt+"\n";
+
                             temp=extract.getString("nautical_twilight_end");
                             lt = time(temp);
                             nss=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunrise+="nautical sunset: "+lt+"\n";
+                            sunset+=lt+"\n";
 
                             temp=extract.getString("astronomical_twilight_end");
                             lt = time(temp);
                             ass=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            //lt = time(temp);
-                            sunrise+="astronomical sunset: "+lt+"\n";
-                            sunset+="asr: "+asr+"\n nsr: "+nsr+"\n csr: "+ csr+"\n sr :"+ sr
-                                    +"\n ss: "+ss+"\n css: "+css+"\n nss: "+nss+"\n ass: "+ass;
+                            sunset+=lt;
+
                         }catch (Exception e){
                             sunriseTextView.append(e.toString());
                         }finally {
-                            sunriseTextView.append("Sunrise: \n"+sunrise);
-                            sunsetTextView.append("Sunset: \n"+sunset);
-
-
+                            sunriseTextView.append("Sunrise\n"+sunrise);
+                            sunsetTextView.append("Sunset\n"+sunset);
 
                             final ShapeDrawable circle = new ShapeDrawable(new OvalShape());
 
@@ -229,9 +227,6 @@ public class Sun extends Fragment {
                             iv.setBackground(circle);
                             iv.setRotation(90);
                         }
-
-
-
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -241,7 +236,6 @@ public class Sun extends Fragment {
         });
         queue.add(stringRequest);
         return rootView;
-
 }
     public static float convertDpToPixel(float dp, Context context){
         return dp * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
@@ -252,15 +246,7 @@ public class Sun extends Fragment {
     static double asr, nsr, csr, sr, ss, css, nss, ass;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-
-
-        //#40284A,#73434B,#B34D25,#F07E07,#F7DE55,#40284A,#73434B,#B34D25
-
-
-
             }
 
     public static LocalTime time(String a) throws ParseException {
@@ -272,7 +258,5 @@ public class Sun extends Fragment {
         //ZoneId.systemDefault();
         return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()).toLocalTime();
     }
-
-
 }
 

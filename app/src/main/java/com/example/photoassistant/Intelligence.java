@@ -111,8 +111,7 @@ public class Intelligence{
         public static String getDofFar(){return String.format("%.02f", dofFar);}
     }
 
-    private static double CoCCalculator()
-    {
+    private static double CoCCalculator(){
         //CoC (mm) = viewing distance (cm) / desired final-image resolution (lp/mm) for a 25 cm viewing distance / enlargement / 25
         //assuming worst case 60cm viewing distance on a 27inch 4k monitor
         double sensorSizeX = Current.getBody().getSensorSizeX();
