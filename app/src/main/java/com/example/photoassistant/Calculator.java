@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Matrix;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
@@ -37,9 +38,11 @@ import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -66,7 +69,7 @@ public class Calculator extends Fragment {
     FloatingActionButton fab;
     private Button aperturePlusButton, shutterSpeedPlusButton, isoPlusButton, zoomPlusButton;
     Button apertureMinusButton, shutterSpeedMinusButton, isoMinusButton, zoomMinusButton;
-    TextView apertureTV, shutterSpeedTV, isoTV, zoomTV;
+    TextView apertureTV, shutterSpeedTV, isoTV, zoomTV, desiredDistanceTV, nearDistanceTV, farDistanceTV;
     Button bodyButton, lensButton;
     TextView evTextView;
 
@@ -138,8 +141,111 @@ public class Calculator extends Fragment {
                 handler.postDelayed(this,250); // set time here to refresh textView
             }
         });
+        rootView.setOnTouchListener(new View.OnTouchListener() {
+            private long startClickTime;
+            float offsetY, offsetX, currentPosY, currentPosX;
+            float initialY,initialX, sensitivityX = 50, sensitivityY = 50;
+            float moverX, moverY;
+            boolean tracking = true;
+            int box;
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                int[] rect = new int[]{0,0};
+                rect = new int[]{0,0};shutterSpeedTV.getLocationOnScreen(rect);
+                Rect shutterRect= new Rect(rect[0], rect[1], rect[0]+shutterSpeedTV.getWidth(), rect[1]+shutterSpeedTV.getHeight());
+                rect = new int[]{0,0};apertureTV.getLocationOnScreen(rect);
+                Rect apertureRect= new Rect(rect[0], rect[1], rect[0]+apertureTV.getWidth(), rect[1]+apertureTV.getHeight());
+                rect = new int[]{0,0};isoTV.getLocationOnScreen(rect);
+                Rect isoRect= new Rect(rect[0], rect[1], rect[0]+isoTV.getWidth(), rect[1]+isoTV.getHeight());
+                rect = new int[]{0,0};zoomTV.getLocationOnScreen(rect);
+                Rect focalLengthRect= new Rect(rect[0], rect[1], rect[0]+zoomTV.getWidth(), rect[1]+zoomTV.getHeight());
+                rect = new int[]{0,0}; desiredDistanceTV.getLocationOnScreen(rect);
+                Rect focusRect= new Rect(rect[0], rect[1], rect[0]+desiredDistanceTV.getWidth(), rect[1]+desiredDistanceTV.getHeight());
+                //Log.d("TAG", String.valueOf(event.getAction()));
+                if (event.getAction() == MotionEvent.ACTION_DOWN)
+                {
+                    initialY = event.getAxisValue(MotionEvent.AXIS_Y);
+                    initialX = event.getAxisValue(MotionEvent.AXIS_X);
+                    int x = (int)event.getX(); int y = (int)event.getY();
+                    moverX=0;moverY=0;
+                    if (apertureRect.contains(x,y)) {
+                        box = 1;
+                    }
+                    else if (shutterRect.contains(x,y)) {
+                        box = 2;
+                    }
+                    else if (isoRect.contains(x,y)) {
+                        box = 3;
+                    }
+                    else if (focalLengthRect.contains(x,y)) {
+                        box = 4;
+                    }
+                    else if (focusRect.contains(x,y)) {
+                        box = 5;
+                    }
+                    else
+                        box=0;
+                    Log.d("TAG", String.valueOf(box));
 
+                }
 
+                if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    currentPosY=event.getAxisValue(MotionEvent.AXIS_Y);
+                    offsetY = (int)(currentPosY-initialY)/sensitivityY;
+                    currentPosX=event.getAxisValue(MotionEvent.AXIS_X);
+                    offsetX = (int)(currentPosX-initialX)/sensitivityX;
+
+                    if(moverY<offsetY)
+                        for(moverY = moverY;moverY<offsetY;moverY++)
+                        {
+                            switch(box)
+                            {
+                                case 1:Intelligence.Current.apertureMinus(); break;
+                                case 2:Intelligence.Current.shutterSpeedMinus();break;
+                                case 3:Intelligence.Current.isoMinus();break;
+                                case 4:Intelligence.Current.focalLengthMinus();break;
+                            }
+                        }
+                    else
+                    {
+                        for(moverY = moverY;moverY>offsetY;moverY--)
+                        {
+                            switch(box)
+                            {
+                                case 1:Intelligence.Current.aperturePlus();break;
+                                case 2:Intelligence.Current.shutterSpeedPlus();break;
+                                case 3:Intelligence.Current.isoPlus();break;
+                                case 4:Intelligence.Current.focalLengthPlus();break;
+                            }
+                        }
+                    }
+                    if(moverX<offsetX)
+                        for(moverX = moverX;moverX<offsetX;moverX++)
+                        {
+                            switch(box)
+                            {
+                                case 5:Intelligence.Current.focusPlus();break;
+                            }
+                        }
+                    else
+                    {
+                        for(moverX = moverX;moverX>offsetX;moverX--)
+                        {
+                            switch(box)
+                            {
+                                case 5:Intelligence.Current.focusMinus();break;
+                            }
+                        }
+                    }
+
+                }
+                if(event.getAction() == MotionEvent.ACTION_UP)
+                {
+
+                }
+                return true;
+            }
+        });
         return rootView;
     }
 
@@ -175,6 +281,9 @@ public class Calculator extends Fragment {
         shutterSpeedTV = view.findViewById(R.id.shutterSpeedTV);
         zoomTV = view.findViewById(R.id.zoomTV);
         isoTV = view.findViewById(R.id.isoTV);
+        desiredDistanceTV = view.findViewById(R.id.DesiredDisanceTV);
+        nearDistanceTV = view.findViewById(R.id.NearDistanceTV);
+        farDistanceTV = view.findViewById(R.id.FarDistanceTV);
         bodyButton = view.findViewById(R.id.cameraSelectButton);
         lensButton = view.findViewById(R.id.lensSelectButton);
         evTextView = view.findViewById(R.id.evTextView);
@@ -227,6 +336,10 @@ public class Calculator extends Fragment {
         bodyButton.setText(Intelligence.Current.getBody().getPartName());
         lensButton.setText(Intelligence.Current.getLens().getSimpleName());
         evTextView.setText(String.format("%.02f", Intelligence.ExposureCalculator()));
+        desiredDistanceTV.setText(String.format("%.02f", Intelligence.Current.getDistance()));
+        nearDistanceTV.setText(Intelligence.Current.getDofNear());
+        farDistanceTV.setText(Intelligence.Current.getDofFar());
+        lensButton.setText(Intelligence.Current.getLens().getSimpleName());
     }
 
 

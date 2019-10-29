@@ -116,15 +116,15 @@
 
     <TextView
         android:id="@+id/DesiredDisanceTV"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="30dp"
-        android:gravity="center_vertical"
+        android:gravity="center|center_horizontal|center_vertical"
         android:text="2"
         android:textAlignment="gravity"
+        app:layout_constraintBottom_toTopOf="@id/equipmentRelativeLayout"
         app:layout_constraintEnd_toStartOf="@+id/FarDistanceTV"
         app:layout_constraintStart_toEndOf="@+id/NearDistanceTV"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/equipmentRelativeLayout"
         tools:text="2" />
 
     <TextView

@@ -43,8 +43,8 @@ public class Intelligence{
         private static ListItemLens lens = MainActivity.lens_al.get(1);
         private static int focalLengthStep = 0;
         private static int apertureStep = 0;
-        private static int shutterSpeedStep = 0;
-        private static int isoStep = 0;
+        private static int shutterSpeedStep = shutterSpeedRange.length/2;
+        private static int isoStep = isoRange.length/2;
         private static double focalLength = 50;
         private static double aperture = 2.8;
         private static double shutterSpeed = 1.0/100;
@@ -52,6 +52,7 @@ public class Intelligence{
         private static int ISO = 400;
         private static double previewISO = 400;
         private static double previewSS = 1.0/125;
+        private static double dofNear = 0,dofFar = 0;
 
         public static ListItemBody getBody(){return body;}
         public static ListItemLens getLens(){return lens;}
@@ -83,7 +84,7 @@ public class Intelligence{
         public static double getAperture(){aperture = currentApertureRange.get(apertureStep); return aperture;}
         public static double getShutterSpeed(){shutterSpeed = currentshutterSpeedRange.get(shutterSpeedStep); return shutterSpeed;}
         public static int getISO(){ISO = currentIsoRange.get(isoStep); return ISO;}
-        public static double getDistnace(){return distance;}
+        public static double getDistance(){return distance;}
         public static String getFocalLengthString() { format.setDecimalSeparatorAlwaysShown(false); return format.format(getFocalLength()); }
         public static String getApertureString() { format.setDecimalSeparatorAlwaysShown(false); return format.format(getAperture()); }
         public static String getShutterSpeedString() { format.setDecimalSeparatorAlwaysShown(false); format.setGroupingUsed(false);if(getShutterSpeed()>=1) return format.format(getShutterSpeed())+"\"";else return format.format(1/getShutterSpeed());}
@@ -97,7 +98,19 @@ public class Intelligence{
         public static String apertureMinus(){apertureStep--; if(apertureStep<1){apertureStep = 0;}aperture = currentApertureRange.get(apertureStep); return getApertureString();}
         public static String shutterSpeedMinus(){shutterSpeedStep--; if(shutterSpeedStep<1){shutterSpeedStep = 0;}shutterSpeed = currentshutterSpeedRange.get(shutterSpeedStep);return getShutterSpeedString();}
         public static String isoMinus(){isoStep--;if(isoStep<1){isoStep = 0;}ISO = currentIsoRange.get(isoStep);return getISOString();}
-
+        public static String focusPlus(){distance = distance * 1.5;
+        if(distance>HyperfocalCalculator()){distance=HyperfocalCalculator();}
+        if(distance<lens.getMinFocusDistance()){distance=lens.getMinFocusDistance();}
+        dofNear = DofNearCalculator();dofFar = DofFarCalculator();
+        return String.valueOf(distance);
+        } public static String focusMinus(){distance = distance / 1.5;
+        if(distance>HyperfocalCalculator()){distance=HyperfocalCalculator();}
+        if(distance<lens.getMinFocusDistance()){distance=lens.getMinFocusDistance();}
+        dofNear = DofNearCalculator();dofFar = DofFarCalculator();
+        return String.valueOf(distance);
+        }
+        public static String getDofNear(){return String.format("%.02f", dofNear);}
+        public static String getDofFar(){return String.format("%.02f", dofFar);}
     }
 
     private static double CoCCalculator()
@@ -122,13 +135,14 @@ public class Intelligence{
         return viewingDistance/lpmm/enlargement/25.0;
     }
     public static double HyperfocalCalculator(){
-        return Current.getFocalLength()*Current.getFocalLength()/(CoCCalculator()*Current.getAperture())+Current.getFocalLength();
+        double x= (Current.getFocalLength()*Current.getFocalLength()/(CoCCalculator()*Current.getAperture())+Current.getFocalLength())/1000;
+        return (Current.getFocalLength()*Current.getFocalLength()/(CoCCalculator()*Current.getAperture())+Current.getFocalLength())/1000;
     }
-    public static double DofNearCalculator(){
-        return Current.getDistnace()*(HyperfocalCalculator()-Current.getFocalLength())/(HyperfocalCalculator()+Current.getDistnace()-2*Current.getFocalLength());
+    protected static double DofNearCalculator(){
+        return (Current.getDistance()*(HyperfocalCalculator())/(HyperfocalCalculator()+Current.getDistance()));
     }
-    public static double DofFarCalculator(){
-        return Current.getDistnace()*(HyperfocalCalculator()-Current.getFocalLength())/(HyperfocalCalculator()+Current.getDistnace());
+    protected static double DofFarCalculator(){
+        return (Current.getDistance()*(HyperfocalCalculator())/(HyperfocalCalculator()-Current.getDistance()));
     }
     public static double ExposureCalculator(){
         return (1/0.44)*Math.log10((1.0/Current.getAperture())*(1.0/Current.getAperture())*Current.getShutterSpeed()*Current.getISO())/Math.log(2)
