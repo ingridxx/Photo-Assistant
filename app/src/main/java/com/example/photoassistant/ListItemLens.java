@@ -1,8 +1,8 @@
 package com.example.photoassistant;
 
-public class ListItemLens {
+public class ListItemLens extends ListItem {
 
-    private String partName;
+    public static int resourceID = R.raw.lens;
     private float minZoom;
     private float maxZoom;
     private float apertureMinWide;
@@ -12,6 +12,7 @@ public class ListItemLens {
     private float minFocusDistance;
 
     public ListItemLens(String partName, String minZoom, String maxZoom, String apertureMaxWide, String apertureMaxTele, String apertureMinWide, String apertureMinTele, String minFocusDistance) {
+        super(partName);
         this.minZoom = Float.valueOf(minZoom);
         this.maxZoom = Float.valueOf(maxZoom);
         this.apertureMaxWide = Float.valueOf(apertureMaxWide);
@@ -19,13 +20,62 @@ public class ListItemLens {
         this.apertureMinWide = Float.valueOf(apertureMinWide);
         this.apertureMinTele = Float.valueOf(apertureMinTele);
         this.minFocusDistance = Float.valueOf(minFocusDistance);
-        this.partName = partName;
+
+    }
+
+    public ListItemLens(String[] array) {
+        super(array[0]);
+    }
+//, String minZoom, String maxZoom, String apertureMaxWide, String apertureMaxTele, String apertureMinWide, String apertureMinTele
+    public ListItemLens(String partName,String[] array) {
+        super(array[0]);
+        this.minZoom = Float.valueOf(array[1]);
+        this.maxZoom = Float.valueOf(array[2]);
+        this.apertureMaxWide = Float.valueOf(array[3]);
+        this.apertureMaxTele = Float.valueOf(array[4]);
+        this.apertureMinWide = Float.valueOf(array[5]);
+        this.apertureMinTele = Float.valueOf(array[6]);
+        if (array.length == 8){
+            this.minFocusDistance = Float.valueOf(array[7]);
+        } else {
+            this.minFocusDistance = (maxZoom /1000);
+        }
+
     }
 
 
     public String getPartName() {
         return partName;
     }
+
+    public double getMinZoom() {
+        return minZoom;
+    }
+
+    public double getMaxZoom() {
+        return maxZoom;
+    }
+
+    public double getApertureMinWide() {
+        return apertureMinWide;
+    }
+
+    public double getApertureMinTele() {
+        return apertureMinTele;
+    }
+
+    public double getApertureMaxWide() {
+        return apertureMaxWide;
+    }
+
+    public double getApertureMaxTele() {
+        return apertureMaxTele;
+    }
+
+    public double getMinFocusDistance() {
+        return minFocusDistance;
+    }
+
     public String getSimpleName() {
         String finalString = "";
         if(apertureMaxWide==apertureMaxTele)
@@ -61,7 +111,7 @@ public class ListItemLens {
         }
         if(minZoomStr.equals(maxZoomStr))
         {
-                finalString = finalString+minZoomStr;
+            finalString = finalString+minZoomStr;
         }
         else
         {
@@ -70,31 +120,40 @@ public class ListItemLens {
         return finalString;
     }
 
-    public double getMinZoom() {
-        return minZoom;
+    @Override
+    protected String TopLineText() {
+        String retVal="";
+
+        retVal += getPartName();
+
+        return retVal;
     }
 
-    public double getMaxZoom() {
-        return maxZoom;
+    @Override
+    protected String MiddleLineText() {
+        return super.MiddleLineText();
     }
 
-    public double getApertureMinWide() {
-        return apertureMinWide;
+    @Override
+    protected String BottomLineText() {
+        return super.BottomLineText();
     }
 
-    public double getApertureMinTele() {
-        return apertureMinTele;
+    @Override
+    public String toString() {
+
+        String retString ="";
+
+        retString += getPartName();
+        retString += getMinZoom();
+        retString += getMaxZoom();
+        retString += getApertureMaxWide();
+        retString += getApertureMaxTele();
+        retString += getApertureMinWide();
+        retString += getApertureMinTele();
+        retString += getMinFocusDistance();
+
+        return retString;
     }
 
-    public double getApertureMaxWide() {
-        return apertureMaxWide;
-    }
-
-    public double getApertureMaxTele() {
-        return apertureMaxTele;
-    }
-
-    public double getMinFocusDistance() {
-        return minFocusDistance;
-    }
 }

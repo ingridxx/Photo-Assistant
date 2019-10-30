@@ -39,8 +39,8 @@ public class Intelligence{
         private static List<Double> currentFocalLengthRange = Arrays.asList(shutterSpeedRange);
         private static List<Integer> currentIsoRange = Arrays.asList(isoRange);
         private static List<Double> currentshutterSpeedRange = Arrays.asList(shutterSpeedRange);
-        private static ListItemBody body = MainActivity.body_al.get(1);
-        private static ListItemLens lens = MainActivity.lens_al.get(1);
+        private static ListItemBody body = MainActivity.getBodySlot(MainActivity.WhichSlot);
+        private static ListItemLens lens = MainActivity.getLensSlot(MainActivity.WhichSlot);
         private static int focalLengthStep = 0;
         private static int apertureStep = 0;
         private static int shutterSpeedStep = shutterSpeedRange.length/2;

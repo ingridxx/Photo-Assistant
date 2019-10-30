@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButtonTopStartRL"
+        app:layout_constraintBottom_toTopOf="@+id/imageButtonBottomStartRL"
+        app:layout_constraintEnd_toStartOf="@+id/imageButtonTopEndRL"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    <ImageButton
+        android:id="@+id/imageButtonTopStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tv_ImageButtonTS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Not Selected"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/imageButtonTopStart"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButtonTopEndRL"
+        app:layout_constraintBottom_toTopOf="@+id/imageButtonBottomEndRL"
+        app:layout_constraintStart_toEndOf="@+id/imageButtonTopStartRL"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintTop_toTopOf="parent">
+    <ImageButton
+        android:id="@+id/imageButtonTopEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tv_ImageButtonTE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Not Selected"
+            android:layout_below="@id/imageButtonTopEnd"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButtonBottomStartRL"
+        app:layout_constraintTop_toBottomOf="@+id/imageButtonTopStartRL"
+        app:layout_constraintEnd_toStartOf="@+id/imageButtonBottomEndRL"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageButton
+            android:id="@+id/imageButtonBottomStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tv_ImageButtonBS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Not Selected"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/imageButtonBottomStart" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButtonBottomEndRL"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageButtonBottomStartRL"
+        app:layout_constraintTop_toBottomOf="@+id/imageButtonTopEndRL">
+
+    <ImageButton
+        android:id="@+id/imageButtonBottomEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tv_ImageButtonBE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Not Selected"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/imageButtonBottomEnd"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_bodyselectiontitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="72dp"
+        android:text="Select A Brand"
+        app:layout_constraintBottom_toTopOf="@+id/imageButtonTopStartRL"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

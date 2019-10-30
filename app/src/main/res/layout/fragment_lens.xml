@@ -10,38 +10,42 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/lens_rl">
 
         <TextView
+            android:id="@+id/textivew"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textivew"
-            android:text="Favourites"
             android:layout_alignParentTop="true"
-            android:layout_centerInParent="true"/>
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="Favourites" />
+
+        <Button
+            android:id="@+id/doneButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Done"
+            android:layout_alignParentEnd="true" />
+
         <Spinner
             android:id="@+id/spinner1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:drawable/btn_dropdown"
             android:spinnerMode="dropdown"
-            android:layout_below="@id/textivew"
+            android:layout_below="@id/doneButton"
             local:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             />
 
 
-        <SeekBar
-            android:id="@+id/lens_seekbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/spinner1"/>
-
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/lens_rv"
-            android:layout_below="@+id/lens_seekbar"/>
+            android:layout_below="@+id/spinner1"/>
 
     </RelativeLayout>
 

@@ -15,6 +15,12 @@
         android:layout_height="match_parent"
         android:layout_weight="1">
 
+        <include
+            android:id="@+id/body_selection_overlay_include"
+            layout="@layout/body_selection_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"/>
 
     </FrameLayout>
 

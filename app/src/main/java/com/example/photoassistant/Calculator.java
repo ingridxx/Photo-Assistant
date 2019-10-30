@@ -287,8 +287,8 @@ public class Calculator extends Fragment {
         bodyButton = view.findViewById(R.id.cameraSelectButton);
         lensButton = view.findViewById(R.id.lensSelectButton);
         evTextView = view.findViewById(R.id.evTextView);
-        Intelligence.Current.setBody(MainActivity.body_al.get(0));
-        Intelligence.Current.setLens(MainActivity.lens_al.get(0));
+        Intelligence.Current.setBody(MainActivity.getBodySlot(MainActivity.WhichSlot));
+        Intelligence.Current.setLens(MainActivity.getLensSlot(MainActivity.WhichSlot));
 
         bodyButton.setOnClickListener(new View.OnClickListener() {
             @Override
