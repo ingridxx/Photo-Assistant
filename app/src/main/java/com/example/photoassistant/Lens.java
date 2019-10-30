@@ -51,7 +51,6 @@ public class Lens extends Fragment {
     public Lens(ListItem[] slot, ArrayList<ListItem> lia, int whichSlot) {
 
         this.slot = slot;
-        Log.d("debugone", "onItemSelected:" + slot.length);
         arrayToSort = lia;
         currentSlot = whichSlot;
         // Required empty public constructor
@@ -72,23 +71,35 @@ public class Lens extends Fragment {
         favouritesString.clear();
         int increasedi = 1;
         for (int i = 0; i < favourites.size(); i++) {
-            increasedi++;
+
             favouritesString.add(i, favourites.get(i).getPartName());
+            Log.d("SlotDebug", "updateArrayAdapter: " + slot[increasedi] + " length - " + slot.length + " i - " + i);
             slot[increasedi] = favourites.get(i);
+            increasedi++;
         }
         arrayAdapterString.notifyDataSetChanged();
 
+//        for (int i =0 ;i < favourites.size();i++){
+//            if (favourites.get(i) !=null){
+//                Log.d("aaaa", "addLensToArrays: index " + i + " - " + favourites.get(i).toString());
+//            }
+//        }
     }
 
 
     public void addLensToArrays(ListItem lensToAdd) {
 
+
+        Log.d("addLensToArray", "" + favourites.size());
         if (!favourites.contains(lensToAdd)) {
             if (favourites.size() < 5) {
+                Log.d("addLensToArray", "< 5");
                 favourites.add(0, lensToAdd);
             } else {
+                Log.d("addLensToArray", "MORE THAN 5");
                 favourites.add(0, lensToAdd);
                 favourites.remove(5);
+
             }
         }
 
@@ -168,25 +179,24 @@ public class Lens extends Fragment {
         lens_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 int where;
-                if (slot[1] != null)
-                    for (int i = 1; i < slot.length; i++) {
-                        String ret = parent.getItemAtPosition(position).toString();
-                        Log.d("debugme", "onItemSelected: " + ret + "");
-                        Log.d("debugme", "onItemSelected: " + slot[i] + "");
 
-                        if (slot[i].getPartName().equals(ret)) {
-                            where = i;
+                if (slot[1] != null) {
+                    for (int i = 1; i < favourites.size(); ++i) {
+                        String ret = parent.getItemAtPosition(position).toString();
+                        if (slot[i].toString().contains(ret)) {
                             ListItem newItem = slot[i];
-                            ListItem tempItem;
+                            ListItem tempItem = null;
                             tempItem = slot[1];
                             slot[1] = newItem;
-                            slot[i] = tempItem;
-                            updateArrayAdapter();
+                            if (!tempItem.equals(newItem)) {
+                                slot[i] = tempItem;
+                                updateArrayAdapter();
+                            }
+                            Log.d("eeeeeee", "onItemSelected: Loops " + i);
+
                         }
-
                     }
-
-
+                }
 
             }
 
