@@ -89,7 +89,8 @@ public class Intelligence{
         public static String getApertureString() { format.setDecimalSeparatorAlwaysShown(false); return format.format(getAperture()); }
         public static String getShutterSpeedString() { format.setDecimalSeparatorAlwaysShown(false); format.setGroupingUsed(false);if(getShutterSpeed()>=1) return format.format(getShutterSpeed())+"\"";else return format.format(1/getShutterSpeed());}
         public static String getISOString() { return Integer.toString(getISO());}
-
+        public static boolean isPrimeLens(){return lens.getMaxZoom()==lens.getMinZoom();}
+        public static boolean isFixedApertureLens(){return lens.getApertureMaxTele()==lens.getApertureMinTele() && lens.getApertureMaxWide()== lens.getApertureMinWide();}
         public static String focalLengthPlus(){focalLengthStep++;if(focalLengthStep>currentFocalLengthRange.size()-1){focalLengthStep = currentFocalLengthRange.size()-1;}focalLength = currentFocalLengthRange.get(focalLengthStep); return getFocalLengthString();}
         public static String aperturePlus(){apertureStep++; if(apertureStep>currentApertureRange.size()-1){apertureStep = currentApertureRange.size()-1;}aperture = currentApertureRange.get(apertureStep); focusRefresh(); return getApertureString();}
         public static String shutterSpeedPlus(){shutterSpeedStep++; if(shutterSpeedStep>currentshutterSpeedRange.size()-1){shutterSpeedStep = currentshutterSpeedRange.size()-1;}shutterSpeed = currentshutterSpeedRange.get(shutterSpeedStep);return getShutterSpeedString();}
@@ -104,7 +105,10 @@ public class Intelligence{
         {
             if(distance>HyperfocalCalculator()){distance=HyperfocalCalculator();}
             if(distance<lens.getMinFocusDistance()){distance=lens.getMinFocusDistance();}
-            dofNear = DofNearCalculator();dofFar = DofFarCalculator();
+            dofNear = DofNearCalculator();
+            dofFar = DofFarCalculator();
+            if(dofFar>Double.MAX_VALUE-1 || dofFar<0){dofFar = Double.POSITIVE_INFINITY;}
+            if(dofNear>Double.MAX_VALUE-1 || dofNear<0){dofNear = Double.POSITIVE_INFINITY;}
             return String.valueOf(distance);
         }
         public static String getDofNear(){return String.format("%.02f", dofNear);}
