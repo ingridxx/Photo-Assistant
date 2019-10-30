@@ -249,6 +249,14 @@ public class Calculator extends Fragment {
         return rootView;
     }
 
+    public static boolean isParsable(ListItem input){
+        try{
+            input.getPartName();
+            return true;
+        }catch(Exception e){
+            return false;
+        }
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -273,7 +281,7 @@ public class Calculator extends Fragment {
         shutterSpeedPlusButton = view.findViewById(R.id.shutterSpeedPlusButton);
         zoomPlusButton = view.findViewById(R.id.zoomPlusButton);
         isoPlusButton = view.findViewById(R.id.isoPlusButton);
-        apertureMinusButton= view.findViewById(R.id.apertureMinusButton);
+        apertureMinusButton = view.findViewById(R.id.apertureMinusButton);
         shutterSpeedMinusButton = view.findViewById(R.id.shutterSpeedMinusButton);
         zoomMinusButton = view.findViewById(R.id.zoomMinusButton);
         isoMinusButton = view.findViewById(R.id.isoMinusButton);
@@ -287,8 +295,11 @@ public class Calculator extends Fragment {
         bodyButton = view.findViewById(R.id.cameraSelectButton);
         lensButton = view.findViewById(R.id.lensSelectButton);
         evTextView = view.findViewById(R.id.evTextView);
-        Intelligence.Current.setBody(MainActivity.getBodySlot(MainActivity.WhichSlot));
-        Intelligence.Current.setLens(MainActivity.getLensSlot(MainActivity.WhichSlot));
+        if(isParsable(MainActivity.getBodySlot(MainActivity.WhichSlot))){
+            Intelligence.Current.setBody(MainActivity.getBodySlot(MainActivity.WhichSlot));
+            Intelligence.Current.setLens(MainActivity.getLensSlot(MainActivity.WhichSlot));
+        }
+
 
         bodyButton.setOnClickListener(new View.OnClickListener() {
             @Override

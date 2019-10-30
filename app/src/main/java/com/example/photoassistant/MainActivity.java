@@ -64,9 +64,8 @@ public class MainActivity extends AppCompatActivity {
     public static ListItem[] Slot2 = new ListItem[2];
     public static ListItem[] Slot3 = new ListItem[2];
     public static ListItem[] Slot4 = new ListItem[2];
-    public static int WhichSlot;
+    public static int WhichSlot =1;
     ListItem[] cacheArray = null;
-    public static ArrayList<ListItem[]> currBody;
 
     public static void addSlot(int whichSlot, ListItem[] li) {
 
@@ -88,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     }
        public static ListItemBody getBodySlot(int whichSlot) {
            ListItemBody retSlot = null;
-           if (resolveSlot(whichSlot)[0] != null) {
+           if (Calculator.isParsable(resolveSlot(whichSlot)[0])) {
             retSlot = (ListItemBody) resolveSlot(whichSlot)[0];
             retSlot.toString();
         }
@@ -98,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
     public static ListItemLens getLensSlot(int whichSlot) {
 
         ListItemLens retSlot = null;
-        if (resolveSlot(whichSlot)[1] != null) {
+        if (Calculator.isParsable(resolveSlot(whichSlot)[1])) {
             retSlot = (ListItemLens) resolveSlot(whichSlot)[1];
             retSlot.toString();
         }
@@ -143,8 +142,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         new ProcessDataFromArrays().execute();
-
-        currBody = new ArrayList<>();
 
 
         bodyButton = findViewById(R.id.bodyButton);
@@ -197,8 +194,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
     @Override
     public void onBackPressed() {
         Log.d("myDebugTag", "onBackPressed:");
@@ -206,9 +201,6 @@ public class MainActivity extends AppCompatActivity {
         if(!fragmentStack.empty())getSupportFragmentManager().beginTransaction().replace(R.id.fl,(Fragment)fragmentStack.peek()).commit();
         else System.exit(1);
     }
-
-
-
 
     private ArrayList<String> findUnAskedPermissions(ArrayList<String> wanted) {
         ArrayList<String> result = new ArrayList<String>();
@@ -234,7 +226,6 @@ public class MainActivity extends AppCompatActivity {
     private boolean canMakeSmores() {
         return (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1);
     }
-
 
     @TargetApi(Build.VERSION_CODES.M)
     @Override
@@ -416,6 +407,8 @@ public class MainActivity extends AppCompatActivity {
             lens_al.clear();
             lens_al.addAll(ProcessArrays(lens, ListItemLens.resourceID, "Lens"));
 
+            Log.d("odebug", "doInBackground: " + lens_al.size());
+            Log.d("odebug", "doInBackground: " + lens_al.get(0).toString());
             return lens_al;
 
 
@@ -423,6 +416,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ArrayList<ListItem> listItems) {
+            Slot1[1] = lens_al.get(0);
+            Slot1[0] = body_al.get(0);
             super.onPostExecute(listItems);
         }
 
@@ -452,7 +447,6 @@ public class MainActivity extends AppCompatActivity {
 
                     retArray.add(tempListItem);
 
-                    Log.d("debug", "ProcessArrays: " + i);
                     i++;
                 }
 
