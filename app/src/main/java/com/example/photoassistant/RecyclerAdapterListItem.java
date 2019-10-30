@@ -166,22 +166,22 @@ public class RecyclerAdapterListItem extends androidx.recyclerview.widget.Recycl
 
         public void bind(final ListItem item, final RecyclerViewOnClickListener listener){
 
-            TitleLine.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
-                    listener.onItemClick(item);
-                }
-            });
+//            TitleLine.setOnClickListener(new View.OnClickListener() {
+//                @Override public void onClick(View v) {
+//                    listener.onItemClick(item);
+//                }
+//            });
 
             Parent_Layout.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
                     listener.onItemClick(item);
                 }
             });
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
-                    listener.onItemClick(item);
-                }
-            });
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override public void onClick(View v) {
+//                    listener.onItemClick(item);
+//                }
+//            });
         }
     }
 

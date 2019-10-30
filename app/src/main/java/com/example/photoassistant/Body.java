@@ -34,7 +34,7 @@ public class Body extends Fragment {
     private Button LensButton;
     private static RecyclerAdapterListItem adapter;
     private static ListItem[] slot;
-    private ListItem[] tempSlot = new ListItem[2];
+    private ListItem[] tempSlot = new ListItem[6];
     private static int whichSlot;
     public Body() {
         // Required empty public constructor

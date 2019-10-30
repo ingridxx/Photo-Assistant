@@ -63,8 +63,6 @@ public class MainActivity extends AppCompatActivity {
     public static Stack fragmentStack = new Stack();
     private static Activity activity;
 
-
-
     public ArrayList<String> permissionsToRequest;
     public ArrayList<String> permissionsRejected = new ArrayList<>();
     public ArrayList<String> permissions = new ArrayList<>();

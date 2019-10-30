@@ -16,14 +16,11 @@ import androidx.fragment.app.Fragment;
 public class BodySelector extends Fragment {
 
 
-
-
-    private static ListItem[] slot;
-    public static ListItem[] Slot1 = new ListItem[2];
-    public static ListItem[] Slot2 = new ListItem[2];
-    public static ListItem[] Slot3 = new ListItem[2];
-    public static ListItem[] Slot4 = new ListItem[2];
-    private static int WhichSlot =1;
+    public static ListItem[] Slot1 = new ListItem[6];
+    public static ListItem[] Slot2 = new ListItem[6];
+    public static ListItem[] Slot3 = new ListItem[6];
+    public static ListItem[] Slot4 = new ListItem[6];
+    private static int WhichSlot = 1;
     ListItem[] cacheArray = null;
 
     public static void addSlot(int whichSlot, ListItem[] li) {
@@ -44,10 +41,23 @@ public class BodySelector extends Fragment {
         }
 
     }
-    public static int nextSlot(){setWhichSlot(getWhichSlot()+1);while(resolveSlot(getWhichSlot())[1]==null ){setWhichSlot(getWhichSlot()+1);}
-        return getWhichSlot();}
-    public static int getWhichSlot() {return WhichSlot;}
-    public static void setWhichSlot(int i){WhichSlot = i%4  ;}
+
+    public static int nextSlot() {
+        setWhichSlot(getWhichSlot() + 1);
+        while (resolveSlot(getWhichSlot())[1] == null) {
+            setWhichSlot(getWhichSlot() + 1);
+        }
+        return getWhichSlot();
+    }
+
+    public static int getWhichSlot() {
+        return WhichSlot;
+    }
+
+    public static void setWhichSlot(int i) {
+        WhichSlot = i % 4;
+    }
+
     public static ListItemBody getBodySlot(int whichSlot) {
         ListItemBody retSlot = null;
         if (Calculator.isParsable(resolveSlot(whichSlot)[0])) {
@@ -56,6 +66,7 @@ public class BodySelector extends Fragment {
         }
         return retSlot;
     }
+
     public static ListItemLens getLensSlot(int whichSlot) {
 
         ListItemLens retSlot = null;
@@ -66,9 +77,9 @@ public class BodySelector extends Fragment {
         return retSlot;
     }
 
-    private static ListItem[] resolveSlot(int whichSlot) {
+    public static ListItem[] resolveSlot(int whichSlot) {
 
-        switch (whichSlot%4+1){
+        switch (whichSlot % 4 + 1) {
             case 1:
                 return Slot1;
             case 2:
@@ -81,6 +92,7 @@ public class BodySelector extends Fragment {
         return null;
 
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -89,6 +101,7 @@ public class BodySelector extends Fragment {
         changeFragBody(rootView);
         return rootView;
     }
+
     public void changeFragBody(View rv) {
         final View rootView = rv;
         ImageButton ib_topStart = rootView.findViewById(R.id.imageButtonTopStart);
@@ -96,10 +109,11 @@ public class BodySelector extends Fragment {
         ImageButton ib_bottomStart = rootView.findViewById(R.id.imageButtonBottomStart);
         ImageButton ib_bottomEnd = rootView.findViewById(R.id.imageButtonBottomEnd);
         setOverlayResources(rootView);
+
         ib_topStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WhichSlot =1;
+                WhichSlot = 1;
                 if (Slot1[0] == null) {
                     MainActivity.fragmentStack.add(new Body(Slot1, 1));
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(Slot1, 1)).commit();
@@ -133,7 +147,7 @@ public class BodySelector extends Fragment {
         ib_topEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WhichSlot =2;
+                WhichSlot = 2;
                 if (Slot2[0] == null) {
                     MainActivity.fragmentStack.add(new Body(Slot2, 2));
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(Slot2, 2)).commit();
@@ -143,7 +157,7 @@ public class BodySelector extends Fragment {
         ib_bottomStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WhichSlot =3;
+                WhichSlot = 3;
                 if (Slot3[0] == null) {
                     MainActivity.fragmentStack.add(new Body(Slot3, 3));
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(Slot3, 3)).commit();
@@ -153,7 +167,7 @@ public class BodySelector extends Fragment {
         ib_bottomEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WhichSlot =4;
+                WhichSlot = 4;
                 if (Slot4[0] == null) {
                     MainActivity.fragmentStack.add(new Body(Slot4, 4));
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(Slot4, 4)).commit();
@@ -195,4 +209,8 @@ public class BodySelector extends Fragment {
         }
 
     }
+
+
+
+
 }

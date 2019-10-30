@@ -28,16 +28,15 @@ import java.util.ArrayList;
 
 public class Lens extends Fragment {
 
+    private static ArrayAdapter<String> arrayAdapterString;
+    ListItem slot[];
     private RecyclerView recyclerView;
     private RecyclerAdapterListItem ra;
     private Spinner lens_spinner;
-    private static ArrayAdapter<String> arrayAdapterString;
-    private  ArrayList<String> favouritesString;
-    private  ArrayList<ListItem> favourites;
-    ListItem slot[];
-    private  ArrayList<ListItem> arrayToSort;
+    private ArrayList<String> favouritesString;
+    private ArrayList<ListItem> favourites;
+    private ArrayList<ListItem> arrayToSort;
     private int currentSlot;
-
 
 
     public Lens() {
@@ -49,14 +48,14 @@ public class Lens extends Fragment {
 //        // Required empty public constructor
 //    }
 
-    public Lens(ListItem[] slot,ArrayList<ListItem> lia,int whichSlot) {
+    public Lens(ListItem[] slot, ArrayList<ListItem> lia, int whichSlot) {
 
         this.slot = slot;
+        Log.d("debugone", "onItemSelected:" + slot.length);
         arrayToSort = lia;
         currentSlot = whichSlot;
         // Required empty public constructor
     }
-
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,37 +67,46 @@ public class Lens extends Fragment {
 
     }
 
-    public void updateArrayAdapter(){
+    public void updateArrayAdapter() {
 
+        favouritesString.clear();
+        int increasedi = 1;
+        for (int i = 0; i < favourites.size(); i++) {
+            increasedi++;
+            favouritesString.add(i, favourites.get(i).getPartName());
+            slot[increasedi] = favourites.get(i);
+        }
         arrayAdapterString.notifyDataSetChanged();
 
     }
 
 
-    public void addLensToArrays(ListItem lensToAdd){
+    public void addLensToArrays(ListItem lensToAdd) {
 
-        if(favourites.size() < 5 ){
-            favourites.add(0,lensToAdd);
-            favouritesString.add(0,lensToAdd.getPartName());
-        } else {
-            favourites.add(0,lensToAdd);
-            favouritesString.add(0,lensToAdd.getPartName());
-            favouritesString.remove(5);
-            favourites.remove(5);
-
+        if (!favourites.contains(lensToAdd)) {
+            if (favourites.size() < 5) {
+                favourites.add(0, lensToAdd);
+            } else {
+                favourites.add(0, lensToAdd);
+                favourites.remove(5);
+            }
         }
 
     }
 
+    public void swapSpinnerItemToStart(ListItem lensToAdd, int position) {
 
+        System.out.println("Lens " + lensToAdd.toString() + " : Pos " + position);
+
+    }
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         favourites = new ArrayList<ListItem>();
         favouritesString = new ArrayList<String>();
-        Gson gson = new Gson();
-        ListItemLens obj;
+        //Gson gson = new Gson();
+        //ListItemLens obj;
 
         super.onCreate(savedInstanceState);
     }
@@ -115,7 +123,7 @@ public class Lens extends Fragment {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         lens_spinner = view.findViewById(R.id.spinner1);
-        arrayAdapterString = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1,favouritesString);
+        arrayAdapterString = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1, favouritesString);
         //arrayAdapter = new ArrayAdapter<ListItemLens>(view.getContext(), android.R.layout.simple_list_item_1,favourites);
         lens_spinner.setAdapter(arrayAdapterString);
         updateArrayAdapter();
@@ -127,28 +135,26 @@ public class Lens extends Fragment {
         recyclerView.setLayoutManager(loutmn);
 
         final Button doneButton = getActivity().findViewById(R.id.doneButton);
-        if (favourites!=null) doneButton.setOnClickListener(new View.OnClickListener() {
+        if (favourites != null) doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("ppp", "onClick: Lens Done Button");
-                slot[1] = favourites.get(0);
-                BodySelector.addSlot(currentSlot,slot);
+                BodySelector.addSlot(currentSlot, slot);
                 MainActivity.fragmentStack.pop();
-                //MainActivity.fragmentStack.push(new BodySelector());
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl,new BodySelector()).commit();
-                Log.d("slotBack", "onClick: " + slot[0].toString() + " " + slot[1].toString() + " " + currentSlot);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new BodySelector()).commit();
                 //getActivity().getSupportFragmentManager().popBackStack("lens", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 //getActivity().getSupportFragmentManager().popBackStack("body", FragmentManager.POP_BACK_STACK_INCLUSIVE);
             }
         });
-        else  {doneButton.setVisibility(View.INVISIBLE);}
+        else {
+            doneButton.setVisibility(View.INVISIBLE);
+        }
 
         ra = new RecyclerAdapterListItem(getContext(), arrayToSort, new RecyclerViewOnClickListener() {
             @Override
             public void onItemClick(ListItem item) {
 
                 doneButton.setVisibility(View.VISIBLE);
-
                 addLensToArrays(item);
                 updateArrayAdapter();
 
@@ -159,19 +165,35 @@ public class Lens extends Fragment {
         ra.notifyDataSetChanged();
 
 
-
         lens_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
-                //this is your selected item (parent.getItemAtPosition(position).toString()
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int where;
+                if (slot[1] != null)
+                    for (int i = 1; i < slot.length; i++) {
+                        String ret = parent.getItemAtPosition(position).toString();
+                        Log.d("debugme", "onItemSelected: " + ret + "");
+                        Log.d("debugme", "onItemSelected: " + slot[i] + "");
+
+                        if (slot[i].getPartName().equals(ret)) {
+                            where = i;
+                            ListItem newItem = slot[i];
+                            ListItem tempItem;
+                            tempItem = slot[1];
+                            slot[1] = newItem;
+                            slot[i] = tempItem;
+                            updateArrayAdapter();
+                        }
+
+                    }
+
+
 
             }
-            public void onNothingSelected(AdapterView<?> parent)
-            {
+
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
-
 
 
         super.onViewCreated(view, savedInstanceState);
@@ -199,7 +221,7 @@ public class Lens extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
 
-                if (false);//(newText.length() == 0 || newText.isEmpty()){}
+                if (false) ;//(newText.length() == 0 || newText.isEmpty()){}
                 else {
 
                     ra.getFilter().filter(newText.toLowerCase().trim());
