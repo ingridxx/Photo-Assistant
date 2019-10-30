@@ -307,14 +307,72 @@ public class Calculator extends Fragment {
                 BodySelector.nextSlot();
                 Intelligence.Current.setBody(BodySelector.getBodySlot(BodySelector.getWhichSlot()));
                 Intelligence.Current.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot()));
+                Intelligence.Current.refreshDistance();
+                if(Intelligence.Current.isPrimeLens())
+                {
+                    zoomPlusButton.setEnabled(false);
+                    zoomPlusButton.setVisibility(View.INVISIBLE);
+                    zoomMinusButton.setEnabled(false);
+                    zoomMinusButton.setVisibility(View.INVISIBLE);
+                }
+                else
+                {
+                    zoomPlusButton.setEnabled(true);
+                    zoomPlusButton.setVisibility(View.VISIBLE);
+                    zoomMinusButton.setEnabled(true);
+                    zoomMinusButton.setVisibility(View.VISIBLE);
+                }
+                if(Intelligence.Current.isFixedApertureLens())
+                {
+                    aperturePlusButton.setEnabled(false);
+                    aperturePlusButton.setVisibility(View.INVISIBLE);
+                    apertureMinusButton.setEnabled(false);
+                    apertureMinusButton.setVisibility(View.INVISIBLE);
+                }
+                else
+                {
+                    aperturePlusButton.setEnabled(true);
+                    aperturePlusButton.setVisibility(View.VISIBLE);
+                    apertureMinusButton.setEnabled(true);
+                    apertureMinusButton.setVisibility(View.VISIBLE);
+                }
             }
         });
 
         lensButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //MainActivity.fragmentStack.push(new Lens());
-                //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Lens()).commit();
+                BodySelector.nextLens();
+                Intelligence.Current.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot()));
+                Intelligence.Current.refreshDistance();
+                if(Intelligence.Current.isPrimeLens())
+                {
+                    zoomPlusButton.setEnabled(false);
+                    zoomPlusButton.setVisibility(View.INVISIBLE);
+                    zoomMinusButton.setEnabled(false);
+                    zoomMinusButton.setVisibility(View.INVISIBLE);
+                }
+                else
+                {
+                    zoomPlusButton.setEnabled(true);
+                    zoomPlusButton.setVisibility(View.VISIBLE);
+                    zoomMinusButton.setEnabled(true);
+                    zoomMinusButton.setVisibility(View.VISIBLE);
+                }
+                if(Intelligence.Current.isFixedApertureLens())
+                {
+                    aperturePlusButton.setEnabled(false);
+                    aperturePlusButton.setVisibility(View.INVISIBLE);
+                    apertureMinusButton.setEnabled(false);
+                    apertureMinusButton.setVisibility(View.INVISIBLE);
+                }
+                else
+                {
+                    aperturePlusButton.setEnabled(true);
+                    aperturePlusButton.setVisibility(View.VISIBLE);
+                    apertureMinusButton.setEnabled(true);
+                    apertureMinusButton.setVisibility(View.VISIBLE);
+                }
             }
         });
 

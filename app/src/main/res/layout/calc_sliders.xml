@@ -10,39 +10,40 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:orientation="vertical"
         android:layout_weight="1"
+        android:orientation="vertical"
         android:weightSum="3">
 
         <Button
-            android:id="@+id/aperturePlusButton"
+            android:id="@+id/isoPlusButton"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="A+"
+            android:layout_alignParentTop="true"
             android:layout_weight="1"
-            android:layout_alignParentTop="true" />
+            android:text="I+" />
 
         <TextView
-            android:id="@+id/apertureTV"
+            android:id="@+id/isoTV"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/aperturePlusButton"
             android:layout_weight="1"
             android:gravity="center"
             android:padding="0dp"
-            android:text="Aperture "
+            android:text="ISO"
             android:textSize="18sp" />
 
         <Button
-            android:id="@+id/apertureMinusButton"
+            android:id="@+id/isoMinusButton"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/apertureTV"
             android:layout_alignParentBottom="true"
+            android:layout_below="@id/apertureTV"
             android:layout_weight="1"
-            android:text="A-" />
+            android:text="I-" />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -79,78 +80,83 @@
             android:layout_weight="1"
             android:text="S-" />
 
-    </LinearLayout><LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:orientation="vertical"
-    android:layout_weight="1"
-    android:weightSum="3">
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/zoomPlusButton"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_weight="1"
-        android:text="Z+" />
-
-    <TextView
-        android:id="@+id/zoomTV"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/aperturePlusButton"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
         android:layout_weight="1"
-        android:gravity="center"
-        android:padding="0dp"
-        android:text="Zoom"
-        android:textSize="18sp" />
+        android:orientation="vertical"
+        android:weightSum="3">
 
-    <Button
-        android:id="@+id/zoomMinusButton"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@id/apertureTV"
+        <Button
+            android:id="@+id/aperturePlusButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_weight="1"
+            android:text="A+" />
+
+        <TextView
+            android:id="@+id/apertureTV"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/aperturePlusButton"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="0dp"
+            android:text="Aperture "
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/apertureMinusButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/apertureTV"
+            android:layout_weight="1"
+            android:text="A-" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
         android:layout_weight="1"
-        android:text="Z-" />
+        android:orientation="vertical"
+        android:weightSum="3">
 
-</LinearLayout><LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:orientation="vertical"
-    android:layout_weight="1"
-    android:weightSum="3">
+        <Button
+            android:id="@+id/zoomPlusButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_weight="1"
+            android:text="Z+"
+            android:visibility="visible" />
 
-    <Button
-        android:id="@+id/isoPlusButton"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_weight="1"
-        android:text="I+" />
+        <TextView
+            android:id="@+id/zoomTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/aperturePlusButton"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="0dp"
+            android:text="Zoom"
+            android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/isoTV"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/aperturePlusButton"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:padding="0dp"
-        android:text="ISO"
-        android:textSize="18sp" />
+        <Button
+            android:id="@+id/zoomMinusButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/apertureTV"
+            android:layout_weight="1"
+            android:text="Z-" />
 
-    <Button
-        android:id="@+id/isoMinusButton"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@id/apertureTV"
-        android:layout_weight="1"
-        android:text="I-" />
-
-</LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="horizontal"
-    android:weightSum="5">
+    android:weightSum="4">
 
     <Button
         android:id="@+id/weatherButton"
@@ -38,11 +38,4 @@
         android:textSize="10sp"
         android:text="Body" />
 
-    <Button
-        android:id="@+id/lensButton"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:textSize="10sp"
-        android:text="Lens" />
 </LinearLayout>

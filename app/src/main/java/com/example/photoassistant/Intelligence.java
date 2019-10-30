@@ -113,6 +113,7 @@ public class Intelligence{
         }
         public static String getDofNear(){return String.format("%.02f", dofNear);}
         public static String getDofFar(){return String.format("%.02f", dofFar);}
+        public static void refreshDistance(){distance = Intelligence.HyperfocalCalculator();}
     }
 
     private static double CoCCalculator(){
