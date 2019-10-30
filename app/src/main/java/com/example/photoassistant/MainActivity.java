@@ -7,7 +7,9 @@ import androidx.fragment.app.FragmentManager;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
@@ -59,66 +61,9 @@ public class MainActivity extends AppCompatActivity {
     public static String currFrag = "sun";
     public static String prevFrag;
     public static Stack fragmentStack = new Stack();
+    private static Activity activity;
 
-    public static ListItem[] Slot1 = new ListItem[2];
-    public static ListItem[] Slot2 = new ListItem[2];
-    public static ListItem[] Slot3 = new ListItem[2];
-    public static ListItem[] Slot4 = new ListItem[2];
-    public static int WhichSlot =1;
-    ListItem[] cacheArray = null;
 
-    public static void addSlot(int whichSlot, ListItem[] li) {
-
-        switch (whichSlot) {
-            case 1:
-                Slot1 = li;
-                break;
-            case 2:
-                Slot2 = li;
-                break;
-            case 3:
-                Slot3 = li;
-                break;
-            case 4:
-                Slot4 = li;
-                break;
-        }
-
-    }
-       public static ListItemBody getBodySlot(int whichSlot) {
-           ListItemBody retSlot = null;
-           if (Calculator.isParsable(resolveSlot(whichSlot)[0])) {
-            retSlot = (ListItemBody) resolveSlot(whichSlot)[0];
-            retSlot.toString();
-        }
-           return retSlot;
-    }
-
-    public static ListItemLens getLensSlot(int whichSlot) {
-
-        ListItemLens retSlot = null;
-        if (Calculator.isParsable(resolveSlot(whichSlot)[1])) {
-            retSlot = (ListItemLens) resolveSlot(whichSlot)[1];
-            retSlot.toString();
-        }
-        return retSlot;
-    }
-
-    private static ListItem[] resolveSlot(int whichSlot) {
-
-        switch (whichSlot) {
-            case 1:
-                return Slot1;
-            case 2:
-                return Slot2;
-            case 3:
-                return Slot3;
-            case 4:
-                return Slot4;
-        }
-        return null;
-
-    }
 
     public ArrayList<String> permissionsToRequest;
     public ArrayList<String> permissionsRejected = new ArrayList<>();
@@ -143,16 +88,19 @@ public class MainActivity extends AppCompatActivity {
 
         new ProcessDataFromArrays().execute();
 
-
+        Intelligence.Current.setLens(new ListItemLens("Lens", new String[]{"Lens","50","50","2.8","2.8","22","22"}));
+        Intelligence.Current.setBody(new ListItemBody("Body", new String[]{"Body","50","36","24","DSLR","Sample"}));
         bodyButton = findViewById(R.id.bodyButton);
         bodyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                changeFragBody();
+                fragmentStack.push(new BodySelector());
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl,new BodySelector()).commit();
 
             }
         });
+        activity = this;
 
 //        lensButton = findViewById(R.id.lensButton);
 //        lensButton.setOnClickListener(new View.OnClickListener() {
@@ -201,7 +149,6 @@ public class MainActivity extends AppCompatActivity {
         if(!fragmentStack.empty())getSupportFragmentManager().beginTransaction().replace(R.id.fl,(Fragment)fragmentStack.peek()).commit();
         else System.exit(1);
     }
-
     private ArrayList<String> findUnAskedPermissions(ArrayList<String> wanted) {
         ArrayList<String> result = new ArrayList<String>();
 
@@ -281,118 +228,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void setOverlayResources() {
-        TextView tvTS = findViewById(R.id.tv_ImageButtonTS);
-        TextView tvTE = findViewById(R.id.tv_ImageButtonTE);
-        TextView tvBS = findViewById(R.id.tv_ImageButtonBS);
-        TextView tvBE = findViewById(R.id.tv_ImageButtonBE);
 
 
-        if (Slot1[0] != null) {
-            tvTS.setText(Slot1[0].getPartName());
-        } else {
-            tvTS.setText("Not Selected");
-        }
-
-        if (Slot2[0] != null) {
-            tvTE.setText(Slot2[0].getPartName());
-        } else {
-            tvTE.setText("Not Selected");
-        }
-
-        if (Slot3[0] != null) {
-            tvBS.setText(Slot3[0].getPartName());
-        } else {
-            tvBS.setText("Not Selected");
-        }
-
-        if (Slot4[0] != null) {
-            tvBE.setText(Slot4[0].getPartName());
-        } else {
-            tvBE.setText("Not Selected");
-        }
-
-    }
-
-    public void changeFragBody() {
-        prevFrag = currFrag;
-        currFrag = "body";
-
-        ImageButton ib_topStart = findViewById(R.id.imageButtonTopStart);
-        ImageButton ib_topEnd = findViewById(R.id.imageButtonTopEnd);
-        ImageButton ib_bottomStart = findViewById(R.id.imageButtonBottomStart);
-        ImageButton ib_bottomEnd = findViewById(R.id.imageButtonBottomEnd);
-
-
-        setOverlayResources();
-
-        final View view = findViewById(R.id.body_selection_overlay_include);
-        view.setVisibility(View.VISIBLE);
-        ib_topStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view.setVisibility(View.INVISIBLE);
-                if (Slot1[0] == null) {
-                    WhichSlot =1;
-                    getSupportFragmentManager().beginTransaction().add(R.id.fl, new Body(Slot1, 1)).addToBackStack("body").commit();
-                }
-            }
-        });
-        ib_topStart.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (Slot1 != null) {
-                    cacheArray = Slot1.clone();
-                    Slot1[0] = null;
-                    Slot1[1] = null;
-                    setOverlayResources();
-
-                    Snackbar.make(v, "Item Deleted", Snackbar.LENGTH_LONG).setAction("Undo?", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Slot1 = cacheArray.clone();
-                            setOverlayResources();
-                            cacheArray[0] = null;
-                            cacheArray[1] = null;
-
-                        }
-
-                    }).show();
-                }
-                return true;
-            }
-        });
-        ib_topEnd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view.setVisibility(View.INVISIBLE);
-                if (Slot2[0] == null) {
-                    WhichSlot =2;
-                    getSupportFragmentManager().beginTransaction().add(R.id.fl, new Body(Slot2, 2)).addToBackStack("body").commit();
-                }
-            }
-        });
-        ib_bottomStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view.setVisibility(View.INVISIBLE);
-                if (Slot3[0] == null) {
-                    WhichSlot =3;
-                    getSupportFragmentManager().beginTransaction().add(R.id.fl, new Body(Slot3, 3)).addToBackStack("body").commit();
-                }
-            }
-        });
-        ib_bottomEnd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view.setVisibility(View.INVISIBLE);
-                if (Slot4[0] == null) {
-                    WhichSlot =4;
-                    getSupportFragmentManager().beginTransaction().add(R.id.fl, new Body(Slot4, 4)).addToBackStack("body").commit();
-                }
-            }
-        });
-    }
 
     @SuppressLint("StaticFieldLeak")
     private class ProcessDataFromArrays extends AsyncTask<ArrayList<ListItem>, Integer, ArrayList<ListItem>> {
@@ -416,8 +253,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ArrayList<ListItem> listItems) {
-            Slot1[1] = lens_al.get(0);
-            Slot1[0] = body_al.get(0);
+            //Slot1[1] = lens_al.get(0);
+            //Slot1[0] = body_al.get(0);
             super.onPostExecute(listItems);
         }
 

@@ -295,26 +295,26 @@ public class Calculator extends Fragment {
         bodyButton = view.findViewById(R.id.cameraSelectButton);
         lensButton = view.findViewById(R.id.lensSelectButton);
         evTextView = view.findViewById(R.id.evTextView);
-        if(isParsable(MainActivity.getBodySlot(MainActivity.WhichSlot))){
-            Intelligence.Current.setBody(MainActivity.getBodySlot(MainActivity.WhichSlot));
-            Intelligence.Current.setLens(MainActivity.getLensSlot(MainActivity.WhichSlot));
+        if(isParsable(BodySelector.getBodySlot(BodySelector.getWhichSlot()))){
+            Intelligence.Current.setBody(BodySelector.getBodySlot(BodySelector.getWhichSlot()));
+            Intelligence.Current.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot()));
         }
 
 
         bodyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.fragmentStack.push(new Body());
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Body()).commit();
-
+                BodySelector.nextSlot();
+                Intelligence.Current.setBody(BodySelector.getBodySlot(BodySelector.getWhichSlot()));
+                Intelligence.Current.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot()));
             }
         });
 
         lensButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.fragmentStack.push(new Lens());
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Lens()).commit();
+                //MainActivity.fragmentStack.push(new Lens());
+                //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Lens()).commit();
             }
         });
 

@@ -6,14 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="15"
+    android:weightSum="1"
     tools:context=".MainActivity">
 
     <FrameLayout
         android:id="@+id/fl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_weight="0">
 
 
     </FrameLayout>
@@ -23,5 +23,5 @@
         layout="@layout/navigation_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="14.99"/>
+        android:layout_weight="1"/>
 </LinearLayout>

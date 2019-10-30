@@ -132,10 +132,13 @@ public class Lens extends Fragment {
             public void onClick(View v) {
                 Log.d("ppp", "onClick: Lens Done Button");
                 slot[1] = favourites.get(0);
-                MainActivity.addSlot(currentSlot,slot);
+                BodySelector.addSlot(currentSlot,slot);
+                MainActivity.fragmentStack.pop();
+                //MainActivity.fragmentStack.push(new BodySelector());
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl,new BodySelector()).commit();
                 Log.d("slotBack", "onClick: " + slot[0].toString() + " " + slot[1].toString() + " " + currentSlot);
-                getActivity().getSupportFragmentManager().popBackStack("lens", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                getActivity().getSupportFragmentManager().popBackStack("body", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                //getActivity().getSupportFragmentManager().popBackStack("lens", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                //getActivity().getSupportFragmentManager().popBackStack("body", FragmentManager.POP_BACK_STACK_INCLUSIVE);
             }
         });
         else  {doneButton.setVisibility(View.INVISIBLE);}

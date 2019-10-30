@@ -39,8 +39,8 @@ public class Intelligence{
         private static List<Double> currentFocalLengthRange = Arrays.asList(shutterSpeedRange);
         private static List<Integer> currentIsoRange = Arrays.asList(isoRange);
         private static List<Double> currentshutterSpeedRange = Arrays.asList(shutterSpeedRange);
-        private static ListItemBody body = MainActivity.getBodySlot(MainActivity.WhichSlot);
-        private static ListItemLens lens = MainActivity.getLensSlot(MainActivity.WhichSlot);
+        private static ListItemBody body = new ListItemBody("Body",new String[]{"Body","50","36","24","DSLR","Sample"});
+        private static ListItemLens lens = new ListItemLens("Lens", new String[]{"Lens","50","50","2.8","2.8","22","22"});
         private static int focalLengthStep = 0;
         private static int apertureStep = 0;
         private static int shutterSpeedStep = shutterSpeedRange.length/2;
@@ -132,7 +132,7 @@ public class Intelligence{
         return viewingDistance/lpmm/enlargement/25.0;
     }
     public static double HyperfocalCalculator(){
-        double x= (Current.getFocalLength()*Current.getFocalLength()/(CoCCalculator()*Current.getAperture())+Current.getFocalLength())/1000;
+        //double x= (Current.getFocalLength()*Current.getFocalLength()/(CoCCalculator()*Current.getAperture())+Current.getFocalLength())/1000;
         return (Current.getFocalLength()*Current.getFocalLength()/(CoCCalculator()*Current.getAperture())+Current.getFocalLength())/1000;
     }
     protected static double DofNearCalculator(){

@@ -31,13 +31,11 @@ import java.util.ArrayList;
 
 
 public class Body extends Fragment {
-
+    private Button LensButton;
     private static RecyclerAdapterListItem adapter;
     private static ListItem[] slot;
-    private int whichSlot;
-    private Button LensButton;
-
-
+    private ListItem[] tempSlot = new ListItem[2];
+    private static int whichSlot;
     public Body() {
         // Required empty public constructor
     }
@@ -77,7 +75,7 @@ public class Body extends Fragment {
             public void onItemClick(ListItem item) {
                 Toast.makeText(getContext(), "Item Clicked", Toast.LENGTH_LONG).show();
                 tv_slot_selected.setText(item.getPartName());
-                slot[0] = item;
+                tempSlot[0] = item;
             }
         });
         recyclerView.setAdapter(adapter);
@@ -86,13 +84,11 @@ public class Body extends Fragment {
         LensButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (slot[0] !=null) {
-                    new AsyncTaskLoadPossibleLenses().execute(slot[0]);
+                if (tempSlot[0] !=null) {
+                    new AsyncTaskLoadPossibleLenses().execute(tempSlot[0]);
                 }
             }
         });
-        getActivity().findViewById(R.id.body_selection_overlay_include).setVisibility(View.INVISIBLE);
         setHasOptionsMenu(true);
     }
 
@@ -105,7 +101,7 @@ public class Body extends Fragment {
 
     public void startLensFragment(ArrayList<ListItem> listItems){
 
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Lens(slot,listItems,whichSlot)).addToBackStack("lens").commit();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Lens(tempSlot,listItems,whichSlot)).addToBackStack("lens").commit();
 
     }
 

@@ -78,15 +78,16 @@ public class ListItemLens extends ListItem {
 
     public String getSimpleName() {
         String finalString = "";
+        finalString = finalString+"f/";
         if(apertureMaxWide==apertureMaxTele)
         {
             finalString = finalString+apertureMaxWide;
         }
         else
         {
-            finalString = apertureMaxWide+"-"+apertureMaxTele;
+            finalString = finalString+apertureMaxWide+"-"+apertureMaxTele;
         }
-        finalString = finalString+"/";
+        finalString = finalString+"\n";
         double minZoomDisplay, maxZoomDisplay;
         if(Math.ceil(minZoom) == Math.floor(minZoom))
         {
@@ -115,7 +116,7 @@ public class ListItemLens extends ListItem {
         }
         else
         {
-            finalString = minZoomStr+"-"+maxZoomStr;
+            finalString = finalString+minZoomStr+"-"+maxZoomStr;
         }
         return finalString;
     }
