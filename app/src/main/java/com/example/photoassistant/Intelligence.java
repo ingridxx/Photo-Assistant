@@ -64,6 +64,8 @@ public class Intelligence{
         }
         public static void setLens(ListItemLens l){lens = l;
         currentApertureRange = new ArrayList<Double>();
+        focalLengthStep = 0;
+        apertureStep = 0;
         currentApertureRange.add(Math.round(lens.getApertureMinTele()*10)/10.0);
         for (int i = 0;i<apertureRange.length;i++)
         {if(apertureRange[i]>Math.round(lens.getApertureMaxWide()*10)/10.0 && apertureRange[i]<Math.round(lens.getApertureMinTele()*10)/10.0)
