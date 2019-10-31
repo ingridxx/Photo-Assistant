@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -99,6 +100,7 @@ public class BodySelector extends Fragment {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         View rootView = inflater.inflate(R.layout.body_selection_overlay, container, false);
         changeFragBody(rootView);
+
         return rootView;
     }
 

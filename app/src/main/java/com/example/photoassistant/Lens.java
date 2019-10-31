@@ -25,6 +25,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class Lens extends Fragment {
 
@@ -36,6 +38,7 @@ public class Lens extends Fragment {
     private ArrayList<String> favouritesString;
     private ArrayList<ListItem> favourites;
     private ArrayList<ListItem> arrayToSort;
+    int currentPosSelcted;
     private int currentSlot;
 
 
@@ -105,10 +108,15 @@ public class Lens extends Fragment {
 
     }
 
-    public void swapSpinnerItemToStart(ListItem lensToAdd, int position) {
+    private void swapSpinnerItemToStart(int position) {
 
-        System.out.println("Lens " + lensToAdd.toString() + " : Pos " + position);
+        if (slot[1] != null && slot[2] != null && position!=0) { // if the first spots arent empty
 
+            Collections.swap(favourites,position,0);
+            lens_spinner.getSelectedItem();
+            updateArrayAdapter();
+
+        }
     }
 
 
@@ -125,6 +133,7 @@ public class Lens extends Fragment {
 
     @Override
     public void onDestroy() {
+        swapSpinnerItemToStart(currentPosSelcted);
 
         super.onDestroy();
     }
@@ -178,26 +187,8 @@ public class Lens extends Fragment {
 
         lens_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int where;
-
-                if (slot[1] != null) {
-                    for (int i = 1; i < favourites.size(); ++i) {
-                        String ret = parent.getItemAtPosition(position).toString();
-                        if (slot[i].toString().contains(ret)) {
-                            ListItem newItem = slot[i];
-                            ListItem tempItem = null;
-                            tempItem = slot[1];
-                            slot[1] = newItem;
-                            if (!tempItem.equals(newItem)) {
-                                slot[i] = tempItem;
-                                updateArrayAdapter();
-                            }
-                            Log.d("eeeeeee", "onItemSelected: Loops " + i);
-
-                        }
-                    }
-                }
-
+                currentPosSelcted = position;
+                System.out.println(" THE CURRENT ITEEM" + favourites.get(position).toString());
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
