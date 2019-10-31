@@ -17,10 +17,8 @@ import androidx.fragment.app.Fragment;
 public class BodySelector extends Fragment {
 
 
-    public static ListItem[] Slot1 = new ListItem[6];
-    public static ListItem[] Slot2 = new ListItem[6];
-    public static ListItem[] Slot3 = new ListItem[6];
-    public static ListItem[] Slot4 = new ListItem[6];
+    public static ListItem[][] Slots = new ListItem[4][6];
+
     private static int WhichSlot = 1;
     ListItem[] cacheArray = null;
 
@@ -28,16 +26,16 @@ public class BodySelector extends Fragment {
 
         switch (whichSlot) {
             case 1:
-                Slot1 = li;
+                Slots[0] = li;
                 break;
             case 2:
-                Slot2 = li;
+                Slots[1] = li;
                 break;
             case 3:
-                Slot3 = li;
+                Slots[2] = li;
                 break;
             case 4:
-                Slot4 = li;
+                Slots[3] = li;
                 break;
         }
 
@@ -109,13 +107,13 @@ public class BodySelector extends Fragment {
 
         switch (whichSlot % 5) {
             case 1:
-                return Slot1;
+                return Slots[0];
             case 2:
-                return Slot2;
+                return Slots[1];
             case 3:
-                return Slot3;
+                return Slots[2];
             case 4:
-                return Slot4;
+                return Slots[3];
         }
         return null;
 
@@ -143,25 +141,25 @@ public class BodySelector extends Fragment {
             @Override
             public void onClick(View v) {
                 WhichSlot = 1;
-                if (Slot1[0] == null) {
-                    MainActivity.fragmentStack.add(new Body(Slot1, 1));
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(Slot1, 1)).commit();
+                if (Slots[0][0] == null) {
+                    MainActivity.fragmentStack.add(new Body(Slots[0], 1));
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(Slots[0], 1)).commit();
                 }
             }
         });
         ib_topStart.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if (Slot1 != null) {
-                    cacheArray = Slot1.clone();
-                    Slot1[0] = null;
-                    Slot1[1] = null;
+                if (Slots[0] != null) {
+                    cacheArray = Slots[0].clone();
+                    Slots[0][0] = null;
+                    Slots[0][1] = null;
                     setOverlayResources(rootView);
 
                     Snackbar.make(v, "Item Deleted", Snackbar.LENGTH_LONG).setAction("Undo?", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Slot1 = cacheArray.clone();
+                            Slots[0] = cacheArray.clone();
                             setOverlayResources(rootView);
                             cacheArray[0] = null;
                             cacheArray[1] = null;
@@ -177,9 +175,9 @@ public class BodySelector extends Fragment {
             @Override
             public void onClick(View v) {
                 WhichSlot = 2;
-                if (Slot2[0] == null) {
-                    MainActivity.fragmentStack.add(new Body(Slot2, 2));
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(Slot2, 2)).commit();
+                if (Slots[1][0] == null) {
+                    MainActivity.fragmentStack.add(new Body(Slots[1], 2));
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(Slots[1], 2)).commit();
                 }
             }
         });
@@ -187,9 +185,9 @@ public class BodySelector extends Fragment {
             @Override
             public void onClick(View v) {
                 WhichSlot = 3;
-                if (Slot3[0] == null) {
-                    MainActivity.fragmentStack.add(new Body(Slot3, 3));
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(Slot3, 3)).commit();
+                if (Slots[2][0] == null) {
+                    MainActivity.fragmentStack.add(new Body(Slots[2], 3));
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(Slots[2], 3)).commit();
                 }
             }
         });
@@ -197,9 +195,9 @@ public class BodySelector extends Fragment {
             @Override
             public void onClick(View v) {
                 WhichSlot = 4;
-                if (Slot4[0] == null) {
-                    MainActivity.fragmentStack.add(new Body(Slot4, 4));
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(Slot4, 4)).commit();
+                if (Slots[3][0] == null) {
+                    MainActivity.fragmentStack.add(new Body(Slots[3], 4));
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(Slots[3], 4)).commit();
                 }
             }
         });
@@ -213,26 +211,26 @@ public class BodySelector extends Fragment {
         TextView tvBE = rootView.findViewById(R.id.tv_ImageButtonBE);
 
 
-        if (Slot1[0] != null) {
-            tvTS.setText(Slot1[0].getPartName());
+        if (Slots[0][0] != null) {
+            tvTS.setText(Slots[0][0].getPartName());
         } else {
             tvTS.setText("Not Selected");
         }
 
-        if (Slot2[0] != null) {
-            tvTE.setText(Slot2[0].getPartName());
+        if (Slots[1][0] != null) {
+            tvTE.setText(Slots[1][0].getPartName());
         } else {
             tvTE.setText("Not Selected");
         }
 
-        if (Slot3[0] != null) {
-            tvBS.setText(Slot3[0].getPartName());
+        if (Slots[2][0] != null) {
+            tvBS.setText(Slots[2][0].getPartName());
         } else {
             tvBS.setText("Not Selected");
         }
 
-        if (Slot4[0] != null) {
-            tvBE.setText(Slot4[0].getPartName());
+        if (Slots[3][0] != null) {
+            tvBE.setText(Slots[3][0].getPartName());
         } else {
             tvBE.setText("Not Selected");
         }

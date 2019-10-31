@@ -253,8 +253,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ArrayList<ListItem> listItems) {
-            //Slot1[1] = lens_al.get(0);
-            //Slot1[0] = body_al.get(0);
+            //Slots[1][1] = lens_al.get(0);
+            //Slots[1][0] = body_al.get(0);
             super.onPostExecute(listItems);
         }
 
