@@ -17,8 +17,11 @@ import androidx.fragment.app.Fragment;
 public class BodySelector extends Fragment {
 
 
-    public static ListItem[][] Slots = new ListItem[4][6];
+    public static final int howManySlots = 4;
+    public static final int howManySsavedLenses = 5;
 
+    public static ListItem[][] Slots = new ListItem[howManySlots][1 + howManySsavedLenses];
+    static int whichLens = 1;
     private static int WhichSlot = 1;
     ListItem[] cacheArray = null;
 
@@ -40,30 +43,33 @@ public class BodySelector extends Fragment {
         }
 
     }
-    public static boolean empty(){
+
+    public static boolean empty() {
         int startPoint = getWhichSlot();
         int tracker = getWhichSlot();
-        do
-        {
+        do {
             tracker = tracker + 1;
-            tracker = tracker%4+1;
-            if(resolveSlot(tracker)[0] != null){ return false;}
-            if(tracker==startPoint) {return true;}
-        }while (true);
+            tracker = tracker % 4 + 1;
+            if (resolveSlot(tracker)[0] != null) {
+                return false;
+            }
+            if (tracker == startPoint) {
+                return true;
+            }
+        } while (true);
     }
 
     public static int nextSlot() {
-        do
-        {
+        do {
             setWhichSlot(getWhichSlot() + 1);
-        }while (resolveSlot(getWhichSlot())[0] == null);
+        } while (resolveSlot(getWhichSlot())[0] == null);
 
         resetLens();
         return getWhichSlot();
     }
-    public static void resetLens()
-    {
-        whichLens=1;
+
+    public static void resetLens() {
+        whichLens = 1;
     }
 
     public static int getWhichSlot() {
@@ -72,31 +78,39 @@ public class BodySelector extends Fragment {
 
     public static void setWhichSlot(int i) {
         WhichSlot = i;
-        if(WhichSlot>4) WhichSlot = 1;
-        if(WhichSlot<1) WhichSlot = 4;
+        if (WhichSlot > 4) WhichSlot = 1;
+        if (WhichSlot < 1) WhichSlot = 4;
     }
 
     public static ListItemBody getBodySlot(int whichSlot) {
         ListItemBody retSlot = null;
-        if (Calculator.isParsable(resolveSlot(whichSlot)[0])) {
+        if (isParsable(resolveSlot(whichSlot)[0])) {
             retSlot = (ListItemBody) resolveSlot(whichSlot)[0];
             retSlot.toString();
         }
         return retSlot;
     }
-    static int whichLens = 1;
-    public static ListItemLens nextLens()
-    {
-        do{
-            whichLens = (whichLens+1)%5+1;
-        }while(resolveSlot(WhichSlot)[whichLens]==null);
+
+    public static boolean isParsable(ListItem input) {
+        try {
+            input.getPartName();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static ListItemLens nextLens() {
+        do {
+            whichLens = (whichLens + 1) % 5 + 1;
+        } while (resolveSlot(WhichSlot)[whichLens] == null);
         return getLensSlot(WhichSlot);
     }
 
     public static ListItemLens getLensSlot(int whichSlot) {
 
         ListItemLens retSlot = null;
-        if (Calculator.isParsable(resolveSlot(whichSlot)[whichLens])) {
+        if (isParsable(resolveSlot(whichSlot)[whichLens])) {
             retSlot = (ListItemLens) resolveSlot(whichSlot)[whichLens];
             retSlot.toString();
         }
@@ -236,8 +250,6 @@ public class BodySelector extends Fragment {
         }
 
     }
-
-
 
 
 }

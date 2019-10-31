@@ -249,14 +249,7 @@ public class Calculator extends Fragment {
         return rootView;
     }
 
-    public static boolean isParsable(ListItem input){
-        try{
-            input.getPartName();
-            return true;
-        }catch(Exception e){
-            return false;
-        }
-    }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -295,7 +288,7 @@ public class Calculator extends Fragment {
         bodyButton = view.findViewById(R.id.cameraSelectButton);
         lensButton = view.findViewById(R.id.lensSelectButton);
         evTextView = view.findViewById(R.id.evTextView);
-        if(isParsable(BodySelector.getBodySlot(BodySelector.getWhichSlot()))){
+        if(BodySelector.isParsable(BodySelector.getBodySlot(BodySelector.getWhichSlot()))){
             Intelligence.Current.setBody(BodySelector.getBodySlot(BodySelector.getWhichSlot()));
             Intelligence.Current.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot()));
         }

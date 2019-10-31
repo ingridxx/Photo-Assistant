@@ -1,4 +1,5 @@
 package com.example.photoassistant;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
@@ -42,8 +43,8 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.util.ArrayList;
 
+import java.util.ArrayList;
 
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
@@ -52,24 +53,23 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 public class MainActivity extends AppCompatActivity {
     public static final int h = 10;
-    Button bodyButton;
-    Button lensButton;
-    Button weatherButton;
-    Button calcButton;
-    Button sunButton;
+    public final static int ALL_PERMISSIONS_RESULT = 101;
+    private static final int MY_CAMERA_REQUEST_CODE = 100;
     public static ArrayList<ListItem> lens_al = new ArrayList<>();
     public static ArrayList<ListItem> body_al = new ArrayList<>();
     public static String currFrag = "sun";
     public static String prevFrag;
     public static Stack fragmentStack = new Stack();
     private static Activity activity;
-
     public ArrayList<String> permissionsToRequest;
     public ArrayList<String> permissionsRejected = new ArrayList<>();
     public ArrayList<String> permissions = new ArrayList<>();
-    public final static int ALL_PERMISSIONS_RESULT = 101;
-    private static final int MY_CAMERA_REQUEST_CODE = 100;
-    GPS gps=new GPS(MainActivity.this);
+    Button bodyButton;
+    Button lensButton;
+    Button weatherButton;
+    Button calcButton;
+    Button sunButton;
+    GPS gps = new GPS(MainActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
         permissions.add(ACCESS_FINE_LOCATION);
         permissions.add(ACCESS_COARSE_LOCATION);
-        ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, MY_CAMERA_REQUEST_CODE);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, MY_CAMERA_REQUEST_CODE);
         permissionsToRequest = findUnAskedPermissions(permissions);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (permissionsToRequest.size() > 0)
@@ -88,15 +88,15 @@ public class MainActivity extends AppCompatActivity {
 
         new ProcessDataFromArrays().execute();
 
-        Intelligence.Current.setLens(new ListItemLens("Lens", new String[]{"Lens","50","50","2.8","2.8","22","22"}));
-        Intelligence.Current.setBody(new ListItemBody("Body", new String[]{"Body","50","36","24","DSLR","Sample"}));
+        Intelligence.Current.setLens(new ListItemLens("Lens", new String[]{"Lens", "50", "50", "2.8", "2.8", "22", "22"}));
+        Intelligence.Current.setBody(new ListItemBody("Body", new String[]{"Body", "50", "36", "24", "DSLR", "Sample"}));
         bodyButton = findViewById(R.id.bodyButton);
         bodyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 fragmentStack.push(new BodySelector());
-                getSupportFragmentManager().beginTransaction().replace(R.id.fl,new BodySelector()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl, new BodySelector()).commit();
 
             }
         });
@@ -115,29 +115,43 @@ public class MainActivity extends AppCompatActivity {
         weatherButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 fragmentStack.push(new Weather());
-                getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Weather()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Weather()).commit();
+
             }
         });
+
         calcButton = findViewById(R.id.calcButton);
         calcButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentStack.push(new Calculator());
-                getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Calculator()).commit();
+
+                if (!BodySelector.empty()) {
+                    fragmentStack.push(new Calculator());
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Calculator()).commit();
+                } else{
+                    Toast.makeText(getApplicationContext(), "Please Select a Lens First!", Toast.LENGTH_SHORT).show();
+                    fragmentStack.push(new BodySelector());
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fl, new BodySelector()).commit();
+                }
             }
+
         });
         sunButton = findViewById(R.id.sunButton);
         sunButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fragmentStack.push(new Sun());
-                getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Sun()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Sun()).commit();
             }
         });
 
 
-        if(fragmentStack.empty()) {fragmentStack.push(new Sun());getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Sun()).commit();}
+        if (fragmentStack.empty()) {
+            fragmentStack.push(new Sun());
+            getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Sun()).commit();
+        }
         //getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Sun()).commit();
 
     }
@@ -146,9 +160,11 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         Log.d("myDebugTag", "onBackPressed:");
         fragmentStack.pop();
-        if(!fragmentStack.empty())getSupportFragmentManager().beginTransaction().replace(R.id.fl,(Fragment)fragmentStack.peek()).commit();
+        if (!fragmentStack.empty())
+            getSupportFragmentManager().beginTransaction().replace(R.id.fl, (Fragment) fragmentStack.peek()).commit();
         else System.exit(1);
     }
+
     private ArrayList<String> findUnAskedPermissions(ArrayList<String> wanted) {
         ArrayList<String> result = new ArrayList<String>();
 
@@ -226,9 +242,6 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         gps.stopListener();
     }
-
-
-
 
 
     @SuppressLint("StaticFieldLeak")
