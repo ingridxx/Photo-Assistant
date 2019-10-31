@@ -56,7 +56,7 @@ public class Intelligence{
 
         public static ListItemBody getBody(){return body;}
         public static ListItemLens getLens(){return lens;}
-
+        public static double getAspectRatio(){return body.getSensorAspectRatio();}
         public static void setBody(ListItemBody b) {
             body = b;
             focalLengthStep = 0;
