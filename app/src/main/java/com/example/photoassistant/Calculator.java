@@ -304,17 +304,29 @@ public class Calculator extends Fragment {
         bodyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BodySelector.nextSlot();
-                Intelligence.Current.setBody(BodySelector.getBodySlot(BodySelector.getWhichSlot()));
-                Intelligence.Current.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot()));
+                if(!BodySelector.empty())
+                {
+                    BodySelector.nextSlot();
+                    Intelligence.Current.setBody(BodySelector.getBodySlot(BodySelector.getWhichSlot()));
+                    Intelligence.Current.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot()));
+                    Intelligence.Current.refreshDistance();
+
+                }
+
             }
         });
 
         lensButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //MainActivity.fragmentStack.push(new Lens());
-                //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Lens()).commit();
+                if(!BodySelector.empty())
+                {
+                    BodySelector.nextLens();
+                    Intelligence.Current.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot()));
+                    Intelligence.Current.refreshDistance();
+
+                }
+
             }
         });
 
@@ -340,6 +352,34 @@ public class Calculator extends Fragment {
     {
         //Intelligence.Current.setBody(Intelligence.Current.getBody());
         //Intelligence.Current.setLens(Intelligence.Current.getLens());
+        if(Intelligence.Current.isPrimeLens())
+        {
+            zoomPlusButton.setEnabled(false);
+            zoomPlusButton.setVisibility(View.INVISIBLE);
+            zoomMinusButton.setEnabled(false);
+            zoomMinusButton.setVisibility(View.INVISIBLE);
+        }
+        else
+        {
+            zoomPlusButton.setEnabled(true);
+            zoomPlusButton.setVisibility(View.VISIBLE);
+            zoomMinusButton.setEnabled(true);
+            zoomMinusButton.setVisibility(View.VISIBLE);
+        }
+        if(Intelligence.Current.isFixedApertureLens())
+        {
+            aperturePlusButton.setEnabled(false);
+            aperturePlusButton.setVisibility(View.INVISIBLE);
+            apertureMinusButton.setEnabled(false);
+            apertureMinusButton.setVisibility(View.INVISIBLE);
+        }
+        else
+        {
+            aperturePlusButton.setEnabled(true);
+            aperturePlusButton.setVisibility(View.VISIBLE);
+            apertureMinusButton.setEnabled(true);
+            apertureMinusButton.setVisibility(View.VISIBLE);
+        }
         apertureTV.setText(Intelligence.Current.getApertureString());
         shutterSpeedTV.setText(Intelligence.Current.getShutterSpeedString());
         zoomTV.setText(Intelligence.Current.getFocalLengthString());

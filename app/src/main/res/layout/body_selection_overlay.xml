@@ -25,9 +25,15 @@
             android:id="@+id/tv_ImageButtonTS"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Not Selected"
+            android:layout_below="@id/imageButtonTopStart"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/imageButtonTopStart"/>
+            android:ellipsize="end"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:maxLines="2"
+            android:maxWidth="100dp"
+            android:minLines="2"
+            android:text="Not Selected"
+            android:textAlignment="gravity" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -49,9 +55,14 @@
             android:id="@+id/tv_ImageButtonTE"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Not Selected"
             android:layout_below="@id/imageButtonTopEnd"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:maxLines="2"
+            android:maxWidth="100dp"
+            android:minLines="2"
+            android:text="Not Selected"
+            android:textAlignment="gravity" />
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -73,9 +84,14 @@
             android:id="@+id/tv_ImageButtonBS"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Not Selected"
+            android:layout_below="@+id/imageButtonBottomStart"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/imageButtonBottomStart" />
+            android:gravity="center|center_horizontal|center_vertical"
+            android:maxLines="2"
+            android:maxWidth="100dp"
+            android:minLines="2"
+            android:text="Not Selected"
+            android:textAlignment="gravity" />
     </RelativeLayout>
 
 
@@ -99,9 +115,14 @@
             android:id="@+id/tv_ImageButtonBE"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Not Selected"
+            android:layout_below="@id/imageButtonBottomEnd"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/imageButtonBottomEnd"/>
+            android:gravity="center|center_horizontal|center_vertical"
+            android:maxLines="2"
+            android:maxWidth="100dp"
+            android:minLines="2"
+            android:text="Not Selected"
+            android:textAlignment="gravity" />
 
     </RelativeLayout>
 

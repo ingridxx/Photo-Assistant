@@ -42,13 +42,30 @@ public class BodySelector extends Fragment {
         }
 
     }
+    public static boolean empty(){
+        int startPoint = getWhichSlot();
+        int tracker = getWhichSlot();
+        do
+        {
+            tracker = tracker + 1;
+            tracker = tracker%4+1;
+            if(resolveSlot(tracker)[0] != null){ return false;}
+            if(tracker==startPoint) {return true;}
+        }while (true);
+    }
 
     public static int nextSlot() {
-        setWhichSlot(getWhichSlot() + 1);
-        while (resolveSlot(getWhichSlot())[1] == null) {
+        do
+        {
             setWhichSlot(getWhichSlot() + 1);
-        }
+        }while (resolveSlot(getWhichSlot())[0] == null);
+
+        resetLens();
         return getWhichSlot();
+    }
+    public static void resetLens()
+    {
+        whichLens=1;
     }
 
     public static int getWhichSlot() {
@@ -56,7 +73,9 @@ public class BodySelector extends Fragment {
     }
 
     public static void setWhichSlot(int i) {
-        WhichSlot = i % 4;
+        WhichSlot = i;
+        if(WhichSlot>4) WhichSlot = 1;
+        if(WhichSlot<1) WhichSlot = 4;
     }
 
     public static ListItemBody getBodySlot(int whichSlot) {
@@ -67,12 +86,20 @@ public class BodySelector extends Fragment {
         }
         return retSlot;
     }
+    static int whichLens = 1;
+    public static ListItemLens nextLens()
+    {
+        do{
+            whichLens = (whichLens+1)%5+1;
+        }while(resolveSlot(WhichSlot)[whichLens]==null);
+        return getLensSlot(WhichSlot);
+    }
 
     public static ListItemLens getLensSlot(int whichSlot) {
 
         ListItemLens retSlot = null;
-        if (Calculator.isParsable(resolveSlot(whichSlot)[1])) {
-            retSlot = (ListItemLens) resolveSlot(whichSlot)[1];
+        if (Calculator.isParsable(resolveSlot(whichSlot)[whichLens])) {
+            retSlot = (ListItemLens) resolveSlot(whichSlot)[whichLens];
             retSlot.toString();
         }
         return retSlot;
@@ -80,7 +107,7 @@ public class BodySelector extends Fragment {
 
     public static ListItem[] resolveSlot(int whichSlot) {
 
-        switch (whichSlot % 4 + 1) {
+        switch (whichSlot % 5) {
             case 1:
                 return Slot1;
             case 2:
