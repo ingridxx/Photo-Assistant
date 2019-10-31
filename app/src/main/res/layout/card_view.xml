@@ -10,37 +10,34 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_margin="10dp"
         android:background="?android:selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:padding="15dp"
-        android:layout_margin="5dp"
+        android:padding="10dp"
         card_view:cardCornerRadius="5dp">
 
         <RelativeLayout
+            android:id="@+id/relative_layout_cardview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/selector_row"
-            android:id="@+id/relative_layout_cardview"
-            android:padding="10dp">
-
-            <View
-                android:id="@+id/click_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clickable="true"
-                android:focusable="true" />
+            android:background="#000000"
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/bodyTitleLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:gravity="center_horizontal"
-                android:textSize="20sp"
-                android:clickable="false"/>
+                android:layout_centerInParent="false"
+                android:layout_toLeftOf="@id/bodyCropFactorTextView"
+                android:clickable="false"
+                android:ellipsize="end"
+                android:gravity="center_vertical|left"
+                android:maxLines="2"
+                android:textAlignment="gravity"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/bodyHintLabel"
@@ -56,6 +53,13 @@
                 android:layout_alignParentEnd="true"
                 android:gravity="end"
                 android:textSize="18sp" />
+
+            <View
+                android:id="@+id/click_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:focusable="true" />
 
 
         </RelativeLayout>

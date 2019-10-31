@@ -58,6 +58,7 @@ public class BodySelector extends Fragment {
         {
             setWhichSlot(getWhichSlot() + 1);
         }while (resolveSlot(getWhichSlot())[0] == null);
+
         resetLens();
         return getWhichSlot();
     }

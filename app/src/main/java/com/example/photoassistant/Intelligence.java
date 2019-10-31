@@ -57,7 +57,11 @@ public class Intelligence{
         public static ListItemBody getBody(){return body;}
         public static ListItemLens getLens(){return lens;}
 
-        public static void setBody(ListItemBody b){body = b;}
+        public static void setBody(ListItemBody b) {
+            body = b;
+            focalLengthStep = 0;
+            apertureStep = 0;
+        }
         public static void setLens(ListItemLens l){lens = l;
         currentApertureRange = new ArrayList<Double>();
         currentApertureRange.add(Math.round(lens.getApertureMinTele()*10)/10.0);

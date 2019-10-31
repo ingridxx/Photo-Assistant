@@ -33,12 +33,10 @@
             android:id="@+id/spinner1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:drawable/btn_dropdown"
-            android:spinnerMode="dropdown"
             android:layout_below="@id/doneButton"
-            local:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            />
+            android:minHeight="30dp"
+            android:spinnerMode="dropdown"
+            local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
 
         <androidx.recyclerview.widget.RecyclerView

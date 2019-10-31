@@ -77,6 +77,11 @@ public class ListItemLens extends ListItem {
     }
 
     public String getSimpleName() {
+        return getSimpleName(false);
+    }
+
+    public String getSimpleName(boolean oneLine) {
+
         String finalString = "";
         finalString = finalString+"f/";
         if(apertureMaxWide==apertureMaxTele)
@@ -87,7 +92,7 @@ public class ListItemLens extends ListItem {
         {
             finalString = finalString+apertureMaxWide+"-"+apertureMaxTele;
         }
-        finalString = finalString+"\n";
+        finalString = finalString+(oneLine?", ":"\n");
         double minZoomDisplay, maxZoomDisplay;
         if(Math.ceil(minZoom) == Math.floor(minZoom))
         {
@@ -120,7 +125,6 @@ public class ListItemLens extends ListItem {
         }
         return finalString;
     }
-
     @Override
     protected String TopLineText() {
         String retVal="";
@@ -132,7 +136,7 @@ public class ListItemLens extends ListItem {
 
     @Override
     protected String MiddleLineText() {
-        return super.MiddleLineText();
+        return getSimpleName(true)+", "+ String.format("%.2f",getMinFocusDistance());
     }
 
     @Override

@@ -14,12 +14,12 @@
             android:id="@+id/tv_slot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Slot 0"
-            android:textSize="15sp"
-            android:background="@drawable/outline_tv"
-            android:padding="10dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:background="@android:color/background_dark"
+            android:padding="10dp"
+            android:text="Slot 0"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/tv_selected_slot"
