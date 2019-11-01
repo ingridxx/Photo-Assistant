@@ -150,8 +150,8 @@ public class Calculator extends Fragment {
 //                            " SPD:"+mCaptureResult.get(TotalCaptureResult.SENSOR_EXPOSURE_TIME)+
 //                            " DIST:"+0.61/mCaptureResult.get(TotalCaptureResult.LENS_FOCUS_DISTANCE)+
 //                            " MM:"+mCaptureResult.get(TotalCaptureResult.LENS_FOCAL_LENGTH));
-                    Intelligence.Current.setPreviewSS(mCaptureResult.get(TotalCaptureResult.SENSOR_EXPOSURE_TIME));
-                    Intelligence.Current.setPreviewISO(mCaptureResult.get(TotalCaptureResult.SENSOR_SENSITIVITY));
+                    Intelligence.setPreviewSS(mCaptureResult.get(TotalCaptureResult.SENSOR_EXPOSURE_TIME));
+                    Intelligence.setPreviewISO(mCaptureResult.get(TotalCaptureResult.SENSOR_SENSITIVITY));
 //                    lensButton.setText(String.valueOf(Intelligence.ExposureCalculator())+"ISO:"+mCaptureResult.get(TotalCaptureResult.SENSOR_SENSITIVITY).toString()+
 //                            " SPD:"+mCaptureResult.get(TotalCaptureResult.SENSOR_EXPOSURE_TIME));
                     updateUI();
@@ -218,10 +218,10 @@ public class Calculator extends Fragment {
                         {
                             switch(box)
                             {
-                                case 1:Intelligence.Current.apertureMinus(); break;
-                                case 2:Intelligence.Current.shutterSpeedMinus();break;
-                                case 3:Intelligence.Current.isoMinus();break;
-                                case 4:Intelligence.Current.focalLengthMinus();
+                                case 1:Intelligence.apertureMinus(); break;
+                                case 2:Intelligence.shutterSpeedMinus();break;
+                                case 3:Intelligence.isoMinus();break;
+                                case 4:Intelligence.focalLengthMinus();
                                     delayCamera();break;
                             }
                         }
@@ -231,10 +231,10 @@ public class Calculator extends Fragment {
                         {
                             switch(box)
                             {
-                                case 1:Intelligence.Current.aperturePlus();break;
-                                case 2:Intelligence.Current.shutterSpeedPlus();break;
-                                case 3:Intelligence.Current.isoPlus();break;
-                                case 4:Intelligence.Current.focalLengthPlus();
+                                case 1:Intelligence.aperturePlus();break;
+                                case 2:Intelligence.shutterSpeedPlus();break;
+                                case 3:Intelligence.isoPlus();break;
+                                case 4:Intelligence.focalLengthPlus();
                                     delayCamera();break;
                             }
                         }
@@ -244,7 +244,7 @@ public class Calculator extends Fragment {
                         {
                             switch(box)
                             {
-                                case 5:Intelligence.Current.focusPlus();break;
+                                case 5:Intelligence.focusPlus();break;
                             }
                         }
                     else
@@ -253,7 +253,7 @@ public class Calculator extends Fragment {
                         {
                             switch(box)
                             {
-                                case 5:Intelligence.Current.focusMinus();break;
+                                case 5:Intelligence.focusMinus();break;
                             }
                         }
                     }
@@ -310,8 +310,8 @@ public class Calculator extends Fragment {
         evTextView = view.findViewById(R.id.evTextView);
         mTextureView = view.findViewById(R.id.textureview);
         if(BodySelector.isParsable(BodySelector.getBodySlot(BodySelector.getWhichSlot()))){
-            Intelligence.Current.setBody(BodySelector.getBodySlot(BodySelector.getWhichSlot()));
-            Intelligence.Current.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot()));
+            Intelligence.setBody(BodySelector.getBodySlot(BodySelector.getWhichSlot()));
+            Intelligence.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot()));
         }
 
 
@@ -342,9 +342,9 @@ public class Calculator extends Fragment {
                 if(!BodySelector.empty())
                 {
                     BodySelector.nextSlot();
-                    Intelligence.Current.setBody(BodySelector.getBodySlot(BodySelector.getWhichSlot()));
-                    Intelligence.Current.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot()));
-                    Intelligence.Current.refreshDistance();
+                    Intelligence.setBody(BodySelector.getBodySlot(BodySelector.getWhichSlot()));
+                    Intelligence.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot()));
+                    Intelligence.refreshDistance();
                     delayCamera();
                 }
 
@@ -359,22 +359,22 @@ public class Calculator extends Fragment {
                 if(!BodySelector.empty())
                 {
                     BodySelector.nextLens();
-                    Intelligence.Current.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot()));
-                    Intelligence.Current.refreshDistance();
+                    Intelligence.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot()));
+                    Intelligence.refreshDistance();
                     delayCamera();
                 }
 
             }
         });
 
-        aperturePlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.aperturePlus();}});
-        shutterSpeedPlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.shutterSpeedPlus(); }});
-        zoomPlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.focalLengthPlus(); delayCamera();}});
-        isoPlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.isoPlus();}});
-        apertureMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.apertureMinus();}});
-        shutterSpeedMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.shutterSpeedMinus(); }});
-        zoomMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.focalLengthMinus(); delayCamera(); }});
-        isoMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.isoMinus(); }});
+        aperturePlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.aperturePlus();}});
+        shutterSpeedPlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.shutterSpeedPlus(); }});
+        zoomPlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.focalLengthPlus(); delayCamera();}});
+        isoPlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.isoPlus();}});
+        apertureMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.apertureMinus();}});
+        shutterSpeedMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.shutterSpeedMinus(); }});
+        zoomMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.focalLengthMinus(); delayCamera(); }});
+        isoMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.isoMinus(); }});
 
         updateUI();
         int count=0,maxTries=10;
@@ -395,7 +395,7 @@ public class Calculator extends Fragment {
     {
         try
         {
-            double zoomFactor = Intelligence.Current.getEquivalentFocalLength()/getPhoneEquivalentFocalLength(mCameraCharacteristics);
+            double zoomFactor = Intelligence.getEquivalentFocalLength()/getPhoneEquivalentFocalLength(mCameraCharacteristics);
             double maxZoom = mCameraCharacteristics.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM);
             if(zoomFactor<=1) return 1.0;
             else if(zoomFactor>maxZoom) return maxZoom;
@@ -431,9 +431,7 @@ public class Calculator extends Fragment {
     int jumpStartCount=0,jumpStartMaxTries=2;
     public void updateUI()
     {
-        //Intelligence.Current.setBody(Intelligence.Current.getBody());
-        //Intelligence.Current.setLens(Intelligence.Current.getLens());
-        if(Intelligence.Current.isPrimeLens())
+        if(Intelligence.isPrimeLens())
         {
             zoomPlusButton.setEnabled(false);
             zoomPlusButton.setVisibility(View.INVISIBLE);
@@ -447,7 +445,7 @@ public class Calculator extends Fragment {
             zoomMinusButton.setEnabled(true);
             zoomMinusButton.setVisibility(View.VISIBLE);
         }
-        if(Intelligence.Current.isFixedApertureLens())
+        if(Intelligence.isFixedApertureLens())
         {
             aperturePlusButton.setEnabled(false);
             aperturePlusButton.setVisibility(View.INVISIBLE);
@@ -461,17 +459,17 @@ public class Calculator extends Fragment {
             apertureMinusButton.setEnabled(true);
             apertureMinusButton.setVisibility(View.VISIBLE);
         }
-        apertureTV.setText(Intelligence.Current.getApertureString());
-        shutterSpeedTV.setText(Intelligence.Current.getShutterSpeedString());
-        zoomTV.setText(Intelligence.Current.getFocalLengthString());
-        isoTV.setText(Intelligence.Current.getISOString());
-        bodyButton.setText(Intelligence.Current.getBodyName());
-        lensButton.setText(Intelligence.Current.getLensSimpleName());
+        apertureTV.setText(Intelligence.getApertureString());
+        shutterSpeedTV.setText(Intelligence.getShutterSpeedString());
+        zoomTV.setText(Intelligence.getFocalLengthString());
+        isoTV.setText(Intelligence.getISOString());
+        bodyButton.setText(Intelligence.getBodyName());
+        lensButton.setText(Intelligence.getLensSimpleName());
         evTextView.setText(String.format("%.02f", Intelligence.ExposureCalculator()));
-        desiredDistanceTV.setText(String.format("%.02f", Intelligence.Current.getDistance()));
-        Intelligence.Current.focusRefresh();
-        nearDistanceTV.setText(Intelligence.Current.getDofNear());
-        farDistanceTV.setText(Intelligence.Current.getDofFar());
+        desiredDistanceTV.setText(String.format("%.02f", Intelligence.getDistance()));
+        Intelligence.focusRefresh();
+        nearDistanceTV.setText(Intelligence.getDofNear());
+        farDistanceTV.setText(Intelligence.getDofFar());
         if(jumpStartCount<jumpStartMaxTries)
         {
             createCameraPreviewSession(zoomFactor());
@@ -695,7 +693,7 @@ public class Calculator extends Fragment {
 
 
             try {
-                double target = Intelligence.Current.getAspectRatio();
+                double target = Intelligence.getAspectRatio();
                 double width = mCameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_PIXEL_ARRAY_SIZE).getWidth();
                 double height = mCameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_PIXEL_ARRAY_SIZE).getHeight();
                 double source = width/height;
