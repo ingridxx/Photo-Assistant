@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         calcButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Calculator.clearWait();
                 if (!BodySelector.empty()) {
                     fragmentStack.push(new Calculator());
                     getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Calculator()).commit();
