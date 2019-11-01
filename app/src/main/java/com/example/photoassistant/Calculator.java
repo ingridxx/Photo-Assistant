@@ -75,20 +75,17 @@ public class Calculator extends Fragment {
     TextView apertureTV, shutterSpeedTV, isoTV, zoomTV, desiredDistanceTV, nearDistanceTV, farDistanceTV;
     Button bodyButton, lensButton;
     TextView evTextView;
-    private static boolean WAIT = false;
+    private boolean WAIT = false;
 
-    public static void clearWait()
-    {
-        WAIT = false;
-    }
     Activity activity;
     public Calculator() {
-        clearWait();
+        WAIT = false;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //((AppCompatActivity) getActivity()).getSupportActionBar().hide();
     }
     private Size mPreviewSize;
     private String mCameraId;
@@ -101,8 +98,6 @@ public class Calculator extends Fragment {
         @Override
         public void onOpened(@NonNull CameraDevice camera) {
             mCameraDevice = camera;
-
-
             createCameraPreviewSession(1.0);
             WAIT = false;
             // Toast.makeText(activity.getApplicationContext(), "Camera Opened!", Toast.LENGTH_SHORT).show();
@@ -125,7 +120,6 @@ public class Calculator extends Fragment {
 
     public void delayCamera()
     {
-        Log.v("HAHAHA", String.valueOf(WAIT));
         if(WAIT) return;
         WAIT = true;
         final Handler handler = new Handler();
@@ -144,19 +138,7 @@ public class Calculator extends Fragment {
         View rootView =  inflater.inflate(R.layout.fragment_calculator, container, false);
         fab = rootView.findViewById(R.id.floatingActionButton);
         mTextureView = (TextureView) rootView.findViewById(R.id.textureview);
-        mTextureView = new TextureView(getContext());
 
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        if (mTextureView.isAvailable()) {
-            setupCamera(mTextureView.getWidth(), mTextureView.getHeight());
-            connectCamera();
-        } else {
-            mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
-        }
         //createCameraPreviewSession();
         final Handler handler=new Handler();
         handler.post(new Runnable(){
@@ -488,22 +470,11 @@ public class Calculator extends Fragment {
         Intelligence.focusRefresh();
         nearDistanceTV.setText(Intelligence.getDofNear());
         farDistanceTV.setText(Intelligence.getDofFar());
-        while(jumpStartCount<jumpStartMaxTries)
+        if(jumpStartCount<jumpStartMaxTries)
         {
-            try
-            {
-
-                createCameraPreviewSession(zoomFactor());jumpStartCount++;
-                break;
-
-            }
-            catch(NullPointerException e)
-            {
-                jumpStartCount++; if(jumpStartCount>jumpStartMaxTries) throw e;
-            }
+            createCameraPreviewSession(zoomFactor());
+            jumpStartCount++;
         }
-
-
 
 
 
@@ -621,15 +592,14 @@ public class Calculator extends Fragment {
                 if(cameraCharacteristics.get(CameraCharacteristics.LENS_INFO_AVAILABLE_FOCAL_LENGTHS)[0]<minFocalLength)
                 {
                     minFocalLength =cameraCharacteristics.get(CameraCharacteristics.LENS_INFO_AVAILABLE_FOCAL_LENGTHS)[0];
-
+                    StreamConfigurationMap map = cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+                    mPreviewSize = getPreferredPreviewSize(map.getOutputSizes(SurfaceTexture.class), width, height);
+                    mCameraCharacteristics=cameraCharacteristics;
+                    mPreviewSize = mPreviewSize;
+                    mCameraId = cameraId;
                 }
 
-                StreamConfigurationMap map = cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-                mPreviewSize = getPreferredPreviewSize(map.getOutputSizes(SurfaceTexture.class), width, height);
-                mCameraCharacteristics=cameraCharacteristics;
-                mPreviewSize = mPreviewSize;
-                mCameraId = cameraId;
-                return;
+
 
 
             }
@@ -668,13 +638,9 @@ public class Calculator extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         openBackgroundThread();
         if (mTextureView.isAvailable()) {
-            try {
-                Thread.sleep(200);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             setupCamera(mTextureView.getWidth(), mTextureView.getHeight());
 
             transformImage(mTextureView.getWidth(), mTextureView.getHeight());
@@ -720,7 +686,7 @@ public class Calculator extends Fragment {
 
 
     private void createCameraPreviewSession(double zoom) {
-        if(mTextureView==null||mPreviewSize==null) return;
+        if(mTextureView==null||mPreviewSize==null ||mCameraDevice==null) return;
         final SurfaceTexture surfaceTexture = mTextureView.getSurfaceTexture();
         surfaceTexture.setDefaultBufferSize(mPreviewSize.getWidth(), mPreviewSize.getHeight());
         Surface previewSurface = new Surface(surfaceTexture);
@@ -789,7 +755,6 @@ public class Calculator extends Fragment {
                     }
                 },null);
             }catch (CameraAccessException e){e.printStackTrace();}
-            catch (NullPointerException e){e.printStackTrace();}
 
 
 
