@@ -75,7 +75,6 @@ public class Calculator extends Fragment {
     TextView apertureTV, shutterSpeedTV, isoTV, zoomTV, desiredDistanceTV, nearDistanceTV, farDistanceTV;
     Button bodyButton, lensButton;
     TextView evTextView;
-    public static boolean WAIT = false;
 
     Activity activity;
     public Calculator() {
@@ -115,6 +114,7 @@ public class Calculator extends Fragment {
             mCameraDevice = null;
         }
     };
+    Button button;
     CameraCharacteristics mCameraCharacteristics;
 
 
@@ -465,13 +465,14 @@ public class Calculator extends Fragment {
         shutterSpeedTV.setText(Intelligence.Current.getShutterSpeedString());
         zoomTV.setText(Intelligence.Current.getFocalLengthString());
         isoTV.setText(Intelligence.Current.getISOString());
-        bodyButton.setText(Intelligence.Current.getBodyName());
-        lensButton.setText(Intelligence.Current.getLensSimpleName());
+        bodyButton.setText(Intelligence.Current.getBody().getPartName());
+        lensButton.setText(Intelligence.Current.getLens().getSimpleName());
         evTextView.setText(String.format("%.02f", Intelligence.ExposureCalculator()));
         desiredDistanceTV.setText(String.format("%.02f", Intelligence.Current.getDistance()));
         Intelligence.Current.focusRefresh();
         nearDistanceTV.setText(Intelligence.Current.getDofNear());
         farDistanceTV.setText(Intelligence.Current.getDofFar());
+
         if(jumpStartCount<jumpStartMaxTries)
         {
             createCameraPreviewSession(zoomFactor());
@@ -489,7 +490,7 @@ public class Calculator extends Fragment {
 
 
 
-
+    public static boolean WAIT = false;
 
 
 
