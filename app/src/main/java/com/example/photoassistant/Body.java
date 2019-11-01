@@ -150,16 +150,17 @@ public class Body extends Fragment {
             ArrayList<ListItem> returnArray = new ArrayList<>();
             String temp_line;
             String[] temp_arr;
-
+            ListItem tempItem;
             try {
                 InputStream is = getResources().openRawResource(ListItemCombination.resourceID);
                 BufferedReader br = new BufferedReader(
                         new InputStreamReader(is, Charset.forName("UTF-8"))
                 );
                 while ((temp_line = br.readLine()) != null) {
-                    if (temp_line.contains(BodyListItem[0].getPartName())) {
-                        temp_arr = temp_line.split(",");
-                        returnArray.add(ListItemFactoryClass.getListItemInstance("Combo", temp_arr));
+                    temp_arr = temp_line.split(",");
+                    tempItem = ListItemFactoryClass.getListItemInstance("Combo", temp_arr);
+                    if (temp_line.contains(BodyListItem[0].getPartName())&& !returnArray.contains(tempItem)) {
+                        returnArray.add(tempItem);
                     }
 
                 }
