@@ -81,6 +81,20 @@ public class Calculator extends Fragment {
 
     }
 
+    private static boolean WAIT = false;
+    public void delayCamera()
+    {
+        if(WAIT) return;
+        WAIT = true;
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                createCameraPreviewSession(zoomFactor());
+                WAIT = false;
+            }
+        }, 1000);
+    }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -207,7 +221,7 @@ public class Calculator extends Fragment {
                                 case 2:Intelligence.Current.shutterSpeedMinus();break;
                                 case 3:Intelligence.Current.isoMinus();break;
                                 case 4:Intelligence.Current.focalLengthMinus();
-                                    createCameraPreviewSession(zoomFactor());break;
+                                    delayCamera();break;
                             }
                         }
                     else
@@ -220,7 +234,7 @@ public class Calculator extends Fragment {
                                 case 2:Intelligence.Current.shutterSpeedPlus();break;
                                 case 3:Intelligence.Current.isoPlus();break;
                                 case 4:Intelligence.Current.focalLengthPlus();
-                                    createCameraPreviewSession(zoomFactor());break;
+                                    delayCamera(); break;
                             }
                         }
                     }
@@ -330,7 +344,7 @@ public class Calculator extends Fragment {
                     Intelligence.Current.setBody(BodySelector.getBodySlot(BodySelector.getWhichSlot()));
                     Intelligence.Current.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot()));
                     Intelligence.Current.refreshDistance();
-                    createCameraPreviewSession(zoomFactor());
+                    delayCamera();
                 }
 
 
@@ -346,7 +360,7 @@ public class Calculator extends Fragment {
                     BodySelector.nextLens();
                     Intelligence.Current.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot()));
                     Intelligence.Current.refreshDistance();
-                    createCameraPreviewSession(zoomFactor());
+                    delayCamera();
                 }
 
             }
@@ -354,11 +368,11 @@ public class Calculator extends Fragment {
 
         aperturePlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.aperturePlus(); updateUI();}});
         shutterSpeedPlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.shutterSpeedPlus(); updateUI(); }});
-        zoomPlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.focalLengthPlus(); createCameraPreviewSession(zoomFactor());updateUI(); }});
+        zoomPlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.focalLengthPlus(); delayCamera();updateUI(); }});
         isoPlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.isoPlus(); updateUI(); }});
         apertureMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.apertureMinus(); updateUI(); }});
         shutterSpeedMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.shutterSpeedMinus(); updateUI(); }});
-        zoomMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.focalLengthMinus(); createCameraPreviewSession(zoomFactor());updateUI(); }});
+        zoomMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.focalLengthMinus(); delayCamera();updateUI(); }});
         isoMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.isoMinus(); updateUI(); }});
 
         updateUI();
