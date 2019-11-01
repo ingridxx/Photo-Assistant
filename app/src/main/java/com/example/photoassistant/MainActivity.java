@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Fragment weather = (Fragment) getSupportFragmentManager().findFragmentById(weather);
 
 
         permissions.add(ACCESS_FINE_LOCATION);

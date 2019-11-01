@@ -10,6 +10,8 @@ import android.graphics.drawable.shapes.OvalShape;
 
 import android.content.pm.ActivityInfo;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -92,6 +94,12 @@ public class Sun extends Fragment {
 
         setHasOptionsMenu(true);
         final View rootView = inflater.inflate(R.layout.fragment_sun, container, false);
+
+        //check network connectivity
+        if (isNetworkAvailable() == false) {
+            Toast.makeText(getActivity(), "Please check your Internet connection and try again.", Toast.LENGTH_LONG).show();
+            getActivity().finish();
+        }
 
         //CIRCLE PARAMETERS
         int margin = 50,thickness = 75, topMargin = 25;
@@ -239,6 +247,13 @@ public class Sun extends Fragment {
         queue.add(stringRequest);
         return rootView;
 }
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
     public static float convertDpToPixel(float dp, Context context){
         return dp * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }

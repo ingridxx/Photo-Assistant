@@ -1,7 +1,10 @@
 package com.example.photoassistant;
 
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.os.Handler;
+import android.widget.Toast;
 
 import com.google.android.gms.location.GeofencingClient;
 import com.google.android.gms.location.GeofencingEvent;
@@ -83,7 +87,11 @@ public class Weather extends Fragment {
         H2Icon = (ImageView) view.findViewById(R.id.H2Icon);
         H3Icon = (ImageView) view.findViewById(R.id.H3Icon);
 
-        // Check Internet Connectivity?
+        // Check Internet Connectivity
+        if (isNetworkAvailable() == false) {
+            Toast.makeText(getActivity(), "Please check your Internet connection and try again.", Toast.LENGTH_LONG).show();
+            getActivity().finish();
+        }
 
 
 
@@ -97,6 +105,13 @@ public class Weather extends Fragment {
 
         updateWeather();
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     private void updateWeather(){
