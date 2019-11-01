@@ -16,7 +16,7 @@
 
         <Button
             android:id="@+id/isoPlusButton"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_weight="1"
@@ -29,7 +29,6 @@
             android:layout_below="@id/aperturePlusButton"
             android:layout_weight="1"
             android:gravity="center"
-            android:minWidth="60dp"
             android:padding="0dp"
             android:text="ISO"
             android:textSize="18sp" />
@@ -68,7 +67,6 @@
             android:layout_below="@id/aperturePlusButton"
             android:layout_weight="1"
             android:gravity="center"
-            android:minWidth="60dp"
             android:padding="0dp"
             android:text="SS"
             android:textSize="18sp" />
@@ -107,7 +105,6 @@
             android:layout_below="@id/aperturePlusButton"
             android:layout_weight="1"
             android:gravity="center"
-            android:minWidth="60dp"
             android:padding="0dp"
             android:text="Aperture "
             android:textSize="18sp" />
@@ -147,7 +144,6 @@
             android:layout_below="@id/aperturePlusButton"
             android:layout_weight="1"
             android:gravity="center"
-            android:minWidth="60dp"
             android:padding="0dp"
             android:text="Zoom"
             android:textSize="18sp" />

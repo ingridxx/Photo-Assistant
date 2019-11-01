@@ -1,8 +1,8 @@
 <!--<?xml version="1.0" encoding="utf-8"?>-->
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/calc_body_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
@@ -15,35 +15,34 @@
     android:paddingStart="0dp"
     android:paddingTop="0dp">
 
-    <!--    <TextView-->
-    <!--        android:id="@+id/evTextView"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="EV"-->
-    <!--        android:textAlignment="center"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@id/equipmentRelativeLayout" />-->
+<!--    <TextView-->
+<!--        android:id="@+id/evTextView"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="EV"-->
+<!--        android:textAlignment="center"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/equipmentRelativeLayout" />-->
+
     <TextureView
         android:id="@+id/textureview"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@null"
-        android:foregroundGravity="center_vertical|center_horizontal|center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="3:2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/frame_layout_1"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
     <FrameLayout
         android:id="@+id/frame_layout_1"
         android:layout_width="wrap_content"
-        android:layout_height="65dp"
+        android:layout_height="wrap_content"
         android:paddingLeft="5dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/textureview">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButton"
@@ -56,22 +55,32 @@
             app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
     </FrameLayout>
 
+    <TextView
+        android:id="@+id/evTextView"
+        android:layout_width="55dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:textAlignment="gravity"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/textureview"
+        app:layout_constraintEnd_toStartOf="@id/frame_layout_1" />
     <LinearLayout
         android:id="@+id/equipmentRelativeLayout"
         android:layout_width="0dp"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="2"
-        app:layout_constraintBottom_toTopOf="@id/textureview"
-        app:layout_constraintEnd_toStartOf="@id/evTextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/NearDistanceTV">
+        app:layout_constraintEnd_toStartOf="@id/evTextView"
+        app:layout_constraintBottom_toTopOf="@id/textureview"
+        app:layout_constraintTop_toBottomOf="@id/NearDistanceTV"
+        android:weightSum="2"
+        >
 
         <Button
             android:id="@+id/cameraSelectButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|center_vertical"
             android:layout_margin="0dp"
             android:layout_weight="1"
             android:autoSizeMaxTextSize="18sp"
@@ -85,6 +94,7 @@
             android:scrollHorizontally="false"
             android:singleLine="false"
             android:text="Camera"
+            android:layout_gravity="center_horizontal|center_vertical"
             android:textAlignment="gravity"
             android:textSize="18sp" />
 
@@ -92,7 +102,6 @@
             android:id="@+id/lensSelectButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|center_vertical"
             android:layout_margin="0dp"
             android:layout_weight="1"
             android:background="?attr/selectableItemBackground"
@@ -101,21 +110,12 @@
             android:padding="0dp"
             android:text="Lens"
             android:textAlignment="gravity"
+            android:layout_gravity="center_horizontal|center_vertical"
             android:textSize="18sp" />
 
 
-    </LinearLayout>
 
-    <TextView
-        android:id="@+id/evTextView"
-        android:layout_width="55dp"
-        android:layout_height="45dp"
-        android:layout_gravity="center_horizontal|center_vertical"
-        android:gravity="center|center_horizontal|center_vertical"
-        android:textAlignment="gravity"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@id/textureview"
-        app:layout_constraintEnd_toStartOf="@id/frame_layout_1" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/NearDistanceTV"
@@ -126,6 +126,8 @@
         android:textAlignment="gravity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <!--        app:layout_constraintStart_toStartOf="@+id/guideline"-->
+
 
     <TextView
         android:id="@+id/DesiredDisanceTV"
@@ -138,8 +140,6 @@
         app:layout_constraintStart_toEndOf="@+id/NearDistanceTV"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="2" />
-    <!--        app:layout_constraintStart_toStartOf="@+id/guideline"-->
-
 
     <TextView
         android:id="@+id/FarDistanceTV"
@@ -152,18 +152,9 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="3" />
 
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--        android:layout_width="MATCH_CONSTRAINT"-->
-<!--        android:layout_height="MATCH_CONSTRAINT"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintDimensionRatio=""-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/equipmentRelativeLayout">-->
 
 
 
-<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier2"
         android:layout_width="wrap_content"
