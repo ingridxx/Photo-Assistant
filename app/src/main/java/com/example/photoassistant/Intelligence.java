@@ -54,8 +54,8 @@ public class Intelligence{
         private static double previewSS = 1.0/125;
         private static double dofNear = 0,dofFar = 0;
 
-        public static ListItemBody getBody(){return body;}
-        public static ListItemLens getLens(){return lens;}
+        //public static ListItemBody getBody(){return body;}
+        //public static ListItemLens getLens(){return lens;}
         public static double getAspectRatio(){return body.getSensorAspectRatio();}
         public static void setBody(ListItemBody b) {
             body = b;
@@ -123,13 +123,17 @@ public class Intelligence{
         public static double getEquivalentFocalLength() {
             return body.getCropFactor()*focalLength;
         }
+        public static String getBodyName(){return body.getPartName();}
+        public static String getLensSimpleName(){return lens.getSimpleName();}
+        public static double getSensorSizeX(){return body.getSensorSizeX();}
+        public static double getSensorSizeY(){return body.getSensorSizeY();}
     }
 
     private static double CoCCalculator(){
         //CoC (mm) = viewing distance (cm) / desired final-image resolution (lp/mm) for a 25 cm viewing distance / enlargement / 25
         //assuming worst case 60cm viewing distance on a 27inch 4k monitor
-        double sensorSizeX = Current.getBody().getSensorSizeX();
-        double sensorSizeY = Current.getBody().getSensorSizeY();
+        double sensorSizeX = Current.getSensorSizeX();
+        double sensorSizeY = Current.getSensorSizeY();
         int viewingDistance = 60;
         int monitorSize = 27;
         int monitorX = 3840;
