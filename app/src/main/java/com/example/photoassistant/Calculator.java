@@ -378,7 +378,7 @@ public class Calculator extends Fragment {
 
         updateUI();
         int count=0,maxTries=10;
-        createCameraPreviewSession(1.0);
+        delayCamera();
 //        while(count<maxTries)
 //        {
 //            try
@@ -397,14 +397,14 @@ public class Calculator extends Fragment {
         {
             double zoomFactor = Intelligence.Current.getEquivalentFocalLength()/getPhoneEquivalentFocalLength(mCameraCharacteristics);
             double maxZoom = mCameraCharacteristics.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM);
-            if(zoomFactor<=1) return 1.0;
+            if(zoomFactor<=1) return 1;
             else if(zoomFactor>maxZoom) return maxZoom;
             else return zoomFactor;
 
         }
         catch (NullPointerException e)
         {
-            return 1.0;
+            return 1;
         }
 
 
@@ -475,7 +475,7 @@ public class Calculator extends Fragment {
 
         if(jumpStartCount<jumpStartMaxTries)
         {
-            createCameraPreviewSession(zoomFactor());
+            delayCamera();
             jumpStartCount++;
         }
 
