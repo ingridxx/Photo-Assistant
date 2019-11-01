@@ -75,11 +75,11 @@ public class Calculator extends Fragment {
     TextView apertureTV, shutterSpeedTV, isoTV, zoomTV, desiredDistanceTV, nearDistanceTV, farDistanceTV;
     Button bodyButton, lensButton;
     TextView evTextView;
-    private boolean WAIT = false;
+    public static boolean WAIT = false;
 
     Activity activity;
     public Calculator() {
-        WAIT = false;
+
     }
 
     @Override
