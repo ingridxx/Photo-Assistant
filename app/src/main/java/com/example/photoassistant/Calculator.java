@@ -91,7 +91,7 @@ public class Calculator extends Fragment {
         super.onCreate(savedInstanceState);
     }
     private Size mPreviewSize;
-    private static String mCameraId;
+    private String mCameraId;
     private TextureView mTextureView;
 
     private HandlerThread mBackgroundThread;
@@ -101,6 +101,7 @@ public class Calculator extends Fragment {
         @Override
         public void onOpened(@NonNull CameraDevice camera) {
             mCameraDevice = camera;
+
 
             createCameraPreviewSession(1.0);
             WAIT = false;
@@ -146,7 +147,7 @@ public class Calculator extends Fragment {
         mTextureView = new TextureView(getContext());
 
         try {
-            Thread.sleep(500);
+            Thread.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
