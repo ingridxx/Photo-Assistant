@@ -98,13 +98,14 @@ public class Calculator extends Fragment {
         public void onOpened(@NonNull CameraDevice camera) {
             mCameraDevice = camera;
             createCameraPreviewSession(1.0);
+            WAIT = false;
             // Toast.makeText(activity.getApplicationContext(), "Camera Opened!", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onDisconnected(@NonNull CameraDevice camera) {
             camera.close();
-            //mCameraDevice = null;
+            mCameraDevice = null;
         }
 
         @Override
@@ -116,6 +117,20 @@ public class Calculator extends Fragment {
     Button button;
     CameraCharacteristics mCameraCharacteristics;
 
+
+    public void delayCamera()
+    {
+        if(WAIT) return;
+        WAIT = true;
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                createCameraPreviewSession(zoomFactor());
+                WAIT = false;
+            }
+        }, 1000);
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -207,7 +222,7 @@ public class Calculator extends Fragment {
                                 case 2:Intelligence.Current.shutterSpeedMinus();break;
                                 case 3:Intelligence.Current.isoMinus();break;
                                 case 4:Intelligence.Current.focalLengthMinus();
-                                    createCameraPreviewSession(zoomFactor());break;
+                                    delayCamera();break;
                             }
                         }
                     else
@@ -220,7 +235,7 @@ public class Calculator extends Fragment {
                                 case 2:Intelligence.Current.shutterSpeedPlus();break;
                                 case 3:Intelligence.Current.isoPlus();break;
                                 case 4:Intelligence.Current.focalLengthPlus();
-                                    createCameraPreviewSession(zoomFactor());break;
+                                    delayCamera();break;
                             }
                         }
                     }
@@ -330,7 +345,7 @@ public class Calculator extends Fragment {
                     Intelligence.Current.setBody(BodySelector.getBodySlot(BodySelector.getWhichSlot()));
                     Intelligence.Current.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot()));
                     Intelligence.Current.refreshDistance();
-                    createCameraPreviewSession(zoomFactor());
+                    delayCamera();
                 }
 
 
@@ -346,24 +361,24 @@ public class Calculator extends Fragment {
                     BodySelector.nextLens();
                     Intelligence.Current.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot()));
                     Intelligence.Current.refreshDistance();
-                    createCameraPreviewSession(zoomFactor());
+                    delayCamera();
                 }
 
             }
         });
 
-        aperturePlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.aperturePlus(); updateUI();}});
-        shutterSpeedPlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.shutterSpeedPlus(); updateUI(); }});
-        zoomPlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.focalLengthPlus(); createCameraPreviewSession(zoomFactor());updateUI(); }});
-        isoPlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.isoPlus(); updateUI(); }});
-        apertureMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.apertureMinus(); updateUI(); }});
-        shutterSpeedMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.shutterSpeedMinus(); updateUI(); }});
-        zoomMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.focalLengthMinus(); createCameraPreviewSession(zoomFactor());updateUI(); }});
-        isoMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.isoMinus(); updateUI(); }});
+        aperturePlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.aperturePlus();}});
+        shutterSpeedPlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.shutterSpeedPlus(); }});
+        zoomPlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.focalLengthPlus(); delayCamera();}});
+        isoPlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.isoPlus();}});
+        apertureMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.apertureMinus();}});
+        shutterSpeedMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.shutterSpeedMinus(); }});
+        zoomMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.focalLengthMinus(); delayCamera(); }});
+        isoMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.isoMinus(); }});
 
         updateUI();
         int count=0,maxTries=10;
-        createCameraPreviewSession(zoomFactor());
+        delayCamera();
 //        while(count<maxTries)
 //        {
 //            try
@@ -460,10 +475,9 @@ public class Calculator extends Fragment {
 
         if(jumpStartCount<jumpStartMaxTries)
         {
-            createCameraPreviewSession(zoomFactor());
+            delayCamera();
             jumpStartCount++;
         }
-
 
 
 
@@ -476,6 +490,7 @@ public class Calculator extends Fragment {
 
 
 
+    public static boolean WAIT = false;
 
 
 
@@ -643,9 +658,15 @@ public class Calculator extends Fragment {
 
         closeCamera();
         closeBackgroundThread();
-        super.onPause();
-    }
 
+        super.onPause();
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
     private void openCamera() {
         CameraManager cameraManager = (CameraManager) getActivity().getSystemService(Context.CAMERA_SERVICE);
         try {
@@ -665,15 +686,15 @@ public class Calculator extends Fragment {
             mCameraDevice = null;
         }
     }
+
+
     private void createCameraPreviewSession(double zoom) {
-        if(mTextureView==null||mPreviewSize==null) return;
+        if(mTextureView==null||mPreviewSize==null ||mCameraDevice==null) return;
         final SurfaceTexture surfaceTexture = mTextureView.getSurfaceTexture();
         surfaceTexture.setDefaultBufferSize(mPreviewSize.getWidth(), mPreviewSize.getHeight());
         Surface previewSurface = new Surface(surfaceTexture);
 
-        int count = 0,maxTries = 3;
-        while(count<maxTries)
-        {
+
             try {
                 double target = Intelligence.Current.getAspectRatio();
                 double width = mCameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_PIXEL_ARRAY_SIZE).getWidth();
@@ -701,22 +722,33 @@ public class Calculator extends Fragment {
                 mPreviewCaptureRequestBuilder.addTarget(previewSurface);
                 mPreviewCaptureRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
                 mPreviewCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_EXPOSURE_COMPENSATION, 0);
+
                 mCameraDevice.createCaptureSession(Arrays.asList(previewSurface), new CameraCaptureSession.StateCallback() {
                     @Override
                     public void onConfigured(@NonNull CameraCaptureSession session) {
                         if (mCameraDevice == null) {
                             return;
                         }
+                        int count = 0,maxTries = 100;
+                        while(count<maxTries)
+                        {
+                            try {
 
-                        try {
-                            session.setRepeatingRequest(mPreviewCaptureRequestBuilder.build(),  new CameraCaptureSession.CaptureCallback() {
-                                @Override
-                                public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result) {
-                                    mCaptureResult = result;
-                                }
-                            }, mBackgroundHandler);
-                        } catch (CameraAccessException e) {
-                            e.printStackTrace();
+                                session.setRepeatingRequest(mPreviewCaptureRequestBuilder.build(),  new CameraCaptureSession.CaptureCallback() {
+                                    @Override
+                                    public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result) {
+                                        mCaptureResult = result;
+                                    }
+                                }, mBackgroundHandler);
+
+
+                                break;
+                            }
+                            catch (IllegalStateException ee)
+                            {
+                                count++;if(count>=maxTries) throw ee;
+                            }catch (CameraAccessException e) {
+                                e.printStackTrace();}
                         }
                     }
                     @Override
@@ -725,15 +757,8 @@ public class Calculator extends Fragment {
                                 Toast.LENGTH_SHORT).show();
                     }
                 },null);
-                return;
-            }
-            catch (IllegalStateException ee)
-            {
-                count++;if(count>=maxTries) throw ee;
-            }catch (CameraAccessException e) {
-                e.printStackTrace();
-            }
-        }
+            }catch (CameraAccessException e){e.printStackTrace();}
+
 
 
     }
