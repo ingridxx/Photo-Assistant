@@ -308,9 +308,9 @@ public class Calculator extends Fragment {
         lensButton = view.findViewById(R.id.lensSelectButton);
         evTextView = view.findViewById(R.id.evTextView);
         mTextureView = view.findViewById(R.id.textureview);
-        if(BodySelector.isParsable(BodySelector.getBodySlot(BodySelector.getWhichSlot()))){
+        if(BodySelector.isValid(BodySelector.getBodySlot(BodySelector.getWhichSlot()))){
             Intelligence.setBody(BodySelector.getBodySlot(BodySelector.getWhichSlot()));
-            Intelligence.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot()));
+            Intelligence.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot(),BodySelector.getWhichSlot()));
         }
 
 
@@ -342,7 +342,7 @@ public class Calculator extends Fragment {
                 {
                     BodySelector.nextSlot();
                     Intelligence.setBody(BodySelector.getBodySlot(BodySelector.getWhichSlot()));
-                    Intelligence.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot()));
+                    Intelligence.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot(),BodySelector.getWhichSlot()));
                     Intelligence.refreshDistance();
                     delayCamera();
                 }
@@ -352,19 +352,19 @@ public class Calculator extends Fragment {
             }
         });
 
-        lensButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!BodySelector.empty())
-                {
-                    BodySelector.nextLens();
-                    Intelligence.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot()));
-                    Intelligence.refreshDistance();
-                    delayCamera();
-                }
-
-            }
-        });
+//        lensButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(!BodySelector.empty())
+//                {
+//                    BodySelector.nextLens();
+//                    Intelligence.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot()));
+//                    Intelligence.refreshDistance();
+//                    delayCamera();
+//                }
+//
+//            }
+//        });
 
         aperturePlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.aperturePlus(); updateUI();}});
         shutterSpeedPlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.shutterSpeedPlus(); updateUI(); }});
