@@ -151,172 +151,71 @@ public class BodySelector extends Fragment {
         ImageButton ib_bottomEnd = rootView.findViewById(R.id.imageButtonBottomEnd);
         setOverlayResources(rootView);
 
-        ib_topStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentSlot = 1;
-                if (Slots[0][0] == null) {
-                    MainActivity.fragmentStack.add(1);
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(1)).commit();
-                } else {
-                    MainActivity.fragmentStack.add(1);
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Lens(Slots[0], (ListItemBody) Slots[0][0], 1)).commit();
-                }
-            }
-        });
-        ib_topStart.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (Slots[0] != null) {
-                    cacheArray = Slots[0].clone();
-                    Slots[0][0] = null;
-                    Slots[0][1] = null;
-                    setOverlayResources(rootView);
 
-                    Snackbar.make(v, "Item Deleted", Snackbar.LENGTH_LONG).setAction("Undo?", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Slots[0] = cacheArray.clone();
-                            setOverlayResources(rootView);
-                            cacheArray[0] = null;
-                            cacheArray[1] = null;
+        dynamicSetOnClickListener(ib_topStart,1,0);
+        dynamicSetOnLongClickListener(ib_topStart,rv,0);
 
-                        }
+        dynamicSetOnClickListener(ib_topEnd,2,1);
+        dynamicSetOnLongClickListener(ib_topEnd,rv,1);
 
-                    }).show();
-                }
-                return true;
-            }
-        });
-        ib_topEnd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentSlot = 2;
-                if (Slots[1][0] == null) {
-                    MainActivity.fragmentStack.add(2);
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(2)).commit();
-                } else {
-                    MainActivity.fragmentStack.add(2);
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Lens(Slots[1], (ListItemBody) Slots[1][0], 2)).commit();
-                }
-            }
-        });
-        ib_topEnd.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (Slots[1] != null) {
-                    cacheArray = Slots[0].clone();
-                    Slots[1][0] = null;
-                    for (int i =1; i <  1+howManySavedLenses; i++){
-                        Slots[1][i] = null;
-                    }
+        dynamicSetOnClickListener(ib_topStart,3,2);
+        dynamicSetOnLongClickListener(ib_topStart,rv,2);
 
-                    setOverlayResources(rootView);
+        dynamicSetOnClickListener(ib_topStart,4,3);
+        dynamicSetOnLongClickListener(ib_topStart,rv,3);
 
-                    Snackbar.make(v, "Item Deleted", Snackbar.LENGTH_LONG).setAction("Undo?", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Slots[1] = cacheArray.clone();
-                            setOverlayResources(rootView);
-                            for (int i =0; i <  cacheArray.length; i++){
-                                cacheArray[i] = null;
-                            }
-
-
-                        }
-
-                    }).show();
-                }
-                return true;
-            }
-        });
-        ib_bottomStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentSlot = 3;
-                if (Slots[2][0] == null) {
-                    MainActivity.fragmentStack.add(3);
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(3)).commit();
-                } else {
-                    MainActivity.fragmentStack.add(3);
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Lens(Slots[2], (ListItemBody) Slots[2][0], 3)).commit();
-                }
-            }
-        });
-
-        ib_topStart.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (Slots[2] != null) {
-                    cacheArray = Slots[0].clone();
-                    Slots[2][0] = null;
-                    for (int i =1; i <  1+howManySavedLenses; i++){
-                        Slots[2][i] = null;
-                    }
-
-                    setOverlayResources(rootView);
-
-                    Snackbar.make(v, "Item Deleted", Snackbar.LENGTH_LONG).setAction("Undo?", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Slots[2] = cacheArray.clone();
-                            setOverlayResources(rootView);
-                            for (int i =0; i <  cacheArray.length; i++){
-                                cacheArray[i] = null;
-                            }
-
-
-                        }
-
-                    }).show();
-                }
-                return true;
-            }
-        });
-        ib_bottomEnd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentSlot = 4;
-                if (Slots[3][0] == null) {
-                    MainActivity.fragmentStack.add(3);
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(4)).commit();
-                } else {
-                    MainActivity.fragmentStack.add(3);
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Lens(Slots[3], (ListItemBody) Slots[3][0], 4)).commit();
-                }
-            }
-        });
-
-        ib_topEnd.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (Slots[3] != null) {
-                    cacheArray = Slots[0].clone();
-                    for (int i =0; i <  1+howManySavedLenses; i++){
-                        Slots[1][i] = null;
-                    }
-
-                    setOverlayResources(rootView);
-
-                    Snackbar.make(v, "Item Deleted", Snackbar.LENGTH_LONG).setAction("Undo?", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Slots[1] = cacheArray.clone();
-                            setOverlayResources(rootView);
-                            for (int i =0; i <  cacheArray.length; i++){
-                                cacheArray[i] = null;
-                            }
-
-
-                        }
-
-                    }).show();
-                }
-                return true;
-            }
-        });
     }
 
+    public void dynamicSetOnLongClickListener(ImageButton ib, final View rootView, final int currentArraySlot){
+
+        ib.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (Slots[currentArraySlot] != null) {
+
+                    cacheArray = Slots[currentArraySlot].clone();
+
+                    for (int i =0 ;i < Slots.length;i++){
+                        Slots[currentArraySlot][i] = null;
+                    }
+                    setOverlayResources(rootView);
+
+                    Snackbar.make(v, "Item Deleted", Snackbar.LENGTH_LONG).setAction("Undo?", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Slots[currentArraySlot] = cacheArray.clone();
+                            setOverlayResources(rootView);
+                            for (int i =0 ;i < cacheArray.length;i++){
+                                cacheArray[i] = null;
+                            }
+
+                        }
+
+                    }).show();
+                }
+                return true;
+            }
+        });
+
+    }
+
+    public void dynamicSetOnClickListener(ImageButton ib, final int currentSlot, final int currentArraySlot){
+
+        ib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Slots[currentArraySlot][0] == null) {
+                    MainActivity.fragmentStack.add(currentSlot);
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(currentSlot)).commit();
+                } else {
+                    MainActivity.fragmentStack.add(currentSlot);
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Lens(Slots[currentArraySlot], (ListItemBody) Slots[currentArraySlot][0], currentSlot)).commit();
+                }
+            }
+        });
+
+
+    }
 
     private void setOverlayResources(View rootView) {
         TextView tvTS = rootView.findViewById(R.id.tv_ImageButtonTS);
