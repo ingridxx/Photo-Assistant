@@ -33,22 +33,14 @@ import java.util.ArrayList;
 public class Body extends Fragment {
     private Button LensButton;
     private static RecyclerAdapterListItem adapter;
-    private static ListItem[] slot;
     private ListItem[] tempSlot = new ListItem[6];
     private static int whichSlot;
     public Body() {
         // Required empty public constructor
     }
 
-    public Body(ListItem[] i,int whichSlot) {
-        slot = i;
+    public Body(int whichSlot) {
         this.whichSlot = whichSlot;
-    }
-
-    public Body(ListItem body,int whichSlot) {
-        this.whichSlot = whichSlot;
-        new AsyncTaskLoadPossibleLenses().execute(slot[0]);
-
     }
 
     @Override
@@ -85,7 +77,9 @@ public class Body extends Fragment {
             @Override
             public void onClick(View v) {
                 if (tempSlot[0] !=null) {
-                    new AsyncTaskLoadPossibleLenses().execute(tempSlot[0]);
+
+                    startLensFragment((ListItemBody) tempSlot[0]);
+
                 }
             }
         });
@@ -99,7 +93,7 @@ public class Body extends Fragment {
     }
 
 
-    public void startLensFragment(ArrayList<ListItem> listItems){
+    public void startLensFragment(ListItemBody listItems){
 
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Lens(tempSlot,listItems,whichSlot)).addToBackStack("lens").commit();
 
@@ -135,41 +129,5 @@ public class Body extends Fragment {
         });
     }
 
-    @SuppressLint("StaticFieldLeak")
-    public class AsyncTaskLoadPossibleLenses extends AsyncTask<ListItem, Integer, ArrayList<ListItem>> {
-
-
-        @Override
-        protected void onPostExecute(ArrayList<ListItem> listItems) {
-            Log.d("proc1", "onPostExecute: ");
-            startLensFragment(listItems);
-        }
-
-        @Override
-        protected ArrayList<ListItem> doInBackground(ListItem... BodyListItem) {
-            ArrayList<ListItem> returnArray = new ArrayList<>();
-            String temp_line;
-            String[] temp_arr;
-
-            try {
-                InputStream is = getResources().openRawResource(ListItemCombination.resourceID);
-                BufferedReader br = new BufferedReader(
-                        new InputStreamReader(is, Charset.forName("UTF-8"))
-                );
-                while ((temp_line = br.readLine()) != null) {
-                    if (temp_line.contains(BodyListItem[0].getPartName())) {
-                        temp_arr = temp_line.split(",");
-                        returnArray.add(ListItemFactoryClass.getListItemInstance("Combo", temp_arr));
-                    }
-
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return returnArray;
-
-        }
-    }
 
 }

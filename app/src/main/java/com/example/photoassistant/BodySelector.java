@@ -5,10 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -18,11 +16,11 @@ public class BodySelector extends Fragment {
 
 
     public static final int howManySlots = 4;
-    public static final int howManySsavedLenses = 5;
+    public static final int howManySavedLenses = 5;
 
-    public static ListItem[][] Slots = new ListItem[howManySlots][1 + howManySsavedLenses];
+    public static ListItem[][] Slots = new ListItem[howManySlots][1 + howManySavedLenses];
     static int whichLens = 1;
-    private static int WhichSlot = 1;
+    private static int currentSlot = 1;
     ListItem[] cacheArray = null;
 
     public static void addSlot(int whichSlot, ListItem[] li) {
@@ -73,25 +71,26 @@ public class BodySelector extends Fragment {
     }
 
     public static int getWhichSlot() {
-        return WhichSlot;
+        return currentSlot;
     }
 
     public static void setWhichSlot(int i) {
-        WhichSlot = i;
-        if (WhichSlot > 4) WhichSlot = 1;
-        if (WhichSlot < 1) WhichSlot = 4;
+        currentSlot = i;
+        if (currentSlot > 4) currentSlot = 1;
+        if (currentSlot < 1) currentSlot = 4;
     }
 
     public static ListItemBody getBodySlot(int whichSlot) {
+        //returns a specific list item from the current
         ListItemBody retSlot = null;
-        if (isParsable(resolveSlot(whichSlot)[0])) {
-            retSlot = (ListItemBody) resolveSlot(whichSlot)[0];
+        if (isValid(resolveSlot(currentSlot)[whichSlot])) {
+            retSlot = (ListItemBody) resolveSlot(whichSlot)[whichSlot];
             retSlot.toString();
         }
         return retSlot;
     }
 
-    public static boolean isParsable(ListItem input) {
+    public static boolean isValid(ListItem input) {
         try {
             input.getPartName();
             return true;
@@ -100,19 +99,18 @@ public class BodySelector extends Fragment {
         }
     }
 
-    public static ListItemLens nextLens() {
-        do {
-            whichLens = (whichLens + 1) % 5 + 1;
-        } while (resolveSlot(WhichSlot)[whichLens] == null);
-        return getLensSlot(WhichSlot);
-    }
+//    public static ListItemLens nextLens() {
+//        do {
+//            whichLens = (whichLens + 1) % 5 + 1;
+//        } while (resolveSlot(currentSlot)[whichLens] == null);
+//        return getLensSlot(currentSlot);
+//    }
 
-    public static ListItemLens getLensSlot(int whichSlot) {
+    public static ListItemLens getLensSlot(int whichSlot, int whichLens) {
 
         ListItemLens retSlot = null;
-        if (isParsable(resolveSlot(whichSlot)[whichLens])) {
+        if (isValid(resolveSlot(whichSlot)[whichLens])) {
             retSlot = (ListItemLens) resolveSlot(whichSlot)[whichLens];
-            retSlot.toString();
         }
         return retSlot;
     }
@@ -154,10 +152,13 @@ public class BodySelector extends Fragment {
         ib_topStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WhichSlot = 1;
+                currentSlot = 1;
                 if (Slots[0][0] == null) {
-                    MainActivity.fragmentStack.add(new Body(Slots[0], 1));
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(Slots[0], 1)).commit();
+                    MainActivity.fragmentStack.add(1);
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(1)).commit();
+                } else {
+                    MainActivity.fragmentStack.add(1);
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Lens(Slots[0], (ListItemBody) Slots[0][0], 1)).commit();
                 }
             }
         });
@@ -188,31 +189,128 @@ public class BodySelector extends Fragment {
         ib_topEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WhichSlot = 2;
+                currentSlot = 2;
                 if (Slots[1][0] == null) {
-                    MainActivity.fragmentStack.add(new Body(Slots[1], 2));
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(Slots[1], 2)).commit();
+                    MainActivity.fragmentStack.add(2);
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(2)).commit();
+                } else {
+                    MainActivity.fragmentStack.add(2);
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Lens(Slots[1], (ListItemBody) Slots[1][0], 2)).commit();
                 }
+            }
+        });
+        ib_topEnd.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (Slots[1] != null) {
+                    cacheArray = Slots[0].clone();
+                    Slots[1][0] = null;
+                    for (int i =1; i <  1+howManySavedLenses; i++){
+                        Slots[1][i] = null;
+                    }
+
+                    setOverlayResources(rootView);
+
+                    Snackbar.make(v, "Item Deleted", Snackbar.LENGTH_LONG).setAction("Undo?", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Slots[1] = cacheArray.clone();
+                            setOverlayResources(rootView);
+                            for (int i =0; i <  cacheArray.length; i++){
+                                cacheArray[i] = null;
+                            }
+
+
+                        }
+
+                    }).show();
+                }
+                return true;
             }
         });
         ib_bottomStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WhichSlot = 3;
+                currentSlot = 3;
                 if (Slots[2][0] == null) {
-                    MainActivity.fragmentStack.add(new Body(Slots[2], 3));
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(Slots[2], 3)).commit();
+                    MainActivity.fragmentStack.add(3);
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(3)).commit();
+                } else {
+                    MainActivity.fragmentStack.add(3);
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Lens(Slots[2], (ListItemBody) Slots[2][0], 3)).commit();
                 }
+            }
+        });
+
+        ib_topStart.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (Slots[2] != null) {
+                    cacheArray = Slots[0].clone();
+                    Slots[2][0] = null;
+                    for (int i =1; i <  1+howManySavedLenses; i++){
+                        Slots[2][i] = null;
+                    }
+
+                    setOverlayResources(rootView);
+
+                    Snackbar.make(v, "Item Deleted", Snackbar.LENGTH_LONG).setAction("Undo?", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Slots[2] = cacheArray.clone();
+                            setOverlayResources(rootView);
+                            for (int i =0; i <  cacheArray.length; i++){
+                                cacheArray[i] = null;
+                            }
+
+
+                        }
+
+                    }).show();
+                }
+                return true;
             }
         });
         ib_bottomEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WhichSlot = 4;
+                currentSlot = 4;
                 if (Slots[3][0] == null) {
-                    MainActivity.fragmentStack.add(new Body(Slots[3], 4));
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(Slots[3], 4)).commit();
+                    MainActivity.fragmentStack.add(3);
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(4)).commit();
+                } else {
+                    MainActivity.fragmentStack.add(3);
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Lens(Slots[3], (ListItemBody) Slots[3][0], 4)).commit();
                 }
+            }
+        });
+
+        ib_topEnd.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (Slots[3] != null) {
+                    cacheArray = Slots[0].clone();
+                    for (int i =0; i <  1+howManySavedLenses; i++){
+                        Slots[1][i] = null;
+                    }
+
+                    setOverlayResources(rootView);
+
+                    Snackbar.make(v, "Item Deleted", Snackbar.LENGTH_LONG).setAction("Undo?", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Slots[1] = cacheArray.clone();
+                            setOverlayResources(rootView);
+                            for (int i =0; i <  cacheArray.length; i++){
+                                cacheArray[i] = null;
+                            }
+
+
+                        }
+
+                    }).show();
+                }
+                return true;
             }
         });
     }

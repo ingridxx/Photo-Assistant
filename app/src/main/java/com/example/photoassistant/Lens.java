@@ -1,6 +1,8 @@
 package com.example.photoassistant;
 
+import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +26,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -37,9 +44,11 @@ public class Lens extends Fragment {
     private Spinner lens_spinner;
     private ArrayList<String> favouritesString;
     private ArrayList<ListItem> favourites;
-    private ArrayList<ListItem> arrayToSort;
+    private ListItem bodyToSort;
+    private ArrayList<ListItem> itemsToDisplay;
     int currentPosSelcted;
     private int currentSlot;
+    private View thisView;
 
 
     public Lens() {
@@ -51,19 +60,32 @@ public class Lens extends Fragment {
 //        // Required empty public constructor
 //    }
 
-    public Lens(ListItem[] slot, ArrayList<ListItem> lia, int whichSlot) {
+    public Lens(ListItem[] slot, ListItemBody li, int whichSlot) {
 
         this.slot = slot;
-        arrayToSort = lia;
+        bodyToSort = li;
         currentSlot = whichSlot;
         // Required empty public constructor
+    }
+
+    private void checkSavedLenses() {
+        ListItem tempItem;
+        for(int i =1; i < 1+BodySelector.howManySavedLenses;i++){
+            tempItem = BodySelector.getLensSlot(currentSlot,i);
+            if (tempItem != null){
+                System.out.println(tempItem.toString());
+                favourites.add(tempItem);
+                updateArrayAdapter();
+            }
+
+        }
+
     }
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         setHasOptionsMenu(true);
-
         View rootView = inflater.inflate(R.layout.fragment_lens, container, false);
         return rootView;
 
@@ -91,7 +113,6 @@ public class Lens extends Fragment {
 
 
     public void addLensToArrays(ListItem lensToAdd) {
-
 
         Log.d("addLensToArray", "" + favourites.size());
         if (!favourites.contains(lensToAdd)) {
@@ -126,14 +147,21 @@ public class Lens extends Fragment {
         favouritesString = new ArrayList<String>();
         //Gson gson = new Gson();
         //ListItemLens obj;
-
+        checkSavedLenses();
         super.onCreate(savedInstanceState);
     }
 
 
     @Override
     public void onDestroy() {
+
         swapSpinnerItemToStart(currentPosSelcted);
+
+        for(int i =0; i<BodySelector.howManySavedLenses;i++){
+
+            BodySelector.Slots[currentSlot][i].getPartName();
+
+        }
 
         super.onDestroy();
     }
@@ -141,7 +169,14 @@ public class Lens extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        thisView = view;
+        itemsToDisplay = new ArrayList<>();
+        new AsyncTaskLoadPossibleLenses().execute(bodyToSort);
 
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    private void InitiateUI(@NonNull View view) {
         lens_spinner = view.findViewById(R.id.spinner1);
         arrayAdapterString = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1, favouritesString);
         //arrayAdapter = new ArrayAdapter<ListItemLens>(view.getContext(), android.R.layout.simple_list_item_1,favourites);
@@ -170,7 +205,7 @@ public class Lens extends Fragment {
             doneButton.setVisibility(View.INVISIBLE);
         }
 
-        ra = new RecyclerAdapterListItem(getContext(), arrayToSort, new RecyclerViewOnClickListener() {
+        ra = new RecyclerAdapterListItem(getContext(), itemsToDisplay, new RecyclerViewOnClickListener() {
             @Override
             public void onItemClick(ListItem item) {
 
@@ -188,16 +223,13 @@ public class Lens extends Fragment {
         lens_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 currentPosSelcted = position;
-                System.out.println(" THE CURRENT ITEEM" + favourites.get(position).toString());
+                System.out.println(" THE CURRENT ITEM" + favourites.get(position).toString());
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
-
-
-        super.onViewCreated(view, savedInstanceState);
 
     }
 
@@ -230,6 +262,46 @@ public class Lens extends Fragment {
                 return true;
             }
         });
+
+    }
+
+
+    @SuppressLint("StaticFieldLeak")
+    public class AsyncTaskLoadPossibleLenses extends AsyncTask<ListItem, Integer, ArrayList<ListItem>> {
+
+
+        @Override
+        protected void onPostExecute(ArrayList<ListItem> listItems) {
+            Log.d("proc1", "onPostExecute: ");
+            itemsToDisplay.addAll(listItems);
+            InitiateUI(thisView);
+        }
+
+        @Override
+        protected ArrayList<ListItem> doInBackground(ListItem... BodyListItem) {
+            ArrayList<ListItem> returnArray = new ArrayList<>();
+            String temp_line;
+            String[] temp_arr;
+
+            try {
+                InputStream is = getResources().openRawResource(ListItemCombination.resourceID);
+                BufferedReader br = new BufferedReader(
+                        new InputStreamReader(is, Charset.forName("UTF-8"))
+                );
+                while ((temp_line = br.readLine()) != null) {
+                    if (temp_line.contains(BodyListItem[0].getPartName())) {
+                        temp_arr = temp_line.split(",");
+                        returnArray.add(ListItemFactoryClass.getListItemInstance("Combo", temp_arr));
+                    }
+
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return returnArray;
+        }
     }
 
 
