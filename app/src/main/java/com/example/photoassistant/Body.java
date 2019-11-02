@@ -150,6 +150,7 @@ public class Body extends Fragment {
             ArrayList<ListItem> returnArray = new ArrayList<>();
             String temp_line;
             String[] temp_arr;
+
             try {
                 InputStream is = getResources().openRawResource(ListItemCombination.resourceID);
                 BufferedReader br = new BufferedReader(
@@ -160,6 +161,7 @@ public class Body extends Fragment {
                         temp_arr = temp_line.split(",");
                         returnArray.add(ListItemFactoryClass.getListItemInstance("Combo", temp_arr));
                     }
+
                 }
 
             } catch (IOException e) {

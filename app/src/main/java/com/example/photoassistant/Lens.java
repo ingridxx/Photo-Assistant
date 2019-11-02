@@ -155,21 +155,18 @@ public class Lens extends Fragment {
         recyclerView.setLayoutManager(loutmn);
 
         final Button doneButton = getActivity().findViewById(R.id.doneButton);
-        doneButton.setOnClickListener(new View.OnClickListener() {
+         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Log.d("ppp", "onClick: Lens Done Button");
-                if(favourites.size()>0)
+                if (favourites != null)
                 {
                     BodySelector.addSlot(currentSlot, slot);
                     MainActivity.fragmentStack.pop();
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new BodySelector()).commit();
                 }
-
             }
         });
-
 
         ra = new RecyclerAdapterListItem(getContext(), arrayToSort, new RecyclerViewOnClickListener() {
             @Override

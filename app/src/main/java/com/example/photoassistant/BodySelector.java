@@ -166,8 +166,8 @@ public class BodySelector extends Fragment {
             public boolean onLongClick(View v) {
                 if (Slots[0] != null) {
                     cacheArray = Slots[0].clone();
-                    for(int i=0;i<Slots[0].length;i++) {Slots[0][i] = null;}
-
+                    Slots[0][0] = null;
+                    Slots[0][1] = null;
                     setOverlayResources(rootView);
 
                     Snackbar.make(v, "Item Deleted", Snackbar.LENGTH_LONG).setAction("Undo?", new View.OnClickListener() {
@@ -175,7 +175,9 @@ public class BodySelector extends Fragment {
                         public void onClick(View v) {
                             Slots[0] = cacheArray.clone();
                             setOverlayResources(rootView);
-                            for(int i=0;i<Slots[0].length;i++) {cacheArray[i] = null;}
+                            cacheArray[0] = null;
+                            cacheArray[1] = null;
+
                         }
 
                     }).show();

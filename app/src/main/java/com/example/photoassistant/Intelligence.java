@@ -28,6 +28,7 @@ import androidx.fragment.app.Fragment;
 
 public class Intelligence{
 
+
     static DecimalFormat format = new DecimalFormat();
     private static final Integer[] isoRange = {50,64,80,100,125,160,200,250,320,400,500,640,800,1000,1250,1600,2000,2500,3200,4000,5000,6400,8000,10000,12800};
     private static final Double[] shutterSpeedRange ={1.0/8000,1.0/6400,1.0/5000,1.0/4000,1.0/3200,1.0/2500,1.0/2000,1.0/1600,1.0/1250,1.0/1000,1.0/800,1.0/640,1.0/500,1.0/400,1.0/320,1.0/250,1.0/200,1.0/160,1.0/125,1.0/100,1.0/80,1.0/60,1.0/50,1.0/40,1.0/30,1.0/25,1.0/20,1.0/15,1.0/13,1.0/10,1.0/8,1.0/6,1.0/5,1.0/4,1.0/3,1.0/2.5,1.0/2,1.0/1.6,1.0/1.3,1.0,1.3,1.6,2.0,2.5,3.0,4.0,5.0,6.0,8.0,10.0,13.0,15.0,20.0,25.0,30.0};
@@ -51,6 +52,12 @@ public class Intelligence{
     private static double previewISO = 400;
     private static double previewSS = 1.0/125;
     private static double dofNear = 0,dofFar = 0;
+
+    public static String getBodyName(){return body.getPartName();}
+    public static String getLensSimpleName(){return lens.getSimpleName();}
+    public static double getSensorSizeX(){return body.getSensorSizeX();}
+    public static double getSensorSizeY(){return body.getSensorSizeY();}
+
     public static double getAspectRatio(){return body.getSensorAspectRatio();}
     public static void setBody(ListItemBody b) {
         body = b;
@@ -102,7 +109,8 @@ public class Intelligence{
     public static String isoMinus(){isoStep--;if(isoStep<1){isoStep = 0;}ISO = currentIsoRange.get(isoStep);return getISOString();}
     public static String focusPlus(){distance = distance * 1.25; if(distance>HyperfocalCalculator()){distance=HyperfocalCalculator();}return focusRefresh();}
     public static String focusMinus(){distance = distance / 1.25;return focusRefresh(); }
-    public static String focusRefresh() {
+    public static String focusRefresh()
+    {
         if(distance>HyperfocalCalculator()){distance=HyperfocalCalculator();}
         if(distance<lens.getMinFocusDistance()){distance=lens.getMinFocusDistance();}
         dofNear = DofNearCalculator();
@@ -117,10 +125,6 @@ public class Intelligence{
     public static double getEquivalentFocalLength() {
         return body.getCropFactor()*focalLength;
     }
-    public static String getBodyName(){return body.getPartName();}
-    public static String getLensSimpleName(){return lens.getSimpleName();}
-    public static double getSensorSizeX(){return body.getSensorSizeX();}
-    public static double getSensorSizeY(){return body.getSensorSizeY();}
     private static double CoCCalculator(){
         //CoC (mm) = viewing distance (cm) / desired final-image resolution (lp/mm) for a 25 cm viewing distance / enlargement / 25
         //assuming worst case 60cm viewing distance on a 27inch 4k monitor
@@ -142,7 +146,7 @@ public class Intelligence{
         return viewingDistance/lpmm/enlargement/25.0;
     }
     public static double HyperfocalCalculator(){
-        //double x= (Current.getFocalLength()*Current.getFocalLength()/(CoCCalculator()*Current.getAperture())+Current.getFocalLength())/1000;
+        //double x= (getFocalLength()*getFocalLength()/(CoCCalculator()*getAperture())+getFocalLength())/1000;
         return (getFocalLength()*getFocalLength()/(CoCCalculator()*getAperture())+getFocalLength())/1000;
     }
     protected static double DofNearCalculator(){
