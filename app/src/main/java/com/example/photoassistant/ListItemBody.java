@@ -67,7 +67,7 @@ public class ListItemBody extends ListItem{
     }
     public float getCropFactor() { return (float)Math.sqrt(fullFrameSensorArea/this.getSensorArea()); }
     public float getSensorArea() { return sensorSizeX*sensorSizeY; }
-    public float getSensorAspectRatio() { return (float)(1.0*sensorSizeY/sensorSizeX); }
+    public float getSensorAspectRatio() { return (float)(1.0*sensorSizeX/sensorSizeY); }
     public String getType() { return type; }
     public String getHint() { return hint; }
 

@@ -88,8 +88,8 @@ public class MainActivity extends AppCompatActivity {
 
         new ProcessDataFromArrays().execute();
 
-        Intelligence.Current.setLens(new ListItemLens("Lens", new String[]{"Lens", "50", "50", "2.8", "2.8", "22", "22"}));
-        Intelligence.Current.setBody(new ListItemBody("Body", new String[]{"Body", "50", "36", "24", "DSLR", "Sample"}));
+        Intelligence.setLens(new ListItemLens("Lens", new String[]{"Lens", "50", "50", "2.8", "2.8", "22", "22"}));
+        Intelligence.setBody(new ListItemBody("Body", new String[]{"Body", "50", "36", "24", "DSLR", "Sample"}));
         bodyButton = findViewById(R.id.bodyButton);
         bodyButton.setOnClickListener(new View.OnClickListener() {
             @Override

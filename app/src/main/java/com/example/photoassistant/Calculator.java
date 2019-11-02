@@ -26,6 +26,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -47,6 +48,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -78,6 +81,20 @@ public class Calculator extends Fragment {
 
     }
 
+    private static boolean WAIT = false;
+    public void delayCamera()
+    {
+        if(WAIT) return;
+        WAIT = true;
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                createCameraPreviewSession(zoomFactor());
+                WAIT = false;
+            }
+        }, 1000);
+    }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,14 +111,14 @@ public class Calculator extends Fragment {
         @Override
         public void onOpened(@NonNull CameraDevice camera) {
             mCameraDevice = camera;
-            createCameraPreviewSession();
+            createCameraPreviewSession(1.0);
             // Toast.makeText(activity.getApplicationContext(), "Camera Opened!", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onDisconnected(@NonNull CameraDevice camera) {
             camera.close();
-            mCameraDevice = null;
+            //mCameraDevice = null;
         }
 
         @Override
@@ -132,8 +149,8 @@ public class Calculator extends Fragment {
 //                            " SPD:"+mCaptureResult.get(TotalCaptureResult.SENSOR_EXPOSURE_TIME)+
 //                            " DIST:"+0.61/mCaptureResult.get(TotalCaptureResult.LENS_FOCUS_DISTANCE)+
 //                            " MM:"+mCaptureResult.get(TotalCaptureResult.LENS_FOCAL_LENGTH));
-                    Intelligence.Current.setPreviewSS(mCaptureResult.get(TotalCaptureResult.SENSOR_EXPOSURE_TIME));
-                    Intelligence.Current.setPreviewISO(mCaptureResult.get(TotalCaptureResult.SENSOR_SENSITIVITY));
+                    Intelligence.setPreviewSS(mCaptureResult.get(TotalCaptureResult.SENSOR_EXPOSURE_TIME));
+                    Intelligence.setPreviewISO(mCaptureResult.get(TotalCaptureResult.SENSOR_SENSITIVITY));
 //                    lensButton.setText(String.valueOf(Intelligence.ExposureCalculator())+"ISO:"+mCaptureResult.get(TotalCaptureResult.SENSOR_SENSITIVITY).toString()+
 //                            " SPD:"+mCaptureResult.get(TotalCaptureResult.SENSOR_EXPOSURE_TIME));
                     updateUI();
@@ -200,10 +217,11 @@ public class Calculator extends Fragment {
                         {
                             switch(box)
                             {
-                                case 1:Intelligence.Current.apertureMinus(); break;
-                                case 2:Intelligence.Current.shutterSpeedMinus();break;
-                                case 3:Intelligence.Current.isoMinus();break;
-                                case 4:Intelligence.Current.focalLengthMinus();break;
+                                case 1:Intelligence.apertureMinus(); break;
+                                case 2:Intelligence.shutterSpeedMinus();break;
+                                case 3:Intelligence.isoMinus();break;
+                                case 4:Intelligence.focalLengthMinus();
+                                    delayCamera();break;
                             }
                         }
                     else
@@ -212,10 +230,11 @@ public class Calculator extends Fragment {
                         {
                             switch(box)
                             {
-                                case 1:Intelligence.Current.aperturePlus();break;
-                                case 2:Intelligence.Current.shutterSpeedPlus();break;
-                                case 3:Intelligence.Current.isoPlus();break;
-                                case 4:Intelligence.Current.focalLengthPlus();break;
+                                case 1:Intelligence.aperturePlus();break;
+                                case 2:Intelligence.shutterSpeedPlus();break;
+                                case 3:Intelligence.isoPlus();break;
+                                case 4:Intelligence.focalLengthPlus();
+                                    delayCamera(); break;
                             }
                         }
                     }
@@ -224,7 +243,7 @@ public class Calculator extends Fragment {
                         {
                             switch(box)
                             {
-                                case 5:Intelligence.Current.focusPlus();break;
+                                case 5:Intelligence.focusPlus();break;
                             }
                         }
                     else
@@ -233,7 +252,7 @@ public class Calculator extends Fragment {
                         {
                             switch(box)
                             {
-                                case 5:Intelligence.Current.focusMinus();break;
+                                case 5:Intelligence.focusMinus();break;
                             }
                         }
                     }
@@ -252,10 +271,10 @@ public class Calculator extends Fragment {
 
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         //hide notification bar
         View tempView = getActivity().getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE;
+        int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY| View.SYSTEM_UI_FLAG_IMMERSIVE;
         tempView.setSystemUiVisibility(uiOptions);
 
 
@@ -288,64 +307,132 @@ public class Calculator extends Fragment {
         bodyButton = view.findViewById(R.id.cameraSelectButton);
         lensButton = view.findViewById(R.id.lensSelectButton);
         evTextView = view.findViewById(R.id.evTextView);
-        if(BodySelector.isValid(BodySelector.getBodySlot(BodySelector.getWhichSlot()))){
-            Intelligence.Current.setBody(BodySelector.getBodySlot(BodySelector.getWhichSlot()));
-            Intelligence.Current.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot(),1));
+        mTextureView = view.findViewById(R.id.textureview);
+        if(BodySelector.isParsable(BodySelector.getBodySlot(BodySelector.getWhichSlot()))){
+            Intelligence.setBody(BodySelector.getBodySlot(BodySelector.getWhichSlot()));
+            Intelligence.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot()));
         }
 
 
         bodyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                LinearLayout equipmentRelativeLayout = view.findViewById(R.id.equipmentRelativeLayout);
+//                FrameLayout frameLayout1 = view.findViewById(R.id.frame_layout_1);
+//                ConstraintLayout calc_body_screen = view.findViewById(R.id.calc_body_screen);
+//                double newWidth = equipmentRelativeLayout.getWidth()+frameLayout1.getWidth();
+//                double newHeight = calc_body_screen.getHeight()-frameLayout1.getHeight();
+//                double newX = equipmentRelativeLayout.getX();
+//                double newY = equipmentRelativeLayout.getY()+equipmentRelativeLayout.getHeight();
+//                newHeight = newWidth/1.5;
+////                if(1.0*newWidth/newHeight>1.5)
+////                {
+////                    newHeight = newHeight*(1/1.5)*newWidth/newHeight;
+////                }
+////                else {
+////                    newWidth = newWidth*(1/1.5)*newWidth/newHeight;
+////                }
+//                mTextureView.setLeft((int)newX);
+//                mTextureView.setTop((int)newY);
+//                mTextureView.setRight((int)(newHeight+newX));
+//                mTextureView.setBottom((int)(newWidth+newY));
+//                Log.d("TAG",newWidth+","+newHeight+","+newX+","+newY);
+                //mTextureView.setLayoutParams(new ConstraintLayout.LayoutParams((int)newWidth, (int)newHeight));
                 if(!BodySelector.empty())
                 {
                     BodySelector.nextSlot();
-                    Intelligence.Current.setBody(BodySelector.getBodySlot(BodySelector.getWhichSlot()));
-                    Intelligence.Current.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot(),1));
-                    Intelligence.Current.refreshDistance();
+                    Intelligence.setBody(BodySelector.getBodySlot(BodySelector.getWhichSlot()));
+                    Intelligence.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot()));
+                    Intelligence.refreshDistance();
+                    delayCamera();
+                }
 
+
+
+            }
+        });
+
+        lensButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!BodySelector.empty())
+                {
+                    BodySelector.nextLens();
+                    Intelligence.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot()));
+                    Intelligence.refreshDistance();
+                    delayCamera();
                 }
 
             }
         });
 
-//        lensButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(!BodySelector.empty())
-//                {
-//                    //BodySelector.nextLens();
-//                    Intelligence.Current.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot(),1));
-//                    Intelligence.Current.refreshDistance();
-//
-//                }
-//
-//            }
-//        });
-
-        aperturePlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.aperturePlus(); updateUI();}});
-        shutterSpeedPlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.shutterSpeedPlus(); updateUI(); }});
-        zoomPlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.focalLengthPlus(); updateUI(); }});
-        isoPlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.isoPlus(); updateUI(); }});
-        apertureMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.apertureMinus(); updateUI(); }});
-        shutterSpeedMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.shutterSpeedMinus(); updateUI(); }});
-        zoomMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.focalLengthMinus(); updateUI(); }});
-        isoMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.Current.isoMinus(); updateUI(); }});
+        aperturePlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.aperturePlus(); updateUI();}});
+        shutterSpeedPlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.shutterSpeedPlus(); updateUI(); }});
+        zoomPlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.focalLengthPlus(); delayCamera();updateUI(); }});
+        isoPlusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.isoPlus(); updateUI(); }});
+        apertureMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.apertureMinus(); updateUI(); }});
+        shutterSpeedMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.shutterSpeedMinus(); updateUI(); }});
+        zoomMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.focalLengthMinus(); delayCamera();updateUI(); }});
+        isoMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.isoMinus(); updateUI(); }});
 
         updateUI();
-        super.onViewCreated(view, savedInstanceState);
-    }
+        int count=0,maxTries=10;
+        createCameraPreviewSession(zoomFactor());
+//        while(count<maxTries)
+//        {
+//            try
+//            {
+//                createCameraPreviewSession(zoomFactor());
+//            }catch (NullPointerException ee)
+//            {
+//                count++;if(count>=maxTries) throw ee;
+//            }
+//        }
 
+    }
+    public double zoomFactor()
+    {
+        try
+        {
+            double zoomFactor = Intelligence.getEquivalentFocalLength()/getPhoneEquivalentFocalLength(mCameraCharacteristics);
+            double maxZoom = mCameraCharacteristics.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM);
+            if(zoomFactor<=1) return 1;
+            else if(zoomFactor>maxZoom) return maxZoom;
+            else return zoomFactor;
+
+        }
+        catch (NullPointerException e)
+        {
+            return 1;
+        }
+
+
+
+    }
+    public double getPhoneEquivalentFocalLength(CameraCharacteristics mCameraCharacteristics)
+    {
+        try
+        {
+            return mCameraCharacteristics.get(CameraCharacteristics.LENS_INFO_AVAILABLE_FOCAL_LENGTHS)[0]*
+                    Math.sqrt(864/
+                            (mCameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_PHYSICAL_SIZE).getWidth()
+                                    *mCameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_PHYSICAL_SIZE).getHeight()));
+        }catch (NullPointerException e)
+        {
+            return 1.0;
+        }
+
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();
     }
-
+    int jumpStartCount=0,jumpStartMaxTries=2;
     public void updateUI()
     {
-        //Intelligence.Current.setBody(Intelligence.Current.getBody());
-        //Intelligence.Current.setLens(Intelligence.Current.getLens());
-        if(Intelligence.Current.isPrimeLens())
+        //Intelligence.setBody(Intelligence.getBody());
+        //Intelligence.setLens(Intelligence.getLens());
+        if(Intelligence.isPrimeLens())
         {
             zoomPlusButton.setEnabled(false);
             zoomPlusButton.setVisibility(View.INVISIBLE);
@@ -359,7 +446,7 @@ public class Calculator extends Fragment {
             zoomMinusButton.setEnabled(true);
             zoomMinusButton.setVisibility(View.VISIBLE);
         }
-        if(Intelligence.Current.isFixedApertureLens())
+        if(Intelligence.isFixedApertureLens())
         {
             aperturePlusButton.setEnabled(false);
             aperturePlusButton.setVisibility(View.INVISIBLE);
@@ -373,17 +460,27 @@ public class Calculator extends Fragment {
             apertureMinusButton.setEnabled(true);
             apertureMinusButton.setVisibility(View.VISIBLE);
         }
-        apertureTV.setText(Intelligence.Current.getApertureString());
-        shutterSpeedTV.setText(Intelligence.Current.getShutterSpeedString());
-        zoomTV.setText(Intelligence.Current.getFocalLengthString());
-        isoTV.setText(Intelligence.Current.getISOString());
-        bodyButton.setText(Intelligence.Current.getBody().getPartName());
-        lensButton.setText(Intelligence.Current.getLens().getSimpleName());
+        apertureTV.setText(Intelligence.getApertureString());
+        shutterSpeedTV.setText(Intelligence.getShutterSpeedString());
+        zoomTV.setText(Intelligence.getFocalLengthString());
+        isoTV.setText(Intelligence.getISOString());
+        bodyButton.setText(Intelligence.getBodyName());
+        lensButton.setText(Intelligence.getLensSimpleName());
         evTextView.setText(String.format("%.02f", Intelligence.ExposureCalculator()));
-        desiredDistanceTV.setText(String.format("%.02f", Intelligence.Current.getDistance()));
-        Intelligence.Current.focusRefresh();
-        nearDistanceTV.setText(Intelligence.Current.getDofNear());
-        farDistanceTV.setText(Intelligence.Current.getDofFar());
+        desiredDistanceTV.setText(String.format("%.02f", Intelligence.getDistance()));
+        Intelligence.focusRefresh();
+        nearDistanceTV.setText(Intelligence.getDofNear());
+        farDistanceTV.setText(Intelligence.getDofFar());
+
+        if(jumpStartCount<jumpStartMaxTries)
+        {
+            createCameraPreviewSession(zoomFactor());
+            jumpStartCount++;
+        }
+
+
+
+
     }
 
 
@@ -485,6 +582,8 @@ public class Calculator extends Fragment {
 
     private void setupCamera(int width, int height) {
         CameraManager cameraManager = (CameraManager) getActivity().getSystemService(Context.CAMERA_SERVICE);
+        float minFocalLength=Float.MAX_VALUE;
+
         try {
             for (String cameraId : cameraManager.getCameraIdList()) {
                 CameraCharacteristics cameraCharacteristics = cameraManager.getCameraCharacteristics(cameraId);
@@ -492,10 +591,19 @@ public class Calculator extends Fragment {
                         CameraCharacteristics.LENS_FACING_FRONT) {
                     continue;
                 }
-                StreamConfigurationMap map = cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-                mPreviewSize = getPreferredPreviewSize(map.getOutputSizes(SurfaceTexture.class), width, height);
-                mCameraId = cameraId;
-                return;
+                if(cameraCharacteristics.get(CameraCharacteristics.LENS_INFO_AVAILABLE_FOCAL_LENGTHS)[0]<minFocalLength)
+                {
+                    minFocalLength =cameraCharacteristics.get(CameraCharacteristics.LENS_INFO_AVAILABLE_FOCAL_LENGTHS)[0];
+                    StreamConfigurationMap map = cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+                    mPreviewSize = getPreferredPreviewSize(map.getOutputSizes(SurfaceTexture.class), width, height);
+                    mCameraCharacteristics=cameraCharacteristics;
+                    mPreviewSize = mPreviewSize;
+                    mCameraId = cameraId;
+                }
+
+
+
+
             }
         } catch (CameraAccessException e) {
             e.printStackTrace();
@@ -571,46 +679,77 @@ public class Calculator extends Fragment {
             mCameraDevice = null;
         }
     }
-    private void createCameraPreviewSession() {
+    private void createCameraPreviewSession(double zoom) {
+        if(mTextureView==null||mPreviewSize==null) return;
         final SurfaceTexture surfaceTexture = mTextureView.getSurfaceTexture();
         surfaceTexture.setDefaultBufferSize(mPreviewSize.getWidth(), mPreviewSize.getHeight());
         Surface previewSurface = new Surface(surfaceTexture);
 
-
-        try {
-
-            mPreviewCaptureRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
-            mPreviewCaptureRequestBuilder.addTarget(previewSurface);
-            mPreviewCaptureRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
-            mPreviewCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_EXPOSURE_COMPENSATION, 0);
-            mCameraDevice.createCaptureSession(Arrays.asList(previewSurface), new CameraCaptureSession.StateCallback() {
-                @Override
-                public void onConfigured(@NonNull CameraCaptureSession session) {
-                    if (mCameraDevice == null) {
-                        return;
-                    }
-                    try {
-                        session.setRepeatingRequest(mPreviewCaptureRequestBuilder.build(),  new CameraCaptureSession.CaptureCallback() {
-                            @Override
-                            public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result) {
-                                mCaptureResult = result;
-                            }
-                        }, mBackgroundHandler);
-                    } catch (CameraAccessException e) {
-                        e.printStackTrace();
-                    }
+        int count = 0,maxTries = 3;
+        while(count<maxTries)
+        {
+            try {
+                double target = Intelligence.getAspectRatio();
+                double width = mCameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_PIXEL_ARRAY_SIZE).getWidth();
+                double height = mCameraCharacteristics.get(CameraCharacteristics.SENSOR_INFO_PIXEL_ARRAY_SIZE).getHeight();
+                double source = width/height;
+                double newVar, margin;
+                Rect rect;
+                if(source<target)
+                {
+                    newVar = width/target;
+                    margin = (height-newVar)/2;
+                    rect = new Rect(0,(int)margin,(int)width, (int)(margin + newVar));
                 }
-
-                @Override
-                public void onConfigureFailed(@NonNull CameraCaptureSession session) {
-                    Toast.makeText(getContext(), "create camera session failed!",
-                            Toast.LENGTH_SHORT).show();
+                else
+                {
+                    newVar = height*target;
+                    margin = (width-newVar)/2;
+                    rect = new Rect((int)margin,0,(int)(margin+newVar), (int)(height));
                 }
-            },null);
+                rect = new Rect(rect.left, rect.top, (int)(rect.right*1.0/zoom), (int)(rect.bottom*1.0/zoom));
 
-        } catch (CameraAccessException e) {
-            e.printStackTrace();
+
+                mPreviewCaptureRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
+                mPreviewCaptureRequestBuilder.set(CaptureRequest.SCALER_CROP_REGION, rect);
+                mPreviewCaptureRequestBuilder.addTarget(previewSurface);
+                mPreviewCaptureRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
+                mPreviewCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_EXPOSURE_COMPENSATION, 0);
+                mCameraDevice.createCaptureSession(Arrays.asList(previewSurface), new CameraCaptureSession.StateCallback() {
+                    @Override
+                    public void onConfigured(@NonNull CameraCaptureSession session) {
+                        if (mCameraDevice == null) {
+                            return;
+                        }
+
+                        try {
+                            session.setRepeatingRequest(mPreviewCaptureRequestBuilder.build(),  new CameraCaptureSession.CaptureCallback() {
+                                @Override
+                                public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result) {
+                                    mCaptureResult = result;
+                                }
+                            }, mBackgroundHandler);
+                        } catch (CameraAccessException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    @Override
+                    public void onConfigureFailed(@NonNull CameraCaptureSession session) {
+                        Toast.makeText(getContext(), "create camera session failed!",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                },null);
+                return;
+            }
+            catch (IllegalStateException ee)
+            {
+                count++;if(count>=maxTries) throw ee;
+            }catch (CameraAccessException e) {
+                e.printStackTrace();
+            }
         }
+
+
     }
 
     private void openBackgroundThread() {
@@ -656,16 +795,26 @@ public class Calculator extends Fragment {
         Matrix matrix = new Matrix();
         int rotation = getActivity().getWindowManager().getDefaultDisplay().getRotation();
         RectF textureRectF = new RectF(0,0, width, height);
-        RectF previewRectF = new RectF(0, 0, mPreviewSize.getHeight(), mPreviewSize.getWidth());
+        RectF previewRectF = new RectF(0, 0, mPreviewSize.getWidth(), mPreviewSize.getHeight());
         float centerX = textureRectF.centerX();
         float centerY = textureRectF.centerY();
         if(rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270) {
-            previewRectF.offset(centerX - previewRectF.centerX(), centerY - previewRectF.centerY());
-            matrix.setRectToRect(textureRectF, previewRectF, Matrix.ScaleToFit.FILL);
-            float scale = Math.max((float)width / mPreviewSize.getWidth(), (float)height/ mPreviewSize.getHeight());
-            matrix.postScale(scale, scale, centerX, centerY);
-            matrix.postRotate(90* (rotation-2), centerX, centerY);
+            //previewRectF.offset(centerX - previewRectF.centerX(), centerY - previewRectF.centerY());
+            //matrix.setRectToRect(textureRectF, previewRectF, Matrix.ScaleToFit.CENTER);
+            //float scale = Math.max((float)width / mPreviewSize.getWidth(), (float)height/ mPreviewSize.getHeight());
+            //matrix.postScale(scale, scale, centerX, centerY);
+            matrix.preRotate(90* (rotation-2), centerX, centerY);
+            matrix.preScale((float)1.0*height/width, (float)1.0*width/height, centerX, centerY);
 
+        }
+        double previewAspect = 1.0*previewRectF.width()/previewRectF.height();
+        double textureAspect = 1.0*width/height;
+        if(previewAspect>textureAspect)
+        {mTextureView.setScaleX((float) (1.0*previewAspect*1.0/textureAspect));
+            }
+        else
+        {
+            mTextureView.setScaleY((float)(1.0/(previewAspect*1.0/textureAspect)));
         }
         mTextureView.setTransform(matrix);
     }
