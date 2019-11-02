@@ -157,11 +157,11 @@ public class Lens extends Fragment {
 
         swapSpinnerItemToStart(currentPosSelcted);
 
-        for(int i =0; i<BodySelector.howManySavedLenses;i++){
-
-            BodySelector.Slots[currentSlot][i].getPartName();
-
-        }
+//        for(int i =0; i<BodySelector.howManySavedLenses;i++){
+//
+//            BodySelector.Slots[BodySelector.getWhichSlot()][i].getPartName();
+//
+//        }
 
         super.onDestroy();
     }

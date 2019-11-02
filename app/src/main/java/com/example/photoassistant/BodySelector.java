@@ -2,6 +2,7 @@ package com.example.photoassistant;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,8 +85,8 @@ public class BodySelector extends Fragment {
         //returns a specific list item from the current
         ListItemBody retSlot = null;
         if (isValid(resolveSlot(currentSlot)[whichSlot])) {
-            retSlot = (ListItemBody) resolveSlot(whichSlot)[whichSlot];
-            retSlot.toString();
+
+            retSlot = (ListItemBody) resolveSlot(whichSlot)[0];
         }
         return retSlot;
     }
@@ -106,11 +107,12 @@ public class BodySelector extends Fragment {
 //        return getLensSlot(currentSlot);
 //    }
 
-    public static ListItemLens getLensSlot(int whichSlot, int whichLens) {
+    public static ListItem getLensSlot(int whichSlot,int whichLens) {
 
-        ListItemLens retSlot = null;
+        ListItem retSlot = null;
         if (isValid(resolveSlot(whichSlot)[whichLens])) {
-            retSlot = (ListItemLens) resolveSlot(whichSlot)[whichLens];
+            Log.d("myDebugTAg", "getBodySlot: " + resolveSlot(whichSlot)[whichLens]);
+            retSlot = resolveSlot(whichSlot)[whichLens];
         }
         return retSlot;
     }
