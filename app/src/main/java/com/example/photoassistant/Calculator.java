@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -73,10 +74,11 @@ public class Calculator extends Fragment {
     private Button aperturePlusButton, shutterSpeedPlusButton, isoPlusButton, zoomPlusButton;
     Button apertureMinusButton, shutterSpeedMinusButton, isoMinusButton, zoomMinusButton;
     TextView apertureTV, shutterSpeedTV, isoTV, zoomTV, desiredDistanceTV, nearDistanceTV, farDistanceTV;
-    Button bodyButton, lensButton;
-    TextView evTextView;
+    Button bodyButton, lensButton, landscapeModeButton, portraitModeButton, sunsetModeButton, offModeButton;
+    TextView evTextView, isoRecommendationTextView, shutterSpeedRecommendationTextView, apertureRecommendationTextView, focalLengthRecommendationTextView;
 
     Activity activity;
+    public int MODE = 4;
     public Calculator() {
 
     }
@@ -308,6 +310,14 @@ public class Calculator extends Fragment {
         lensButton = view.findViewById(R.id.lensSelectButton);
         evTextView = view.findViewById(R.id.evTextView);
         mTextureView = view.findViewById(R.id.textureview);
+        landscapeModeButton = view.findViewById(R.id.modeButton1);
+        portraitModeButton = view.findViewById(R.id.modeButton2);
+        sunsetModeButton = view.findViewById(R.id.modeButton3);
+        offModeButton = view.findViewById(R.id.modeButton4);
+        isoRecommendationTextView = view.findViewById(R.id.recommendationTextView1);
+        shutterSpeedRecommendationTextView = view.findViewById(R.id.recommendationTextView2);
+        apertureRecommendationTextView = view.findViewById(R.id.recommendationTextView3);
+        focalLengthRecommendationTextView = view.findViewById(R.id.recommendationTextView4);
         if(BodySelector.isParsable(BodySelector.getBodySlot(BodySelector.getWhichSlot()))){
             Intelligence.setBody(BodySelector.getBodySlot(BodySelector.getWhichSlot()));
             Intelligence.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot()));
@@ -374,6 +384,15 @@ public class Calculator extends Fragment {
         shutterSpeedMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.shutterSpeedMinus(); updateUI(); }});
         zoomMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.focalLengthMinus(); delayCamera();updateUI(); }});
         isoMinusButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) { Intelligence.isoMinus(); updateUI(); }});
+
+        landscapeModeButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) {
+            MODE = 1;}});
+        portraitModeButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) {
+            MODE = 2;}});
+        sunsetModeButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) {
+            MODE = 3;}});
+        offModeButton.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View view) {
+            MODE = 4;}});
 
         updateUI();
         int count=0,maxTries=10;
@@ -477,7 +496,7 @@ public class Calculator extends Fragment {
             createCameraPreviewSession(zoomFactor());
             jumpStartCount++;
         }
-
+        runRecommenations(MODE);
 
 
 
@@ -819,4 +838,176 @@ public class Calculator extends Fragment {
         mTextureView.setTransform(matrix);
     }
 
+    public void runRecommenations(int mode)
+    {
+        isoRecommendationTextView.setText("");
+        apertureRecommendationTextView.setText("");
+        focalLengthRecommendationTextView.setText("");
+        shutterSpeedRecommendationTextView.setText("");
+        switch(mode)
+        {
+            case 1:
+                isoRecommendationTextView.setText("1");
+                apertureRecommendationTextView.setText("2");
+                break;
+            case 2:
+                shutterSpeedRecommendationTextView.setText("1");
+                focalLengthRecommendationTextView.setText("2");
+                apertureRecommendationTextView.setText("3");
+                break;
+            case 3:
+                isoRecommendationTextView.setText("1");
+                apertureRecommendationTextView.setText("2");
+                break;
+        }
+        apertureRecommendationTextView.setBackgroundColor(redGreenColorTranslator(recommendationCalculator(mode, 3, Intelligence.getAperture(), Intelligence.getCropFactor())));
+        shutterSpeedRecommendationTextView.setBackgroundColor(redGreenColorTranslator(recommendationCalculator(mode, 2, Intelligence.getShutterSpeed(), Intelligence.getCropFactor())));
+        isoRecommendationTextView.setBackgroundColor(redGreenColorTranslator(recommendationCalculator(mode, 1, Intelligence.getISO(), Intelligence.getCropFactor())));
+        focalLengthRecommendationTextView.setBackgroundColor(redGreenColorTranslator(recommendationCalculator(mode, 4, Intelligence.getFocalLength(), Intelligence.getCropFactor())));
+    }
+
+    public int redGreenColorTranslator(double value)
+    {
+        int red, green, color;
+//        if(value>=1)
+//        {
+//            color = Color.argb(255,0,255,0);
+//        }
+//        else if(value>0)
+//        {
+//            color = Color.argb(255,255-(int)(value*255),255,255-(int)(value*255));
+//        }
+//        else if (value <= -1)
+//        {color = Color.argb(255,255,0,0);
+//        }
+//        else
+//        {
+//
+//            color = Color.argb(255,255,255+(int)(value*255),255+(int)(value*255));
+//        }
+        if(value>=1)
+        {
+            color = Color.argb(255,0,255,0);
+        }
+        else if(value>0)
+        {
+            color = Color.argb(255,0,(int)(value*255),0);
+        }
+        else if (value <= -1)
+        {color = Color.argb(255,255,0,0);
+        }
+        else
+        {
+
+            color = Color.argb(255,-(int)(value*255),0,0);
+        }
+        return color;
+
+    }
+    public double recommendationCalculator(int mode, int typeOfValue, double value, double cropFactor)
+    {
+        double calc=1, returnValue=0;
+        double pivotLeftStart=0, pivotLeftEnd = 1, pivotTarget=2, pivotRightStart=3, pivotRightEnd = 4, scale=0;
+
+        switch(mode)
+        {
+            //landscape
+            case 1:
+                switch(typeOfValue)
+                {
+                    //iso
+                    case 1:calc = value;
+                        pivotLeftStart = 50;
+                        pivotLeftEnd = 50;
+                        pivotTarget = 100;
+                        pivotRightStart = 400;
+                        pivotRightEnd = 800;
+                        scale  =0.001;
+                    break;
+                    //aperture
+                    case 3:calc = value*cropFactor;
+                        pivotLeftStart = 5.0;
+                        pivotLeftEnd = 7.1;
+                        pivotTarget = 10;
+                        pivotRightStart = 13;
+                        pivotRightEnd = 16;
+                        scale  =0.25;
+                    break;
+
+                }
+            break;
+                //portrait
+            case 2:
+                switch(typeOfValue)
+                {
+                    //ss
+                    case 2:calc = value;
+                        pivotLeftStart = 1.0/8000;
+                        pivotLeftEnd = 1.0/400;
+                        pivotTarget = 1.0/160;
+                        pivotRightStart = 1.0/80;
+                        pivotRightEnd = 1.0/60;
+                        scale  = 50;
+                        break;
+                    //aperture
+                    case 3:calc = value*cropFactor;
+                        pivotLeftStart = 1.4;
+                        pivotLeftEnd = 2;
+                        pivotTarget = 2.8;
+                        pivotRightStart = 4.0;
+                        pivotRightEnd = 5.6;
+                        scale  =0.25;
+                        break;
+                    //focal
+                    case 4:calc = value*cropFactor;
+                        pivotLeftStart = 35;
+                        pivotLeftEnd = 50;
+                        pivotTarget = 85;
+                        pivotRightStart = 105;
+                        pivotRightEnd = 125;
+                        scale  =0.01;
+                        break;
+                }
+                break;
+            case 3:
+                switch(typeOfValue)
+                {
+                    //iso
+                    case 1:calc = value;
+                        pivotLeftStart = 50;
+                        pivotLeftEnd = 50;
+                        pivotTarget = 100;
+                        pivotRightStart = 400;
+                        pivotRightEnd = 800;
+                        scale  =0.001;
+                        break;
+                    //aperture
+                    case 3:calc = value*cropFactor;
+                        pivotLeftStart = 7.1;
+                        pivotLeftEnd = 10;
+                        pivotTarget = 16;
+                        pivotRightStart = 22;
+                        pivotRightEnd = 40;
+                        scale  =0.25;
+                        break;
+                }
+                break;
+        }
+        try
+        {
+            if(calc<pivotLeftStart) returnValue = -1.0*(pivotLeftStart-calc)*scale;
+            else if(calc>=pivotLeftStart && calc<pivotLeftEnd) returnValue = 0;
+            else if(calc>=pivotLeftEnd && calc<=pivotTarget) returnValue = calc/(pivotTarget-pivotLeftEnd) - pivotLeftEnd/(pivotTarget-pivotLeftEnd);
+            else if(calc>pivotTarget && calc<=pivotRightStart) returnValue = calc/(pivotTarget-pivotRightStart
+            ) - pivotRightStart/(pivotTarget-pivotRightStart);
+            else if(calc>pivotRightStart && calc <pivotRightEnd) returnValue = 0;
+            else if(calc>pivotRightEnd) returnValue = 1.0*(pivotRightEnd-calc)*scale;
+        }
+        catch (Exception e)
+        {
+            returnValue = 0;
+        }
+        Log.d("TAG", String.valueOf(returnValue));
+        return returnValue;
+    }
 }
