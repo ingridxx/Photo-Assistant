@@ -76,7 +76,7 @@ public class Calculator extends Fragment {
     TextView apertureTV, shutterSpeedTV, isoTV, zoomTV, desiredDistanceTV, nearDistanceTV, farDistanceTV;
     Button bodyButton, lensButton, landscapeModeButton, portraitModeButton, sunsetModeButton, offModeButton;
     TextView evTextView, isoRecommendationTextView, shutterSpeedRecommendationTextView, apertureRecommendationTextView, focalLengthRecommendationTextView;
-    private boolean WAIT = false;
+    private static boolean WAIT = false;
     public static void clearWait()
     {
         WAIT = false;
@@ -103,7 +103,7 @@ public class Calculator extends Fragment {
         public void onOpened(@NonNull CameraDevice camera) {
             mCameraDevice = camera;
 
-            createCameraPreviewSession(1.0);
+            createCameraPreviewSession(zoomFactor());
             WAIT = false;
             // Toast.makeText(activity.getApplicationContext(), "Camera Opened!", Toast.LENGTH_SHORT).show();
         }
@@ -413,7 +413,7 @@ public class Calculator extends Fragment {
 
         updateUI();
         int count=0,maxTries=10;
-        createCameraPreviewSession(1.0);
+        createCameraPreviewSession(zoomFactor());
 //        while(count<maxTries)
 //        {
 //            try
