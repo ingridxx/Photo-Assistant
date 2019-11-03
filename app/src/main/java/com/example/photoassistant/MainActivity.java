@@ -13,6 +13,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Camera;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -49,6 +50,7 @@ import java.util.ArrayList;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static android.Manifest.permission.CAMERA;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -80,7 +82,8 @@ public class MainActivity extends AppCompatActivity {
 
         permissions.add(ACCESS_FINE_LOCATION);
         permissions.add(ACCESS_COARSE_LOCATION);
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, MY_CAMERA_REQUEST_CODE);
+        permissions.add(CAMERA);
+       // ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, MY_CAMERA_REQUEST_CODE);
         permissionsToRequest = findUnAskedPermissions(permissions);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (permissionsToRequest.size() > 0)
@@ -89,8 +92,8 @@ public class MainActivity extends AppCompatActivity {
 
         new ProcessDataFromArrays().execute();
 
-        Intelligence.Current.setLens(new ListItemLens("Lens", new String[]{"Lens", "50", "50", "2.8", "2.8", "22", "22"}));
-        Intelligence.Current.setBody(new ListItemBody("Body", new String[]{"Body", "50", "36", "24", "DSLR", "Sample"}));
+        Intelligence.setLens(new ListItemLens("Lens", new String[]{"Lens", "50", "50", "2.8", "2.8", "22", "22"}));
+        Intelligence.setBody(new ListItemBody("Body", new String[]{"Body", "50", "36", "24", "DSLR", "Sample"}));
         bodyButton = findViewById(R.id.bodyButton);
         bodyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         calcButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Calculator.clearWait();
                 if (!BodySelector.empty()) {
                     fragmentStack.push(new Calculator());
                     getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Calculator()).commit();
