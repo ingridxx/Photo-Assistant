@@ -90,7 +90,7 @@ public class Weather extends Fragment {
         // Check Internet Connectivity
         if (isNetworkAvailable() == false) {
             Toast.makeText(getActivity(), "Please check your Internet connection and try again.", Toast.LENGTH_LONG).show();
-            getActivity().finish();
+            //getActivity().finish();
         }
 
 

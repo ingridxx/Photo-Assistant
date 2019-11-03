@@ -98,7 +98,7 @@ public class Sun extends Fragment {
         //check network connectivity
         if (isNetworkAvailable() == false) {
             Toast.makeText(getActivity(), "Please check your Internet connection and try again.", Toast.LENGTH_LONG).show();
-            getActivity().finish();
+            //getActivity().finish();
         }
 
         //CIRCLE PARAMETERS
@@ -241,7 +241,6 @@ public class Sun extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                sunriseTextView.append("That didn't work!");
             }
         });
         queue.add(stringRequest);
