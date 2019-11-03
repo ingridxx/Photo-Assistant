@@ -112,6 +112,7 @@ public class Intelligence{
         return String.valueOf(distance);
     }
     public static String getDofNear(){return String.format("%.02f", dofNear);}
+    public static double getCropFactor(){return body.getCropFactor();}
     public static String getDofFar(){return String.format("%.02f", dofFar);}
     public static void refreshDistance(){distance = Intelligence.HyperfocalCalculator();}
     public static double getEquivalentFocalLength() {
