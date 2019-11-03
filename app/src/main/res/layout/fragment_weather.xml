@@ -25,7 +25,6 @@
                 android:id="@+id/Location"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="Location"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textColor="#F1F1F1"
@@ -61,7 +60,6 @@
                         android:layout_gravity="center"
                         android:layout_weight="1.5"
                         android:gravity="center_vertical"
-                        android:text="Temperature"
                         android:textAlignment="center"
                         android:textColor="#F1F1F1"
                         android:textSize="32dp" />
@@ -81,7 +79,6 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Description"
                         android:textAlignment="center"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                         android:textColor="#FCFAFA"
@@ -100,7 +97,6 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:layout_weight="1"
-                            android:text="Humidity"
                             android:textAlignment="center"
                             android:textColor="#FFFFFF"
                             android:textSize="18sp" />
@@ -111,7 +107,6 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:layout_weight="1"
-                            android:text="PSI"
                             android:textAlignment="center"
                             android:textColor="#FFFFFF"
                             android:textSize="18sp" />
@@ -141,7 +136,6 @@
                             android:layout_height="fill_parent"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
-                            android:text="Hour1"
                             android:textAlignment="center"
                             android:textSize="18sp" />
 
@@ -159,7 +153,6 @@
                             android:layout_height="fill_parent"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="2"
-                            android:text="Hour1Temp"
                             android:textAlignment="center"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -177,7 +170,6 @@
                             android:layout_height="fill_parent"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
-                            android:text="Hour2"
                             android:textAlignment="center"
                             android:textSize="18sp" />
 
@@ -195,7 +187,6 @@
                             android:layout_height="fill_parent"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="2"
-                            android:text="Hour2Temp"
                             android:textAlignment="center"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -213,7 +204,6 @@
                             android:layout_height="fill_parent"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
-                            android:text="Hour3"
                             android:textAlignment="center"
                             android:textSize="18sp" />
 
@@ -231,7 +221,6 @@
                             android:layout_height="fill_parent"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="2"
-                            android:text="Hour3Temp"
                             android:textAlignment="center"
                             android:textSize="18sp" />
                     </LinearLayout>
