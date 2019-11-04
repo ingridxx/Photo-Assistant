@@ -2,9 +2,15 @@ package com.example.photoassistant;
 
 import android.content.Context;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.PointF;
 import android.graphics.Shader;
 import android.graphics.SweepGradient;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 
@@ -24,6 +30,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -102,14 +109,14 @@ public class Sun extends Fragment {
         }
 
         //CIRCLE PARAMETERS
-        int margin = 50,thickness = 75, topMargin = 25;
+        final int margin = 50,thickness = 75, topMargin = 25;
         //POSITION CIRCLE
-        ImageView blackCircle = rootView.findViewById(R.id.black_circle);
+        final ImageView blackCircle = rootView.findViewById(R.id.black_circle);
         ImageView sunCircle = rootView.findViewById(R.id.gradientRing);
         Display display = ((Activity)getContext()).getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics ();
         display.getMetrics(outMetrics);
-        float shorter = outMetrics.heightPixels<outMetrics.widthPixels ? outMetrics.heightPixels : outMetrics.widthPixels;
+        final float shorter = outMetrics.heightPixels<outMetrics.widthPixels ? outMetrics.heightPixels : outMetrics.widthPixels;
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams((int)(shorter-convertDpToPixel(margin,getContext())), (int)(shorter-convertDpToPixel(margin,getContext())));
         layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
         layoutParams.setMargins(0,(int)convertDpToPixel(topMargin,getContext()),0,0);
@@ -120,9 +127,9 @@ public class Sun extends Fragment {
 
         blackCircle.setLayoutParams(layoutParams);
 
-
         final TextView sunriseTextView = rootView.findViewById(R.id.sunriseTextView);
         final TextView sunsetTextView = rootView.findViewById(R.id.sunsetTextView);
+        final TextView fourTimesTextView = rootView.findViewById(R.id.fourTimesTextView);
 
 
 
@@ -161,48 +168,46 @@ public class Sun extends Fragment {
                             temp=extract.getString("astronomical_twilight_begin");
                             lt = time(temp);
                             asr = lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunrise+=lt+"\n";
+                            sunrise+="<font color=#40284A>"+lt+"</font>"+"<br>";
 
                             temp=extract.getString("nautical_twilight_begin");
                             lt = time(temp);
                             nsr=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunrise+=lt+"\n";
+                            sunrise+="<font color=#73434B>"+lt+"</font>"+"<br>";
 
                             temp=extract.getString("civil_twilight_begin");
                             lt = time(temp);
                             csr=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunrise+=lt+"\n";
+                            sunrise+="<font color=#B34D25>"+lt+"</font>"+"<br>";
 
                             temp=extract.getString("sunrise");
                             lt = time(temp);
                             sr=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunrise+=lt;
+                            sunrise+="<font color=#F07E07>"+lt+"</font>"+"";
+
 
                             temp=extract.getString("sunset");
                             lt = time(temp);
                             ss=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunset+=lt+"\n";
-
+                            sunset+="<font color=#F07E07>"+lt+"</font>"+"<br>";
                             temp=extract.getString("civil_twilight_end");
                             lt = time(temp);
                             css=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunset+=lt+"\n";
-
+                            sunset+="<font color=#B34D25>"+lt+"</font>"+"<br>";
                             temp=extract.getString("nautical_twilight_end");
                             lt = time(temp);
                             nss=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunset+=lt+"\n";
-
+                            sunset+="<font color=#73434B>"+lt+"</font>"+"<br>";
                             temp=extract.getString("astronomical_twilight_end");
                             lt = time(temp);
                             ass=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunset+=lt;
+                            sunset+="<font color=#40284A>"+lt+"</font>"+"";
 
-                        }catch (Exception e){
-                            sunriseTextView.append(e.toString());
+
+
+                        }catch (Exception e){e.printStackTrace();
                         }finally {
-                            sunriseTextView.append("Sunrise\n"+sunrise);
-                            sunsetTextView.append("Sunset\n"+sunset);
+
 
                             final ShapeDrawable circle = new ShapeDrawable(new OvalShape());
 
@@ -234,8 +239,48 @@ public class Sun extends Fragment {
                                 }
                             };circle.setShaderFactory(shaderFactory);
                             ImageView iv = (ImageView)(rootView.findViewById(R.id.gradientRing));
+
+                            int length = blackCircle.getHeight();
+                            final Bitmap bitmap = Bitmap.createBitmap(length, length, Bitmap.Config.ARGB_8888);
+                            Canvas canvas = new Canvas(bitmap);
+                            Paint paint = new Paint();
+                            paint.setStyle(Paint.Style.STROKE);
+                            paint.setColor(0xFF40284A);
+                            paint.setStrokeWidth(3);
+                            canvas.drawBitmap(bitmap,0,0,null);
+                            canvas.drawLine((float)getCircleX(asr, length,length)
+                                    ,(float)getCircleY(asr,length,length),(float)(length/2.0),(float)(length/2.0),paint);
+                            canvas.drawLine((float)getCircleX(ass, length,length)
+                                    ,(float)getCircleY(ass,length,length),(float)(length/2.0),(float)(length/2.0),paint);
+                            paint.setColor(0xFF73434B);
+                            canvas.drawLine((float)getCircleX(nsr, length,length)
+                                    ,(float)getCircleY(nsr,length,length),(float)(length/2.0),(float)(length/2.0),paint);
+                            canvas.drawLine((float)getCircleX(nss, length,length)
+                                    ,(float)getCircleY(nss,length,length),(float)(length/2.0),(float)(length/2.0),paint);
+                            paint.setColor(0xFFB34D25);
+
+                            canvas.drawLine((float)getCircleX(csr, length,length)
+                                    ,(float)getCircleY(csr,length,length),(float)(length/2.0),(float)(length/2.0),paint);
+                            canvas.drawLine((float)getCircleX(css, length,length)
+                                    ,(float)getCircleY(css,length,length),(float)(length/2.0),(float)(length/2.0),paint);
+                            paint.setColor(0xFFF07E07);
+                            canvas.drawLine((float)getCircleX(sr, length,length)
+                                    ,(float)getCircleY(sr,length,length),(float)(length/2.0),(float)(length/2.0),paint);
+                            canvas.drawLine((float)getCircleX(ss, length,length)
+                                    ,(float)getCircleY(ss,length,length),(float)(length/2.0),(float)(length/2.0),paint);
+                            paint.setColor(0xFFFFFFFF);
+
+                            canvas.drawLine((float)getCircleX((sr+ss)/2.0, length,length)
+                                    ,(float)getCircleY((sr+ss)/2.0,length,length),(float)(length/2.0),(float)(length/2.0),paint);
+                            canvas.drawLine((float)getCircleX((sr+ss)/2.0+0.5, length,length)
+                                    ,(float)getCircleY((sr+ss)/2.0+0.5,length,length),(float)(length/2.0),(float)(length/2.0),paint);
                             iv.setBackground(circle);
                             iv.setRotation(90);
+                            blackCircle.setImageDrawable(new BitmapDrawable(getResources(),bitmap));
+                            sunriseTextView.setText(Html.fromHtml("Sunrise<br>" + sunrise));
+                            sunsetTextView.setText(Html.fromHtml("Sunset<br>" + sunset));
+                            fourTimesTextView.setText("\nAstronomical\nNautical\nCivil\nHorizon");
+
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -258,6 +303,21 @@ public class Sun extends Fragment {
     }
     public static float convertPixelsToDp(float px, Context context){
         return px / ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+    }
+    public static double getCircleX(double percentageAngle, double width, double height)
+    {
+        percentageAngle = percentageAngle + 0.5;
+        percentageAngle = 1-percentageAngle;
+        double xx = percentageAngle*2* Math.PI;
+
+        return width/2.0 + width*Math.sin(xx)/2.0;
+    }
+    public static double getCircleY(double percentageAngle, double width, double height)
+    {
+        percentageAngle = percentageAngle + 0.5;
+        percentageAngle = 1-percentageAngle;
+        double yy = percentageAngle*2* Math.PI;
+        return height/2.0 - height*Math.cos(yy)/2.0;
     }
     static double asr, nsr, csr, sr, ss, css, nss, ass;
     @Override
