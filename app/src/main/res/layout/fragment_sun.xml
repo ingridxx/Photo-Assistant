@@ -31,9 +31,8 @@
         android:orientation="horizontal"
         android:weightSum="3"
         android:layout_alignParentBottom="true">
-
         <TextView
-            android:id="@+id/sunriseTextView"
+            android:id="@+id/sunsetTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -41,7 +40,6 @@
             android:gravity="left|center_vertical"
             android:textAlignment="gravity"
             android:textSize="18sp" />
-
         <TextView
             android:id="@+id/fourTimesTextView"
             android:layout_width="0dp"
@@ -51,9 +49,8 @@
             android:gravity="center|center_horizontal|center_vertical"
             android:text=""
             android:textSize="18sp" />
-
         <TextView
-            android:id="@+id/sunsetTextView"
+            android:id="@+id/sunriseTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -61,6 +58,10 @@
             android:gravity="right|center_vertical"
             android:textAlignment="gravity"
             android:textSize="18sp" />
+
+
+
+
 
     </LinearLayout>
 

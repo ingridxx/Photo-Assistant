@@ -167,25 +167,25 @@ public class Sun extends Fragment {
                             JSONObject reader = new JSONObject(response);
                             JSONObject extract = reader.getJSONObject("results");
 
-                            temp=extract.getString("astronomical_twilight_begin");
+                            temp=extract.getString("sunrise");
                             lt = time(temp);
-                            asr = lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunrise+="<font color=#40284A>"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
-
+                            sr=lt.getHour()/24.0+lt.getMinute()/1440.0;
+                            sunrise+="<font color=#F07E07>"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
+                            temp=extract.getString("civil_twilight_begin");
+                            lt = time(temp);
+                            csr=lt.getHour()/24.0+lt.getMinute()/1440.0;
+                            sunrise+="<font color=#B34D25>"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
                             temp=extract.getString("nautical_twilight_begin");
                             lt = time(temp);
                             nsr=lt.getHour()/24.0+lt.getMinute()/1440.0;
                             sunrise+="<font color=#73434B>"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
 
-                            temp=extract.getString("civil_twilight_begin");
+                            temp=extract.getString("astronomical_twilight_begin");
                             lt = time(temp);
-                            csr=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunrise+="<font color=#B34D25>"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
+                            asr = lt.getHour()/24.0+lt.getMinute()/1440.0;
+                            sunrise+="<font color=#40284A>"+lt.format(dateTimeFormatter)+"</font>"+"";
 
-                            temp=extract.getString("sunrise");
-                            lt = time(temp);
-                            sr=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunrise+="<font color=#F07E07>"+lt.format(dateTimeFormatter)+"</font>"+"";
+
 
 
                             temp=extract.getString("sunset");
@@ -286,7 +286,7 @@ public class Sun extends Fragment {
                             sunriseTextView.setText(Html.fromHtml("<br><br>Sunrise<br>" + sunrise));
                             sunsetTextView.setText(Html.fromHtml("<br><br>Sunset<br>" + sunset));
                             fourTimesTextView.setText(Html.fromHtml("<font color=#FF0000>Now<br>"
-                                    +LocalTime.now().format(dateTimeFormatter)+"</font><br><br>Astronomical<br>Nautical<br>Civil<br>Horizon"));
+                                    +LocalTime.now().format(dateTimeFormatter)+"</font><br><br>Horizon<br>Civil<br>Nautical<br>Astronomical"));
 
                         }
                     }
