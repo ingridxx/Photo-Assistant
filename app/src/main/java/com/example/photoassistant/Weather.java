@@ -15,7 +15,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.os.Handler;
 import android.widget.Toast;
@@ -33,16 +36,18 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
 public class Weather extends Fragment {
-    TextView location;
+    Spinner location;
     TextView nowTemp;
     ImageView weatherIcon;
     TextView Description;
@@ -57,7 +62,7 @@ public class Weather extends Fragment {
     ImageView H1Icon;
     ImageView H2Icon;
     ImageView H3Icon;
-
+    LinkedList<String> options=new LinkedList<String>();
 
     Handler handler;
 
@@ -71,7 +76,7 @@ public class Weather extends Fragment {
 
         handler = new Handler();
 
-        location = (TextView) view.findViewById(R.id.Location);
+        location = (Spinner) view.findViewById(R.id.Location);
         Description = (TextView) view.findViewById(R.id.Description);
         weatherIcon = (ImageView) view.findViewById(R.id.WeatherIcon);
         nowTemp = (TextView) view.findViewById(R.id.currentTemp);
@@ -143,8 +148,22 @@ public class Weather extends Fragment {
     }
     List<Location> locations = new ArrayList<Location>();
 
-    private void renderWeatherScreen(JSONObject currentTemp, JSONObject OWForecast, JSONObject PSI, JSONObject Humidity){
+    private void renderWeatherScreen(final JSONObject currentTemp, final JSONObject OWForecast, final JSONObject PSI, final JSONObject Humidity){
         String locationString;
+        Map<String, String> simpleLocationNames = new HashMap<String, String>();
+        simpleLocationNames.put("Banyan Road", "Jurong Island");
+        simpleLocationNames.put("Clementi Road", "Clementi");
+        simpleLocationNames.put("East Coast Parkway", "East Coast");
+        simpleLocationNames.put("Kim Chuan Road", "Bartley");
+        simpleLocationNames.put("Nanyang Avenue", "Nanyang Avenue");
+        simpleLocationNames.put("Old Choa Chu Kang Road", "Tengah");
+        simpleLocationNames.put("Pulau Ubin", "Pulau Ubin");
+        simpleLocationNames.put("Sembawang Road", "Yishun");
+        simpleLocationNames.put("Sentosa", "Sentosa");
+        simpleLocationNames.put("Tuas South Avenue 3", "Tuas");
+        simpleLocationNames.put("West Coast Highway", "West Coast");
+        simpleLocationNames.put("Woodlands Avenue 9", "Woodlands");
+        simpleLocationNames.put("Woodlands Road", "Sungei Kadut");
         try {
             GPS gps = new GPS(getContext());
             Location current = new Location("");
@@ -156,6 +175,14 @@ public class Weather extends Fragment {
             for (int i=0;i<metadata.length();i++) {
                 double latitude = metadata.getJSONObject(i).getJSONObject("location").getDouble("latitude");
                 double longitude = metadata.getJSONObject(i).getJSONObject("location").getDouble("longitude");
+                if(simpleLocationNames.containsKey(metadata.getJSONObject(i).getString("name")))
+                {
+                    options.add(simpleLocationNames.get(metadata.getJSONObject(i).getString("name")));
+                }
+                else
+                {
+                    options.add(metadata.getJSONObject(i).getString("name"));
+                }
                 Location location = new Location("");
                 location.setLatitude(latitude);
                 location.setLongitude(longitude);
@@ -177,7 +204,7 @@ public class Weather extends Fragment {
             }
             locationString =  metadata.getJSONObject(targetIndex).getString("name");
 
-            int currentTempData = currentTemp.getJSONArray("items").getJSONObject(0).getJSONArray("readings").getJSONObject(targetIndex).getInt("value"); // index 1 for Clementi Road
+            double currentTempData = currentTemp.getJSONArray("items").getJSONObject(0).getJSONArray("readings").getJSONObject(targetIndex).getDouble("value");
             JSONArray forecastData = OWForecast.getJSONArray("list");
             int PSIData = PSI.getJSONArray("items").getJSONObject(0).getJSONObject("readings").getJSONObject("psi_twenty_four_hourly").getInt("national");
             int humidityData = Humidity.getJSONArray("items").getJSONObject(0).getJSONObject("general").getJSONObject("relative_humidity").getInt("high");
@@ -240,27 +267,43 @@ public class Weather extends Fragment {
 
             // Location
 
-            Map<String, String> simpleLocationNames = new HashMap<String, String>();
-            simpleLocationNames.put("Banyan Road", "Jurong Island");
-            simpleLocationNames.put("Clementi Road", "Clementi");
-            simpleLocationNames.put("East Coast Parkway", "East Coast");
-            simpleLocationNames.put("Kim Chuan Road", "Bartley");
-            simpleLocationNames.put("Nanyang Avenue", "Nanyang Avenue");
-            simpleLocationNames.put("Old Choa Chu Kang Road", "Tengah");
-            simpleLocationNames.put("Pulau Ubin", "Pulau Ubin");
-            simpleLocationNames.put("Sembawang Road", "Yishun");
-            simpleLocationNames.put("Sentosa", "Sentosa");
-            simpleLocationNames.put("Tuas South Avenue 3", "Tuas");
-            simpleLocationNames.put("West Coast Highway", "West Coast");
-            simpleLocationNames.put("Woodlands Avenue 9", "Woodlands");
-            simpleLocationNames.put("Woodlands Road", "Sungei Kadut");
+
+            location.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                    try {
+                        double currentTempData = currentTemp.getJSONArray("items").getJSONObject(0).getJSONArray("readings").getJSONObject(position).getDouble("value"); // index 1 for Clementi Road
+                        JSONArray forecastData = OWForecast.getJSONArray("list");
+                        int PSIData = PSI.getJSONArray("items").getJSONObject(0).getJSONObject("readings").getJSONObject("psi_twenty_four_hourly").getInt("national");
+                        int humidityData = Humidity.getJSONArray("items").getJSONObject(0).getJSONObject("general").getJSONObject("relative_humidity").getInt("high");
+                        // Current Weather Description
+                        Description.setText(forecastData.getJSONObject(0).getJSONArray("weather").getJSONObject(0).getString("description").trim());
+                        // Current Weather icon
+                        getWeatherIcon(forecastData.getJSONObject(0).getJSONArray("weather").getJSONObject(0).getString("icon"));
+
+                        // Current Temperature, Humidity, and PSI
+                        nowTemp.setText(currentTempData + "℃");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parentView) {
+                    // your code here
+                }
+
+            });
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item,options);
+
+            location.setAdapter(adapter);
             if(simpleLocationNames.containsKey(locationString))
             {
-                location.setText(simpleLocationNames.get(locationString));
+
             }
             else
             {
-                location.setText(locationString);
+                //location.setText(locationString);
             }
 
         } catch (Exception e) {

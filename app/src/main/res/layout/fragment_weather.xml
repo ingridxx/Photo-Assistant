@@ -21,12 +21,11 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <TextView
+            <Spinner
                 android:id="@+id/Location"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textColor="#F1F1F1"
                 android:textSize="30sp" />
 
