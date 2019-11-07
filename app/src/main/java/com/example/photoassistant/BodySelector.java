@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 public class BodySelector extends Fragment {
@@ -24,6 +26,11 @@ public class BodySelector extends Fragment {
     static int whichLens = 1;
     private static int WhichSlot = 1;
     ListItem[] cacheArray = null;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+        super.onCreate(savedInstanceState);
+    }
 
     public static void addSlot(int whichSlot, ListItem[] li) {
 

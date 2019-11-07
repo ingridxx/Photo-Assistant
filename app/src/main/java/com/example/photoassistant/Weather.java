@@ -303,6 +303,7 @@ public class Weather extends Fragment {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item,options);
 
             location.setAdapter(adapter);
+            location.setSelection(targetIndex);
             if(simpleLocationNames.containsKey(locationString))
             {
 
