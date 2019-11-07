@@ -15,6 +15,7 @@ import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
@@ -63,7 +64,6 @@ public class Lens extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         setHasOptionsMenu(true);
-
         View rootView = inflater.inflate(R.layout.fragment_lens, container, false);
         return rootView;
 
@@ -124,6 +124,8 @@ public class Lens extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         favourites = new ArrayList<ListItem>();
         favouritesString = new ArrayList<String>();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+
         //Gson gson = new Gson();
         //ListItemLens obj;
 

@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
@@ -64,6 +65,7 @@ public class Body extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // 1. get a reference to recyclerView
+        setHasOptionsMenu(true);
         final TextView tv_slot = view.findViewById(R.id.tv_slot);
         tv_slot.setText("Slot " + whichSlot);
         final TextView tv_slot_selected = view.findViewById(R.id.tv_selected_slot);
@@ -89,12 +91,11 @@ public class Body extends Fragment {
                 }
             }
         });
-        setHasOptionsMenu(true);
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
         super.onCreate(savedInstanceState);
     }
 

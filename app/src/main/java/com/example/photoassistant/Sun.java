@@ -24,6 +24,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
@@ -50,6 +51,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -133,7 +135,7 @@ public class Sun extends Fragment {
         final TextView sunsetTextView = rootView.findViewById(R.id.sunsetTextView);
         final TextView fourTimesTextView = rootView.findViewById(R.id.fourTimesTextView);
 
-
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
 
         final RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         //String url="https://api.sunrise-sunset.org/json?lat=37.421&lng=-122.084&date=today";
