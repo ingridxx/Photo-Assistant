@@ -132,11 +132,12 @@
         android:id="@+id/tv_bodyselectiontitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="72dp"
+        android:layout_marginBottom="28dp"
+        android:gravity="center_horizontal"
         android:text="Click a Button to \nSelect A Brand"
         app:layout_constraintBottom_toTopOf="@+id/imageButtonTopStartRL"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:gravity="center_horizontal"/>
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -231,30 +232,51 @@ public class BodySelector extends Fragment {
         ImageButton ib_bottomStart = rootView.findViewById(R.id.imageButtonBottomStart);
         ImageButton ib_bottomEnd = rootView.findViewById(R.id.imageButtonBottomEnd);
 
-        if(ifNullHandler(tvTS,0)){}
-            ib_bottomEnd.setBackground(findTypeBody((ListItemBody) Slots[0][0],0));
-        ifNullHandler(tvBS,2);
-        ifNullHandler(tvTE,1);
-        ifNullHandler(tvBE,3);
-
-
+        ImageView.ScaleType sctype = ImageView.ScaleType.FIT_CENTER;
+        if(ifNullHandler(tvTS,0)){
+            ib_topStart.setImageResource(findTypeBody((ListItemBody) Slots[0][0],0));
+            ib_topStart.setScaleType(sctype);
+        }
+        if(ifNullHandler(tvTE,1)){
+            ib_topStart.setImageResource(findTypeBody((ListItemBody) Slots[1][0],1));
+            ib_topStart.setScaleType(sctype);
+        }
+        if(ifNullHandler(tvBS,2)){
+            ib_topStart.setImageResource(findTypeBody((ListItemBody) Slots[2][0],2));
+            ib_topStart.setScaleType(sctype);
+        }
+        if(ifNullHandler(tvBE,3)){
+            ib_topStart.setImageResource(findTypeBody((ListItemBody) Slots[3][0],3));
+            ib_topStart.setScaleType(sctype);
+        }
 
     }
 
-    private Drawable findTypeBody(ListItemBody lib, int i) {
+    private int findTypeBody(ListItemBody lib, int i) {
 
-//        switch (lib.getType()){
-//            case "SLR":
-//                return R.drawable.
-//
-//        }
-        return null;
+        switch (lib.getType()){
+            case "SLR":
+                return R.drawable.slr;
+            case "Digital SLR":
+                return R.drawable.slr;
+            case "Rangefinder":
+                return R.drawable.rangefinder;
+            case "Medium Format":
+                return R.drawable.medium;
+            case "Mirrorless":
+                return R.drawable.mirrorless;
+            case "Cine":
+                return R.drawable.cine;
+
+
+        }
+        return 0;
     }
 
     private boolean ifNullHandler(TextView tv, int arraynum){
         boolean retVal = false;
         if (Slots[arraynum][0] != null) {
-            tv.setText(Slots[3][0].getPartName());
+            tv.setText(Slots[arraynum][0].getPartName());
             retVal = true;
         } else {
             tv.setText("Not Selected");
