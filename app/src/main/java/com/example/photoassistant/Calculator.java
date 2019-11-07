@@ -505,7 +505,7 @@ public class Calculator extends Fragment {
         {
             shutterSpeedTV.setText(Intelligence.getShutterSpeedString());
         }
-        if(zoomFactor()<=1 || zoomFactor()> mCameraCharacteristics.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM))
+        if(zoomFactor()<=1 || zoomFactor()>= mCameraCharacteristics.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM))
         {
             zoomTV.setTextColor(0xFFFF0000);
         }
