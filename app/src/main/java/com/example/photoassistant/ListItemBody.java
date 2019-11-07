@@ -1,5 +1,7 @@
 package com.example.photoassistant;
 
+import android.media.Image;
+
 import androidx.annotation.NonNull;
 
 public class ListItemBody extends ListItem{

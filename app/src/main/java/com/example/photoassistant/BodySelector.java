@@ -1,6 +1,7 @@
 package com.example.photoassistant;
 
 import android.content.pm.ActivityInfo;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -151,17 +152,6 @@ public class BodySelector extends Fragment {
         ImageButton ib_bottomEnd = rootView.findViewById(R.id.imageButtonBottomEnd);
         setOverlayResources(rootView);
 
-//        ib_topStart.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                WhichSlot = 1;
-//                if (Slots[0][0] == null) {
-//                    MainActivity.fragmentStack.add(new Body(Slots[0], 1));
-//                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(Slots[0], 1)).commit();
-//                }
-//            }
-//        });
-
         setIbOnClick(ib_topStart,0,1);
 
         setIbOnClick(ib_topEnd,1,2);
@@ -229,32 +219,40 @@ public class BodySelector extends Fragment {
         TextView tvTE = rootView.findViewById(R.id.tv_ImageButtonTE);
         TextView tvBS = rootView.findViewById(R.id.tv_ImageButtonBS);
         TextView tvBE = rootView.findViewById(R.id.tv_ImageButtonBE);
+        ImageButton ib_topStart = rootView.findViewById(R.id.imageButtonTopStart);
+        ImageButton ib_topEnd = rootView.findViewById(R.id.imageButtonTopEnd);
+        ImageButton ib_bottomStart = rootView.findViewById(R.id.imageButtonBottomStart);
+        ImageButton ib_bottomEnd = rootView.findViewById(R.id.imageButtonBottomEnd);
+
+        if(ifNullHandler(tvTS,0)){}
+            ib_bottomEnd.setBackground(findTypeBody((ListItemBody) Slots[0][0],0));
+        ifNullHandler(tvBS,2);
+        ifNullHandler(tvTE,1);
+        ifNullHandler(tvBE,3);
 
 
-        if (Slots[0][0] != null) {
-            tvTS.setText(Slots[0][0].getPartName());
+
+    }
+
+    private Drawable findTypeBody(ListItemBody lib, int i) {
+
+//        switch (lib.getType()){
+//            case "SLR":
+//                return R.drawable.
+//
+//        }
+        return null;
+    }
+
+    private boolean ifNullHandler(TextView tv, int arraynum){
+        boolean retVal = false;
+        if (Slots[arraynum][0] != null) {
+            tv.setText(Slots[3][0].getPartName());
+            retVal = true;
         } else {
-            tvTS.setText("Not Selected");
+            tv.setText("Not Selected");
         }
-
-        if (Slots[1][0] != null) {
-            tvTE.setText(Slots[1][0].getPartName());
-        } else {
-            tvTE.setText("Not Selected");
-        }
-
-        if (Slots[2][0] != null) {
-            tvBS.setText(Slots[2][0].getPartName());
-        } else {
-            tvBS.setText("Not Selected");
-        }
-
-        if (Slots[3][0] != null) {
-            tvBE.setText(Slots[3][0].getPartName());
-        } else {
-            tvBE.setText("Not Selected");
-        }
-
+        return  retVal;
     }
 
 
