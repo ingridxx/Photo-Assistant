@@ -59,15 +59,12 @@ public class MainActivity extends AppCompatActivity {
     private static final int MY_CAMERA_REQUEST_CODE = 100;
     public static ArrayList<ListItem> lens_al = new ArrayList<>();
     public static ArrayList<ListItem> body_al = new ArrayList<>();
-    public static String currFrag = "sun";
-    public static String prevFrag;
     public static Stack fragmentStack = new Stack();
     private static Activity activity;
     public ArrayList<String> permissionsToRequest;
     public ArrayList<String> permissionsRejected = new ArrayList<>();
     public ArrayList<String> permissions = new ArrayList<>();
     Button bodyButton;
-    Button lensButton;
     Button weatherButton;
     Button calcButton;
     Button sunButton;
@@ -77,13 +74,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Fragment weather = (Fragment) getSupportFragmentManager().findFragmentById(weather);
-
 
         permissions.add(ACCESS_FINE_LOCATION);
         permissions.add(ACCESS_COARSE_LOCATION);
         permissions.add(CAMERA);
-       // ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, MY_CAMERA_REQUEST_CODE);
         permissionsToRequest = findUnAskedPermissions(permissions);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (permissionsToRequest.size() > 0)
@@ -98,23 +92,12 @@ public class MainActivity extends AppCompatActivity {
         bodyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 fragmentStack.push(new BodySelector());
                 getSupportFragmentManager().beginTransaction().replace(R.id.fl, new BodySelector()).commit();
-
             }
         });
         activity = this;
 
-//        lensButton = findViewById(R.id.lensButton);
-//        lensButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                fragmentStack.push(new Lens());
-//                getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Lens()).commit();
-//
-//            }
-//        });
         weatherButton = findViewById(R.id.weatherButton);
         weatherButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,7 +139,6 @@ public class MainActivity extends AppCompatActivity {
             fragmentStack.push(new Sun());
             getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Sun()).commit();
         }
-        //getSupportFragmentManager().beginTransaction().replace(R.id.fl,new Sun()).commit();
 
     }
 

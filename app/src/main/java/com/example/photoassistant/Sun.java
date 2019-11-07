@@ -276,10 +276,6 @@ public class Sun extends Fragment {
                                     ,(float)getCircleY(ss,length,length),(float)(length/2.0),(float)(length/2.0),paint);
                             paint.setColor(0xFFFF0000);
 
-//                            canvas.drawLine((float)getCircleX((sr+ss)/2.0, length,length)
-//                                    ,(float)getCircleY((sr+ss)/2.0,length,length),(float)(length/2.0),(float)(length/2.0),paint);
-//                            canvas.drawLine((float)getCircleX((sr+ss)/2.0+0.5, length,length)
-//                                    ,(float)getCircleY((sr+ss)/2.0+0.5,length,length),(float)(length/2.0),(float)(length/2.0),paint);
                             canvas.drawLine((float)getCircleX(nowAngle, length,length)
                                     ,(float)getCircleY(nowAngle,length,length),(float)(length/2.0),(float)(length/2.0),paint);
                             iv.setBackground(circle);

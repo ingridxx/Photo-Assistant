@@ -33,7 +33,7 @@ public class BodySelector extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
     }
-
+    //cleanup here?
     public static void addSlot(int whichSlot, ListItem[] li) {
 
         switch (whichSlot) {
@@ -195,7 +195,7 @@ public class BodySelector extends Fragment {
 
     }
 
-    private void setIbOnLongClick(ImageButton ib, final View rootView, final int arraySlot){
+    private void setIbOnLongClick(final ImageButton ib, final View rootView, final int arraySlot){
 
         ib.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -215,6 +215,7 @@ public class BodySelector extends Fragment {
                         }
 
                     }).show();
+                    ib.setImageResource(android.R.color.transparent);
                 }
                 return true;
             }
@@ -238,16 +239,16 @@ public class BodySelector extends Fragment {
             ib_topStart.setScaleType(sctype);
         }
         if(ifNullHandler(tvTE,1)){
-            ib_topStart.setImageResource(findTypeBody((ListItemBody) Slots[1][0],1));
-            ib_topStart.setScaleType(sctype);
+            ib_topEnd.setImageResource(findTypeBody((ListItemBody) Slots[1][0],1));
+            ib_topEnd.setScaleType(sctype);
         }
         if(ifNullHandler(tvBS,2)){
-            ib_topStart.setImageResource(findTypeBody((ListItemBody) Slots[2][0],2));
-            ib_topStart.setScaleType(sctype);
+            ib_bottomStart.setImageResource(findTypeBody((ListItemBody) Slots[2][0],2));
+            ib_bottomStart.setScaleType(sctype);
         }
         if(ifNullHandler(tvBE,3)){
-            ib_topStart.setImageResource(findTypeBody((ListItemBody) Slots[3][0],3));
-            ib_topStart.setScaleType(sctype);
+            ib_bottomEnd.setImageResource(findTypeBody((ListItemBody) Slots[3][0],3));
+            ib_bottomEnd.setScaleType(sctype);
         }
 
     }
@@ -267,8 +268,6 @@ public class BodySelector extends Fragment {
                 return R.drawable.mirrorless;
             case "Cine":
                 return R.drawable.cine;
-
-
         }
         return 0;
     }

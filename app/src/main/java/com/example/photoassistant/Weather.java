@@ -278,6 +278,7 @@ public class Weather extends Fragment {
                 @Override
                 public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                     try {
+                        //duplicated code
                         double currentTempData = currentTemp.getJSONArray("items").getJSONObject(0).getJSONArray("readings").getJSONObject(position).getDouble("value"); // index 1 for Clementi Road
                         JSONArray forecastData = OWForecast.getJSONArray("list");
                         int PSIData = PSI.getJSONArray("items").getJSONObject(0).getJSONObject("readings").getJSONObject("psi_twenty_four_hourly").getInt("national");

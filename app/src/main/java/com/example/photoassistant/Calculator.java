@@ -511,18 +511,19 @@ public class Calculator extends Fragment {
         }
         else
         {
+            //how do you set it back to default?
             zoomTV.setTextColor(0xFFFFFFFF);
         }
 
         zoomTV.setText(Intelligence.getFocalLengthString());
         isoTV.setText(Intelligence.getISOString());
-        bodyButton.setText(Intelligence.getBodyName());
-        lensButton.setText(Intelligence.getLensSimpleName());
-        evTextView.setText(String.format("%.02f", Intelligence.ExposureCalculator()));
-        desiredDistanceTV.setText(String.format("%.02f", Intelligence.getDistance()));
+        bodyButton.setText("Camera\n"+Intelligence.getBodyName());
+        lensButton.setText("Lens\n"+Intelligence.getLensSimpleName());
+        evTextView.setText("EV\n"+String.format("%.02f", Intelligence.ExposureCalculator()));
+        desiredDistanceTV.setText("Set\n"+String.format("%.02f", Intelligence.getDistance()));
         Intelligence.focusRefresh();
-        nearDistanceTV.setText(Intelligence.getDofNear());
-        farDistanceTV.setText(Intelligence.getDofFar());
+        nearDistanceTV.setText("Near\n"+Intelligence.getDofNear());
+        farDistanceTV.setText("Far\n"+Intelligence.getDofFar());
         while(jumpStartCount<jumpStartMaxTries)
         {
             try
@@ -539,6 +540,13 @@ public class Calculator extends Fragment {
         }
         runRecommenations(MODE);
 
+        //how do you set it back?
+        switch(MODE)
+        {
+            case 1:landscapeModeButton.setBackgroundColor(0xFFFFFFFF); break;
+            case 2:portraitModeButton.setBackgroundColor(0xFFFFFFFF); break;
+            case 3:sunsetModeButton.setBackgroundColor(0xFFFFFFFF);break;
+        }
 
 
 
@@ -984,12 +992,12 @@ public class Calculator extends Fragment {
                         scale  =0.001;
                     break;
                     //aperture
-                    case 3:calc = value*cropFactor;
-                        pivotLeftStart = 5.0;
-                        pivotLeftEnd = 7.1;
-                        pivotTarget = 10;
-                        pivotRightStart = 13;
-                        pivotRightEnd = 16;
+                    case 3:calc = value;
+                        pivotLeftStart = 5;
+                        pivotLeftEnd = 6.3;
+                        pivotTarget = 7.1;
+                        pivotRightStart = 8;
+                        pivotRightEnd = 13;
                         scale  =0.25;
                     break;
 
@@ -1012,8 +1020,8 @@ public class Calculator extends Fragment {
                     case 3:calc = value*cropFactor;
                         pivotLeftStart = 1.4;
                         pivotLeftEnd = 2;
-                        pivotTarget = 2.8;
-                        pivotRightStart = 4.0;
+                        pivotTarget = 3.5;
+                        pivotRightStart = 4.5;
                         pivotRightEnd = 5.6;
                         scale  =0.25;
                         break;
@@ -1041,11 +1049,11 @@ public class Calculator extends Fragment {
                         scale  =0.001;
                         break;
                     //aperture
-                    case 3:calc = value*cropFactor;
-                        pivotLeftStart = 7.1;
-                        pivotLeftEnd = 10;
+                    case 3:calc = value;
+                        pivotLeftStart = 13;
+                        pivotLeftEnd = 14;
                         pivotTarget = 16;
-                        pivotRightStart = 22;
+                        pivotRightStart = 20;
                         pivotRightEnd = 40;
                         scale  =0.25;
                         break;

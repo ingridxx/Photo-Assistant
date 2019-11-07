@@ -29,6 +29,8 @@ import androidx.fragment.app.Fragment;
 public class Intelligence{
 
     static DecimalFormat format = new DecimalFormat();
+
+
     private static final Integer[] isoRange = {50,64,80,100,125,160,200,250,320,400,500,640,800,1000,1250,1600,2000,2500,3200,4000,5000,6400,8000,10000,12800};
     private static final Double[] shutterSpeedRange ={1.0/8000,1.0/6400,1.0/5000,1.0/4000,1.0/3200,1.0/2500,1.0/2000,1.0/1600,1.0/1250,1.0/1000,1.0/800,1.0/640,1.0/500,1.0/400,1.0/320,1.0/250,1.0/200,1.0/160,1.0/125,1.0/100,1.0/80,1.0/60,1.0/50,1.0/40,1.0/30,1.0/25,1.0/20,1.0/15,1.0/13,1.0/10,1.0/8,1.0/6,1.0/5,1.0/4,1.0/3,1.0/2.5,1.0/2,1.0/1.6,1.0/1.3,1.0,1.3,1.6,2.0,2.5,3.0,4.0,5.0,6.0,8.0,10.0,13.0,15.0,20.0,25.0,30.0};
     private static final Double[] apertureRange ={40.0,36.0,32.0,29.0,25.0,22.0,20.0,18.0,16.0,14.0,13.0,11.0,10.0,9.0,8.0,7.1,6.3,5.6,5.0,4.5,4.0,3.5,3.2,2.8,2.5,2.2,2.0,1.8,1.6,1.4,1.2,1.1,1.0,0.95,0.85,0.75};
@@ -115,11 +117,11 @@ public class Intelligence{
     {
         if(1.0/getShutterSpeed()>getEquivalentFocalLength())
         {
-            return true;
+            return false;
         }
         else {
 
-        return false;
+        return true;
         }
     }
     public static String getDofNear(){return String.format("%.02f", dofNear);}

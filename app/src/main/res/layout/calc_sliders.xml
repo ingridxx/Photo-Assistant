@@ -16,8 +16,9 @@
         <TextView
             android:id="@+id/NearDistanceTV"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:gravity="center"
+            android:layout_height="40dp"
+            android:layout_marginStart="5dp"
+            android:gravity="left|center_vertical"
             android:text="1"
             android:textAlignment="gravity"
             app:layout_constraintStart_toStartOf="parent"
@@ -26,8 +27,8 @@
         <TextView
             android:id="@+id/FarDistanceTV"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:gravity="center_vertical"
+            android:layout_height="40dp"
+            android:gravity="right|center_vertical"
             android:text="3"
             android:textAlignment="gravity"
             app:layout_constraintEnd_toEndOf="parent"
@@ -37,7 +38,7 @@
         <TextView
             android:id="@+id/DesiredDisanceTV"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="40dp"
             android:gravity="center|center_horizontal|center_vertical"
             android:text="2"
             android:textAlignment="gravity"
@@ -149,7 +150,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_below="@id/apertureTV"
                     android:layout_weight="1"
-                    android:text="+"
+                    android:text="-"
                     android:textSize="30sp" />
 
 
@@ -191,7 +192,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_below="@id/apertureTV"
                     android:layout_weight="1"
-                    android:text="+"
+                    android:text="-"
                     android:textSize="30sp" />
 
 
@@ -233,7 +234,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_below="@id/apertureTV"
                     android:layout_weight="1"
-                    android:text="+"
+                    android:text="-"
                     android:textSize="30sp" />
 
 
@@ -276,7 +277,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_below="@id/apertureTV"
                     android:layout_weight="1"
-                    android:text="+"
+                    android:text="-"
                     android:textSize="30sp" />
 
 
@@ -302,21 +303,21 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:text="\uD83C\uDF32" />
+            android:text="@string/landscapeEmoji" />
 
         <Button
             android:id="@+id/modeButton2"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:text="\uD83D\uDC64" />
+            android:text="@string/portraitEmoji" />
 
         <Button
             android:id="@+id/modeButton3"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:text="\u2600" />
+            android:text="@string/sunEmoji" />
 
         <Button
             android:id="@+id/modeButton4"

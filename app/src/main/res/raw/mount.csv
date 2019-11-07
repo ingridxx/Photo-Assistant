@@ -1,59 +1,26 @@
-M42,45.46,36,24,SLR,Universal mount for 35mm SLR cameras
-C-mount (8mm),17.526,4.88,3.68,Cine,C-mount (8mm)
-C-mount (16mm),17.526,10.26,7.49,Cine,C-mount (16mm)
-C-mount (1/3 inch),17.526,4.8,3.6,Cine,C-mount (1/3 inch)
-C-mount (1/2 inch),17.526,6.4,4.8,Cine,C-mount (1/2 inch)
-C-mount (2/3 inch),17.526,8.8,6.6,Cine,C-mount (2/3 inch)
-C-mount (1 inch),17.526,12.8,9.6,Cine,C-mount (1 inch)
-C-mount (4/3 inch),17.526,17.3,13,Cine,C-mount (4/3 inch)
 Canon EF (FF),44,36,24,Digital SLR,5D/6D/1Ds/1DX/1DC
 Canon EF (APS-H),44,27.9,18.6,Digital SLR,1D/1DII/1DIII/1DIV
 Canon EF-S,44,22.3,14.9,Digital SLR,xxD/xxxD/xxxxD
-M39,45.2,36,24,SLR,Universal mount for 35mm SLR cameras
 Nikon F (FX),46.5,36,24,Digital SLR,D3/D4/D5/D6xx/D7xx/D8xx/Df
 Nikon F (DX),46.5,23.7,15.6,Digital SLR,D1/D2/Dxx/Dxxxx
+Sony E (FF),18,36,24,Mirrorless,a7/a7S/a7R/a9
+Sony E (APS-C),18,23.7,15.6,Mirrorless,NEX/axxxx
+Micro 4/3,19.25,17.3,13,Mirrorless,Olympus/Panasonic
 Pentax K,45.46,36,24,Digital SLR,Multiple manufacturers
 Olympus OM,46,36,24,Digital SLR,OMx/OMxx/OM2000
 4/3 (Four/Thirds),38.64,17.3,13,Digital SLR,Olympus 4/3 DSLRs
 Contax N,48,36,24,Digital SLR,Contax N Digital
-Large format,1000000,127,102,Large Format,Large Format
-Kiev-88/Salut,82.1,60,60,Medium Format,Kiev-88/Salut
-Mamiya 645,63.3,60,45,Medium Format,Mamiya 645
-Mamiya 645 AFD,63.3,60,45,Medium Format,Mamiya 645 AFD
-Contax 645,64,60,45,Medium Format,Contax 645
-Pentax 645,70.87,60,45,Medium Format,Pentax 645
-Pentax 67,85,70,60,Medium Format,Pentax 67
-Hasselblad,61.63,43.8,32.9,Medium Format,H4 and later
-Leica S,53,45,30,Medium Format,Leica S (Medium Format)
-Mamiya RB,111,70,60,Medium Format,Mamiya RB
 Sigma SA (1.3x),44,26.7,17.9,Mirrorless,SD Quattro H
 Sony A (FF),44.5,36,24,Mirrorless,a900/a850/a99
 Sony A (APS-C),44.5,23.7,15.6,Mirrorless,axx/axxx (except a900/a850/a99)
-Sony E (FF),18,36,24,Mirrorless,a7/a7S/a7R/a9
-Sony E (APS-C),18,23.7,15.6,Mirrorless,NEX/axxxx
-Micro 4/3,19.25,17.3,13,Mirrorless,Olympus/Panasonic
 Samsung NX,25.5,23.7,15.6,Mirrorless,Samsung NX
 Nikon CX,17,13.2,8.8,Mirrorless,Nikon 1 Jx/Vx/Sx/AW1
 Canon EF-M,18,22.3,14.9,Mirrorless,M/M2/M3/M5/M6/M10/M50/M100
 FujiFilm XF,17.7,23.7,15.6,Mirrorless,Fuji X-Mount (APS-C)
 Pentax Q/Q10,9.2,6.17,4.55,Mirrorless,Pentax Q/Q10
 Pentax Q7/Q-s1,9.2,7.44,5.58,Mirrorless,Pentax Q7/Q-s1
-Tamron Adaptall-2,50.7,36,24,Other,Tamron Adaptall-2
-Other mount,1000000,36,24,Other,Other mount
-T2 mount,55,36,24,Other,T2 mount
-Tamron Adapt-A-Matic,50.7,36,24,Other,Tamron Adapt-A-Matic
-Komura Uni-Dapt,55,36,24,Other,Komura Uni-Dapt
-Pentaflex 16,44,10.26,7.49,Other,Pentaflex 16
-Contax I-III (CRM),34.85,36,24,Rangefinder,Contax Rangefinder Mount
-M39 Leica screw-mount (LSM),28.8,36,24,Rangefinder,M39 Leica screw-mount (LSM)
-Leica M,27.8,36,24,Rangefinder,Leica M-series rangefinder
-Contax G,29,36,24,Rangefinder,Contax G
-Rollei 35mm,44.6,36,24,Rangefinder,Rollei 35mm
-Canon S,28.8,36,24,Rangefinder,Canon S
-Nikon S,34.85,36,24,Rangefinder,Nikon S
-Petri FT,45.5,36,24,Rangefinder,Petri FT
-Leica L (TL),20,23.7,15.6,Rangefinder,T/TL/TL2/CL
-Leica L (SL),20,36,24,Rangefinder,Leica SL/Panasonic S1/S1R/S1H/Sigma fp
+M39,45.2,36,24,SLR,Universal mount for 35mm SLR cameras
+M42,45.46,36,24,SLR,Universal mount for 35mm SLR cameras
 Sigma SA (35mm),44,36,24,SLR,SA300/SA5/SA7/SA9
 Sigma SA (1.7x),44,20.7,13.8,SLR,SD9/SD10/SD14/SD15
 Sigma SA (1.5x),44,23.7,15.6,SLR,SD1/SD Quattro 
@@ -80,3 +47,36 @@ Olympus Pen F,28.95,24,18,SLR,Original 1963 Pen F
 Canon R,42,36,24,SLR,Canon R (1959)
 Zenit 7,47.58,36,24,SLR,Zenit 7 (1967)
 Pentax-110,27,17,13,SLR,Pentax-110
+Contax I-III (CRM),34.85,36,24,Rangefinder,Contax Rangefinder Mount
+M39 Leica screw-mount (LSM),28.8,36,24,Rangefinder,M39 Leica screw-mount (LSM)
+Leica M,27.8,36,24,Rangefinder,Leica M-series rangefinder
+Contax G,29,36,24,Rangefinder,Contax G
+Rollei 35mm,44.6,36,24,Rangefinder,Rollei 35mm
+Canon S,28.8,36,24,Rangefinder,Canon S
+Nikon S,34.85,36,24,Rangefinder,Nikon S
+Petri FT,45.5,36,24,Rangefinder,Petri FT
+Leica L (TL),20,23.7,15.6,Rangefinder,T/TL/TL2/CL
+Leica L (SL),20,36,24,Rangefinder,Leica SL/Panasonic S1/S1R/S1H/Sigma fp
+Large format,1000000,127,102,Large Format,Large Format
+Kiev-88/Salut,82.1,60,60,Medium Format,Kiev-88/Salut
+Mamiya 645,63.3,60,45,Medium Format,Mamiya 645
+Mamiya 645 AFD,63.3,60,45,Medium Format,Mamiya 645 AFD
+Contax 645,64,60,45,Medium Format,Contax 645
+Pentax 645,70.87,60,45,Medium Format,Pentax 645
+Pentax 67,85,70,60,Medium Format,Pentax 67
+Hasselblad,61.63,43.8,32.9,Medium Format,H4 and later
+Leica S,53,45,30,Medium Format,Leica S (Medium Format)
+Mamiya RB,111,70,60,Medium Format,Mamiya RB
+C-mount (8mm),17.526,4.88,3.68,Cine,C-mount (8mm)
+C-mount (16mm),17.526,10.26,7.49,Cine,C-mount (16mm)
+C-mount (1/3 inch),17.526,4.8,3.6,Cine,C-mount (1/3 inch)
+C-mount (1/2 inch),17.526,6.4,4.8,Cine,C-mount (1/2 inch)
+C-mount (2/3 inch),17.526,8.8,6.6,Cine,C-mount (2/3 inch)
+C-mount (1 inch),17.526,12.8,9.6,Cine,C-mount (1 inch)
+C-mount (4/3 inch),17.526,17.3,13,Cine,C-mount (4/3 inch)
+Tamron Adaptall-2,50.7,36,24,Other,Tamron Adaptall-2
+Other mount,1000000,36,24,Other,Other mount
+T2 mount,55,36,24,Other,T2 mount
+Tamron Adapt-A-Matic,50.7,36,24,Other,Tamron Adapt-A-Matic
+Komura Uni-Dapt,55,36,24,Other,Komura Uni-Dapt
+Pentaflex 16,44,10.26,7.49,Other,Pentaflex 16
