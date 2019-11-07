@@ -496,10 +496,14 @@ public class Calculator extends Fragment {
         }
         apertureTV.setText(Intelligence.getApertureString());
 
-        shutterSpeedTV.setText(Intelligence.getShutterSpeedString());
+
         if(Intelligence.reciprocalRuleViolated())
         {
-            shutterSpeedTV.append("\n\uD83D\uDD2D");
+            shutterSpeedTV.setText("\uD83D\uDD2D"+ Intelligence.getShutterSpeedString());
+        }
+        else
+        {
+            shutterSpeedTV.setText(Intelligence.getShutterSpeedString());
         }
         if(zoomFactor()<=1 || zoomFactor()> mCameraCharacteristics.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM))
         {

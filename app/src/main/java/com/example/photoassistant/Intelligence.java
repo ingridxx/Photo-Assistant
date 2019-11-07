@@ -86,10 +86,10 @@ public class Intelligence{
     public static double getShutterSpeed(){shutterSpeed = currentshutterSpeedRange.get(shutterSpeedStep); return shutterSpeed;}
     public static int getISO(){ISO = currentIsoRange.get(isoStep); return ISO;}
     public static double getDistance(){return distance;}
-    public static String getFocalLengthString() { format.setDecimalSeparatorAlwaysShown(false); return format.format(getFocalLength()); }
-    public static String getApertureString() { format.setDecimalSeparatorAlwaysShown(false); return format.format(getAperture()); }
-    public static String getShutterSpeedString() { format.setDecimalSeparatorAlwaysShown(false); format.setGroupingUsed(false);if(getShutterSpeed()>=1) return format.format(getShutterSpeed())+"\"";else return "1/"+format.format(1/getShutterSpeed());}
-    public static String getISOString() { return Integer.toString(getISO());}
+    public static String getFocalLengthString() { format.setDecimalSeparatorAlwaysShown(false); return format.format(getFocalLength())+"\nmm"; }
+    public static String getApertureString() { format.setDecimalSeparatorAlwaysShown(false); return "f/\n"+format.format(getAperture()); }
+    public static String getShutterSpeedString() { format.setDecimalSeparatorAlwaysShown(false); format.setGroupingUsed(false);if(getShutterSpeed()>=1) return "\n"+format.format(getShutterSpeed())+"\"";else return "1/\n"+format.format(1/getShutterSpeed());}
+    public static String getISOString() { return "ISO\n"+Integer.toString(getISO());}
     public static boolean isPrimeLens(){return lens.getMaxZoom()==lens.getMinZoom();}
     public static boolean isFixedApertureLens(){return lens.getApertureMaxTele()==lens.getApertureMinTele() && lens.getApertureMaxWide()== lens.getApertureMinWide();}
     public static String focalLengthPlus(){focalLengthStep++;if(focalLengthStep>currentFocalLengthRange.size()-1){focalLengthStep = currentFocalLengthRange.size()-1;}focalLength = currentFocalLengthRange.get(focalLengthStep); return getFocalLengthString();}
