@@ -291,21 +291,21 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:text="Ld" />
+            android:text="\uD83C\uDF32" />
 
         <Button
             android:id="@+id/modeButton2"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:text="P" />
+            android:text="\uD83D\uDC64" />
 
         <Button
             android:id="@+id/modeButton3"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:text="SS" />
+            android:text="\u2600" />
 
         <Button
             android:id="@+id/modeButton4"
