@@ -151,31 +151,69 @@ public class BodySelector extends Fragment {
         ImageButton ib_bottomEnd = rootView.findViewById(R.id.imageButtonBottomEnd);
         setOverlayResources(rootView);
 
-        ib_topStart.setOnClickListener(new View.OnClickListener() {
+//        ib_topStart.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                WhichSlot = 1;
+//                if (Slots[0][0] == null) {
+//                    MainActivity.fragmentStack.add(new Body(Slots[0], 1));
+//                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(Slots[0], 1)).commit();
+//                }
+//            }
+//        });
+
+        setIbOnClick(ib_topStart,0,1);
+
+        setIbOnClick(ib_topEnd,1,2);
+
+        setIbOnClick(ib_bottomStart,2,3);
+
+        setIbOnClick(ib_bottomEnd,3,4);
+
+        setIbOnLongClick(ib_topStart,rootView,0);
+
+        setIbOnLongClick(ib_topEnd,rootView,1);
+
+        setIbOnLongClick(ib_bottomStart,rootView,2);
+
+        setIbOnLongClick(ib_bottomEnd,rootView,3);
+
+
+
+    }
+
+    private void setIbOnClick(ImageButton ib, final int arraySpot, final int spot){
+
+        ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WhichSlot = 1;
-                if (Slots[0][0] == null) {
-                    MainActivity.fragmentStack.add(new Body(Slots[0], 1));
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(Slots[0], 1)).commit();
+                WhichSlot = spot;
+                if (Slots[arraySpot][0] == null) {
+                    MainActivity.fragmentStack.add(new Body(Slots[arraySpot], spot));
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(Slots[arraySpot], spot)).commit();
                 }
             }
         });
-        ib_topStart.setOnLongClickListener(new View.OnLongClickListener() {
+
+    }
+
+    private void setIbOnLongClick(ImageButton ib, final View rootView, final int arraySlot){
+
+        ib.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if (Slots[0] != null) {
-                    cacheArray = Slots[0].clone();
-                    for(int i=0;i<Slots[0].length;i++) {Slots[0][i] = null;}
+                if (Slots[arraySlot] != null) {
+                    cacheArray = Slots[arraySlot].clone();
+                    for(int i=0;i<Slots[arraySlot].length;i++) {Slots[arraySlot][i] = null;}
 
                     setOverlayResources(rootView);
 
                     Snackbar.make(v, "Item Deleted", Snackbar.LENGTH_LONG).setAction("Undo?", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Slots[0] = cacheArray.clone();
+                            Slots[arraySlot] = cacheArray.clone();
                             setOverlayResources(rootView);
-                            for(int i=0;i<Slots[0].length;i++) {cacheArray[i] = null;}
+                            for(int i=0;i<Slots[arraySlot].length;i++) {cacheArray[i] = null;}
                         }
 
                     }).show();
@@ -183,38 +221,8 @@ public class BodySelector extends Fragment {
                 return true;
             }
         });
-        ib_topEnd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                WhichSlot = 2;
-                if (Slots[1][0] == null) {
-                    MainActivity.fragmentStack.add(new Body(Slots[1], 2));
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(Slots[1], 2)).commit();
-                }
-            }
-        });
-        ib_bottomStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                WhichSlot = 3;
-                if (Slots[2][0] == null) {
-                    MainActivity.fragmentStack.add(new Body(Slots[2], 3));
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(Slots[2], 3)).commit();
-                }
-            }
-        });
-        ib_bottomEnd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                WhichSlot = 4;
-                if (Slots[3][0] == null) {
-                    MainActivity.fragmentStack.add(new Body(Slots[3], 4));
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Body(Slots[3], 4)).commit();
-                }
-            }
-        });
-    }
 
+    }
 
     private void setOverlayResources(View rootView) {
         TextView tvTS = rootView.findViewById(R.id.tv_ImageButtonTS);
