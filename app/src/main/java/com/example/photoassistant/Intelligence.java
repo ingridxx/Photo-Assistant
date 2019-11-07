@@ -88,7 +88,7 @@ public class Intelligence{
     public static double getDistance(){return distance;}
     public static String getFocalLengthString() { format.setDecimalSeparatorAlwaysShown(false); return format.format(getFocalLength()); }
     public static String getApertureString() { format.setDecimalSeparatorAlwaysShown(false); return format.format(getAperture()); }
-    public static String getShutterSpeedString() { format.setDecimalSeparatorAlwaysShown(false); format.setGroupingUsed(false);if(getShutterSpeed()>=1) return format.format(getShutterSpeed())+"\"";else return format.format(1/getShutterSpeed());}
+    public static String getShutterSpeedString() { format.setDecimalSeparatorAlwaysShown(false); format.setGroupingUsed(false);if(getShutterSpeed()>=1) return format.format(getShutterSpeed())+"\"";else return "1/"+format.format(1/getShutterSpeed());}
     public static String getISOString() { return Integer.toString(getISO());}
     public static boolean isPrimeLens(){return lens.getMaxZoom()==lens.getMinZoom();}
     public static boolean isFixedApertureLens(){return lens.getApertureMaxTele()==lens.getApertureMinTele() && lens.getApertureMaxWide()== lens.getApertureMinWide();}
@@ -111,6 +111,17 @@ public class Intelligence{
         if(dofNear>Double.MAX_VALUE-1 || dofNear<0){dofNear = Double.POSITIVE_INFINITY;}
         return String.valueOf(distance);
     }
+    public static boolean reciprocalRuleViolated()
+    {
+        if(1.0/getShutterSpeed()>getEquivalentFocalLength())
+        {
+            return true;
+        }
+        else {
+
+        return false;
+        }
+    }
     public static String getDofNear(){return String.format("%.02f", dofNear);}
     public static double getCropFactor(){return body.getCropFactor();}
     public static String getDofFar(){return String.format("%.02f", dofFar);}
@@ -123,24 +134,7 @@ public class Intelligence{
     public static double getSensorSizeX(){return body.getSensorSizeX();}
     public static double getSensorSizeY(){return body.getSensorSizeY();}
     private static double CoCCalculator(){
-        //CoC (mm) = viewing distance (cm) / desired final-image resolution (lp/mm) for a 25 cm viewing distance / enlargement / 25
-        //assuming worst case 60cm viewing distance on a 27inch 4k monitor
-        double sensorSizeX = getSensorSizeX();
-        double sensorSizeY = getSensorSizeY();
-        int viewingDistance = 60;
-        int monitorSize = 27;
-        int monitorX = 3840;
-        int monitorY = 2160;
-        int monitorAspectRatioX = 16;
-        int monitorAspectRatioY = 9;
-        double monitorkMM =monitorSize*2.54*10/(monitorAspectRatioX*monitorAspectRatioX+monitorAspectRatioY*monitorAspectRatioY);//reverse pythagoras theorem
-        double lpmm = 1.0*(monitorX/monitorAspectRatioX)/monitorkMM;
-
-        double sensorSize = sensorSizeX*sensorSizeY;
-        double viewSize = monitorAspectRatioX*monitorkMM*monitorAspectRatioY*monitorkMM;
-        double enlargement = Math.sqrt(viewSize/sensorSize);
-
-        return viewingDistance/lpmm/enlargement/25.0;
+       return Math.sqrt(getSensorSizeX()*getSensorSizeX()+getSensorSizeY()*getSensorSizeY())/1730.0;
     }
     public static double HyperfocalCalculator(){
         //double x= (Current.getFocalLength()*Current.getFocalLength()/(CoCCalculator()*Current.getAperture())+Current.getFocalLength())/1000;

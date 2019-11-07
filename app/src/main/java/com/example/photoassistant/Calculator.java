@@ -495,7 +495,21 @@ public class Calculator extends Fragment {
             apertureMinusButton.setVisibility(View.VISIBLE);
         }
         apertureTV.setText(Intelligence.getApertureString());
+
         shutterSpeedTV.setText(Intelligence.getShutterSpeedString());
+        if(Intelligence.reciprocalRuleViolated())
+        {
+            shutterSpeedTV.append("\n\uD83D\uDD2D");
+        }
+        if(zoomFactor()<=1 || zoomFactor()> mCameraCharacteristics.get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM))
+        {
+            zoomTV.setTextColor(0xFFFF0000);
+        }
+        else
+        {
+            zoomTV.setTextColor(0xFFFFFFFF);
+        }
+
         zoomTV.setText(Intelligence.getFocalLengthString());
         isoTV.setText(Intelligence.getISOString());
         bodyButton.setText(Intelligence.getBodyName());
