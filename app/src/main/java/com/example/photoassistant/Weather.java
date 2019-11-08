@@ -176,9 +176,11 @@ public class Weather extends Fragment {
             Location current = new Location("");
             current.setLatitude(gps.getLatitude());
             current.setLongitude(gps.getLongitude());
+
             // Initialize data streams
             //JSONArray currentTempData = currentTemp.getJSONArray("items").getJSONObject(0).getJSONArray("readings");
             JSONArray metadata = currentTemp.getJSONObject("metadata").getJSONArray("stations");
+            if(metadata.length()<=0) return;
             for (int i=0;i<metadata.length();i++) {
                 double latitude = metadata.getJSONObject(i).getJSONObject("location").getDouble("latitude");
                 double longitude = metadata.getJSONObject(i).getJSONObject("location").getDouble("longitude");
