@@ -1,28 +1,20 @@
 package com.example.photoassistant;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.graphics.Camera;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -31,21 +23,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Stack;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.android.material.snackbar.Snackbar;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
@@ -72,8 +50,20 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        activity = this;
+        new ProcessDataFromArrays().execute();
+//            View include_ = findViewById(R.id.tutorial_include);
+//            include_.setVisibility(View.VISIBLE);
+//            View nav_bar_inc = findViewById(R.id.nav_bar_inc);
+//            nav_bar_inc.setVisibility(View.INVISIBLE);
+        Intelligence.setLens(new ListItemLens("Lens", new String[]{"Lens", "50", "50", "2.8", "2.8", "22", "22"}));
+        Intelligence.setBody(new ListItemBody("Body", new String[]{"Body", "50", "36", "24", "DSLR", "Sample"}));
+//        if(adapter.getCount() == 5){
+//            done=true;
+//        }
 
         permissions.add(ACCESS_FINE_LOCATION);
         permissions.add(ACCESS_COARSE_LOCATION);
@@ -84,10 +74,19 @@ public class MainActivity extends AppCompatActivity {
                 requestPermissions(permissionsToRequest.toArray(new String[permissionsToRequest.size()]), ALL_PERMISSIONS_RESULT);
         }
 
-        new ProcessDataFromArrays().execute();
 
-        Intelligence.setLens(new ListItemLens("Lens", new String[]{"Lens", "50", "50", "2.8", "2.8", "22", "22"}));
-        Intelligence.setBody(new ListItemBody("Body", new String[]{"Body", "50", "36", "24", "DSLR", "Sample"}));
+        handleButtons();
+
+
+
+
+
+
+
+    }
+
+    private void handleButtons() {
+
         bodyButton = findViewById(R.id.bodyButton);
         bodyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fl, new BodySelector()).commit();
             }
         });
-        activity = this;
 
         weatherButton = findViewById(R.id.weatherButton);
         weatherButton.setOnClickListener(new View.OnClickListener() {
@@ -133,13 +131,6 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Sun()).commit();
             }
         });
-
-
-        if (fragmentStack.empty()) {
-            fragmentStack.push(new Sun());
-            getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Sun()).commit();
-        }
-
     }
 
     @Override
@@ -243,8 +234,6 @@ public class MainActivity extends AppCompatActivity {
             lens_al.clear();
             lens_al.addAll(ProcessArrays(lens, ListItemLens.resourceID, "Lens"));
 
-            Log.d("odebug", "doInBackground: " + lens_al.size());
-            Log.d("odebug", "doInBackground: " + lens_al.get(0).toString());
             return lens_al;
 
 
@@ -255,6 +244,10 @@ public class MainActivity extends AppCompatActivity {
             //Slots[1][1] = lens_al.get(0);
             //Slots[1][0] = body_al.get(0);
             super.onPostExecute(listItems);
+            if (fragmentStack.empty()) {
+                fragmentStack.push(new Sun());
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl, new Sun()).commit();
+            }
         }
 
         @Override
@@ -296,6 +289,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+
 
 
 }

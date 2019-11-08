@@ -66,6 +66,7 @@ public class Weather extends Fragment {
     LinkedList<String> options=new LinkedList<String>();
 
     Handler handler;
+    int count =0;
 
 
     @Override
@@ -277,30 +278,37 @@ public class Weather extends Fragment {
             location.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                    try {
-                        //duplicated code
-                        double currentTempData = currentTemp.getJSONArray("items").getJSONObject(0).getJSONArray("readings").getJSONObject(position).getDouble("value"); // index 1 for Clementi Road
-                        JSONArray forecastData = OWForecast.getJSONArray("list");
-                        int PSIData = PSI.getJSONArray("items").getJSONObject(0).getJSONObject("readings").getJSONObject("psi_twenty_four_hourly").getInt("national");
-                        int humidityData = Humidity.getJSONArray("items").getJSONObject(0).getJSONObject("general").getJSONObject("relative_humidity").getInt("high");
-                        // Current Weather Description
-                        Description.setText(forecastData.getJSONObject(0).getJSONArray("weather").getJSONObject(0).getString("description").trim());
-                        // Current Weather icon
-                        getWeatherIcon(forecastData.getJSONObject(0).getJSONArray("weather").getJSONObject(0).getString("icon"));
+                    boolean userSelect = false;
+                    if (!userSelect) {
+                        try {
+                            //duplicated code
+                            Log.d("weatherDebug", "onItemSelected: " + count);
+                            count++;
+                            double currentTempData = currentTemp.getJSONArray("items").getJSONObject(0).getJSONArray("readings").getJSONObject(position).getDouble("value"); // index 1 for Clementi Road
+                            JSONArray forecastData = OWForecast.getJSONArray("list");
+                            int PSIData = PSI.getJSONArray("items").getJSONObject(0).getJSONObject("readings").getJSONObject("psi_twenty_four_hourly").getInt("national");
+                            int humidityData = Humidity.getJSONArray("items").getJSONObject(0).getJSONObject("general").getJSONObject("relative_humidity").getInt("high");
+                            // Current Weather Description
+                            Description.setText(forecastData.getJSONObject(0).getJSONArray("weather").getJSONObject(0).getString("description").trim());
+                            // Current Weather icon
+                            getWeatherIcon(forecastData.getJSONObject(0).getJSONArray("weather").getJSONObject(0).getString("icon"));
 
-                        // Current Temperature, Humidity, and PSI
-                        nowTemp.setText(currentTempData + "℃");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                            // Current Temperature, Humidity, and PSI
+                            nowTemp.setText(currentTempData + "℃");
+                            userSelect = true;
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            userSelect = false;
+                        }
                     }
-                    }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parentView) {
-                    // your code here
                 }
 
-            });
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parentView) {
+                        // your code here
+                    }
+
+                });
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item,options);
 
             location.setAdapter(adapter);

@@ -19,7 +19,6 @@ public class RecyclerAdapterListItem extends androidx.recyclerview.widget.Recycl
     private ArrayList<ListItem> list_item;
     private ArrayList<ListItem> copyList;
     private Context context;
-    private ListItem currentBody;
     private final RecyclerViewOnClickListener listener;
 
 
@@ -30,19 +29,6 @@ public class RecyclerAdapterListItem extends androidx.recyclerview.widget.Recycl
         copyList.addAll(init_list_array);
         listener = rvocl;
     }
-
-//    public RecyclerAdapterListItem(Context context, ArrayList<ListItem> init_list_array,ListItem currentBody) {
-//        this.context = context;
-//        handleFilter(init_list_array,currentBody);
-//
-//    }
-
-//    private void handleFilter(ArrayList<ListItem> init_list_array,ListItem filtered){
-//
-//        ArrayList<ListItem> combinationArray = new ArrayList<>();
-//
-//
-//    }
 
     @Override
     public Filter getFilter() {
@@ -61,6 +47,7 @@ public class RecyclerAdapterListItem extends androidx.recyclerview.widget.Recycl
                 filteredList.addAll(copyList);
 
             } else {
+
                 String filtered = constraint.toString().toLowerCase().trim();
                 String[] filterIndividualWords = filtered.split(",");
 
