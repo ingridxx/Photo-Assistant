@@ -165,27 +165,29 @@ public class Sun extends Fragment {
                         String sunset="";
                         String temp="";
                         LocalTime lt;
+
                         try{
                             JSONObject reader = new JSONObject(response);
                             JSONObject extract = reader.getJSONObject("results");
 
+                            Log.d(TAG, "onResponse: ");
+                            
                             temp=extract.getString("sunrise");
                             lt = time(temp);
                             sr=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunrise+="<font color=#F07E07>"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
+                            sunrise+="<font color="+ getResources().getColor(R.color.civil) + ">"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
                             temp=extract.getString("civil_twilight_begin");
                             lt = time(temp);
                             csr=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunrise+="<font color=#B34D25>"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
+                            sunrise+="<font color="+ getResources().getColor(R.color.nautical) + ">"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
                             temp=extract.getString("nautical_twilight_begin");
                             lt = time(temp);
                             nsr=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunrise+="<font color=#73434B>"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
-
+                            sunrise+="<font color="+ getResources().getColor(R.color.astronomical) + ">"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
                             temp=extract.getString("astronomical_twilight_begin");
                             lt = time(temp);
                             asr = lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunrise+="<font color=#40284A>"+lt.format(dateTimeFormatter)+"</font>"+"";
+                            sunrise+="<font color="+ getResources().getColor(R.color.sunset) + ">"+lt.format(dateTimeFormatter)+"</font>"+"";
 
 
 
@@ -193,19 +195,19 @@ public class Sun extends Fragment {
                             temp=extract.getString("sunset");
                             lt = time(temp);
                             ss=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunset+="<font color=#F07E07>"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
+                            sunset+="<font color="+ getResources().getColor(R.color.civil) + ">"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
                             temp=extract.getString("civil_twilight_end");
                             lt = time(temp);
                             css=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunset+="<font color=#B34D25>"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
+                            sunset+="<font color="+ getResources().getColor(R.color.nautical) + ">"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
                             temp=extract.getString("nautical_twilight_end");
                             lt = time(temp);
                             nss=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunset+="<font color=#73434B>"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
+                            sunset+="<font color="+ getResources().getColor(R.color.astronomical) + ">"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
                             temp=extract.getString("astronomical_twilight_end");
                             lt = time(temp);
                             ass=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunset+="<font color=#40284A>"+lt.format(dateTimeFormatter)+"</font>"+"";
+                            sunset+="<font color="+ getResources().getColor(R.color.sunset) + ">"+lt.format(dateTimeFormatter)+"</font>"+"";
 
 
 

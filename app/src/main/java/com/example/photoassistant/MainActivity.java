@@ -55,15 +55,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         activity = this;
         new ProcessDataFromArrays().execute();
-//            View include_ = findViewById(R.id.tutorial_include);
-//            include_.setVisibility(View.VISIBLE);
-//            View nav_bar_inc = findViewById(R.id.nav_bar_inc);
-//            nav_bar_inc.setVisibility(View.INVISIBLE);
+
         Intelligence.setLens(new ListItemLens("Lens", new String[]{"Lens", "50", "50", "2.8", "2.8", "22", "22"}));
         Intelligence.setBody(new ListItemBody("Body", new String[]{"Body", "50", "36", "24", "DSLR", "Sample"}));
-//        if(adapter.getCount() == 5){
-//            done=true;
-//        }
 
         permissions.add(ACCESS_FINE_LOCATION);
         permissions.add(ACCESS_COARSE_LOCATION);
@@ -74,14 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 requestPermissions(permissionsToRequest.toArray(new String[permissionsToRequest.size()]), ALL_PERMISSIONS_RESULT);
         }
 
-
         handleButtons();
-
-
-
-
-
-
 
     }
 
