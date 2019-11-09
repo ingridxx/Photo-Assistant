@@ -106,11 +106,7 @@ public class Sun extends Fragment {
         setHasOptionsMenu(true);
         final View rootView = inflater.inflate(R.layout.fragment_sun, container, false);
 
-        //check network connectivity
-        if (isNetworkAvailable() == false) {
-            Toast.makeText(getActivity(), "Please check your Internet connection and try again.", Toast.LENGTH_LONG).show();
-            //getActivity().finish();
-        }
+
 
         //CIRCLE PARAMETERS
         final int margin = 50,thickness = 75, topMargin = 25;
@@ -141,6 +137,11 @@ public class Sun extends Fragment {
         //String url="https://api.sunrise-sunset.org/json?lat=37.421&lng=-122.084&date=today";
         String url="https://api.sunrise-sunset.org/json?";
         GPS gps=new GPS(getActivity().getApplicationContext());
+        //check network connectivity
+        if (isNetworkAvailable() == false) {
+            Toast.makeText(getActivity(), "Please check your Internet connection and try again.", Toast.LENGTH_LONG).show();
+            return rootView;
+        }
         if (gps.canGetLocation()) {
 
 
@@ -152,8 +153,8 @@ public class Sun extends Fragment {
 
 
         } else {
-
-            gps.showSettingsAlert();
+            Toast.makeText(getActivity(), "Please check your GPS settings and try again.", Toast.LENGTH_LONG).show();
+            return rootView;
         }
         // Request a string response from the provided URL.
         final StringRequest stringRequest = new StringRequest(Request.Method.GET, url,

@@ -149,9 +149,9 @@ public class Intelligence{
         return (getDistance()*(HyperfocalCalculator())/(HyperfocalCalculator()-getDistance()));
     }
     public static double ExposureCalculator(){
-        return (1/0.44)*Math.log10((1.0/getAperture())*(1.0/getAperture())*getShutterSpeed()*getISO())/Math.log(2)
+        return (1/0.4345)*Math.log10((1.0/getAperture())*(1.0/getAperture())*getShutterSpeed()*getISO())/Math.log(2)
         //return 0
-        -(1/0.44)*Math.log10(getPreviewSS()*getPreviewISO())/Math.log(2)+30+2.33;
+        -(1/0.4345)*Math.log10(getPreviewSS()*getPreviewISO())/Math.log(2)+30+2.77;
     }
 
 

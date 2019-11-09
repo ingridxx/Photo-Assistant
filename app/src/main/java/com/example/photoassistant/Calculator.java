@@ -624,18 +624,6 @@ public class Calculator extends Fragment {
         }
         runRecommenations(MODE);
 
-        //how do you set it back?
-        switch (MODE) {
-            case 1:
-                landscapeModeButton.setBackgroundColor(0xFFFFFFFF);
-                break;
-            case 2:
-                portraitModeButton.setBackgroundColor(0xFFFFFFFF);
-                break;
-            case 3:
-                sunsetModeButton.setBackgroundColor(0xFFFFFFFF);
-                break;
-        }
 
 
     }
