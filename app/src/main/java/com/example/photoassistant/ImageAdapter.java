@@ -12,10 +12,6 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
-import java.sql.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class ImageAdapter extends PagerAdapter {
 

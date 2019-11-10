@@ -3,7 +3,6 @@ package com.example.photoassistant;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -19,18 +18,14 @@ import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.StreamConfigurationMap;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
@@ -38,24 +33,14 @@ import android.os.HandlerThread;
 import android.util.Log;
 import android.util.Size;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -164,7 +149,6 @@ public class Calculator extends Fragment {
     }
 
     public void delayCamera() {
-        Log.v("HAHAHA", String.valueOf(WAIT));
         if (WAIT) return;
         WAIT = true;
         final Handler handler = new Handler();
@@ -384,7 +368,7 @@ public class Calculator extends Fragment {
         shutterSpeedRecommendationTextView = view.findViewById(R.id.recommendationTextView2);
         apertureRecommendationTextView = view.findViewById(R.id.recommendationTextView3);
         focalLengthRecommendationTextView = view.findViewById(R.id.recommendationTextView4);
-        if (BodySelector.isParsable(BodySelector.getBodySlot(BodySelector.getWhichSlot()))) {
+        if (BodySelector.isValid(BodySelector.getBodySlot(BodySelector.getWhichSlot()))) {
             Intelligence.setBody(BodySelector.getBodySlot(BodySelector.getWhichSlot()));
             Intelligence.setLens(BodySelector.getLensSlot(BodySelector.getWhichSlot()));
         }
@@ -531,6 +515,11 @@ public class Calculator extends Fragment {
 
     }
 
+    /**
+     *
+     * @return
+     */
+
     public double zoomFactor() {
         try {
             double zoomFactor = Intelligence.getEquivalentFocalLength() / getPhoneEquivalentFocalLength(mCameraCharacteristics);
@@ -558,10 +547,12 @@ public class Calculator extends Fragment {
 
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
+    /**
+     * Updates all the ui functions to either be visible or invisible
+     * depending on type of ListItemBody or ListItemLens.
+     * also updates labels and runs the recommendations class to help
+     * users.
+     */
 
     public void updateUI() {
         if (Intelligence.isPrimeLens()) {
@@ -623,8 +614,6 @@ public class Calculator extends Fragment {
             }
         }
         runRecommenations(MODE);
-
-
 
     }
 

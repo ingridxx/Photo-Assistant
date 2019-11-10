@@ -29,28 +29,28 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+/**
+ * Lens is a fragment in which is swapped into the main activity screen
+ * which controls the lens handling UI and selections.
+ */
 public class Lens extends Fragment {
 
     private static ArrayAdapter<String> arrayAdapterString;
     ListItem slot[];
+    int currentPosSelcted;
     private RecyclerView recyclerView;
     private RecyclerAdapterListItem ra;
     private Spinner lens_spinner;
     private ArrayList<String> favouritesString;
     private ArrayList<ListItem> favourites;
     private ArrayList<ListItem> arrayToSort;
-    int currentPosSelcted;
     private int currentSlot;
 
 
     public Lens() {
         // Required empty public constructor
     }
-//    public Lens(ListItem[] slot) {
-//        arrayToSort = MainActivity.lens_al;
-//        this.slot = slot;
-//        // Required empty public constructor
-//    }
+
 
     public Lens(ListItem[] slot, ArrayList<ListItem> lia, int whichSlot) {
 
@@ -69,6 +69,11 @@ public class Lens extends Fragment {
 
     }
 
+    /**
+     * this method updates the array adapter, as well updating
+     * the spinner adapters using Favourites string.
+     */
+
     public void updateArrayAdapter() {
 
         favouritesString.clear();
@@ -82,37 +87,39 @@ public class Lens extends Fragment {
         }
         arrayAdapterString.notifyDataSetChanged();
 
-//        for (int i =0 ;i < favourites.size();i++){
-//            if (favourites.get(i) !=null){
-//                Log.d("aaaa", "addLensToArrays: index " + i + " - " + favourites.get(i).toString());
-//            }
-//        }
     }
 
-
+    /**
+     * this method adds a new lens to the array. if there is less than
+     *  howManySsavedLenses (= 5 )it  just adds them, until there is
+     *  more than 5 where it uses FIFO to add.
+     *
+     * @param lensToAdd
+     */
     public void addLensToArrays(ListItem lensToAdd) {
-
-
         Log.d("addLensToArray", "" + favourites.size());
         if (!favourites.contains(lensToAdd)) {
-            if (favourites.size() < 5) {
-                Log.d("addLensToArray", "< 5");
+            if (favourites.size() < BodySelector.howManySsavedLenses) {
                 favourites.add(0, lensToAdd);
             } else {
-                Log.d("addLensToArray", "MORE THAN 5");
                 favourites.add(0, lensToAdd);
-                favourites.remove(5);
+                favourites.remove(BodySelector.howManySsavedLenses);
 
             }
         }
 
     }
 
+    /**
+     * this is used to swap the currently selected lens to the position at the
+     * start of the array.
+     * @param position is the position currently selected to swap.
+     */
     private void swapSpinnerItemToStart(int position) {
 
-        if (slot[1] != null && slot[2] != null && position!=0) { // if the first spots arent empty
+        if (slot[1] != null && slot[2] != null && position != 0) { // if the first spots arent empty
 
-            Collections.swap(favourites,position,0);
+            Collections.swap(favourites, position, 0);
             lens_spinner.getSelectedItem();
             updateArrayAdapter();
 
@@ -126,9 +133,6 @@ public class Lens extends Fragment {
         favouritesString = new ArrayList<String>();
         ((AppCompatActivity) getActivity()).getSupportActionBar().show();
 
-        //Gson gson = new Gson();
-        //ListItemLens obj;
-
         super.onCreate(savedInstanceState);
     }
 
@@ -140,13 +144,20 @@ public class Lens extends Fragment {
         super.onDestroy();
     }
 
+    /**
+     * this is a lifecycle call which is called when the view is created.
+     * this is where the lens spinner and recyclerView are instantiated
+     * and the ui elements are bound.
+     *
+     * @param view the view in which the layout can be inflated in
+     * @param savedInstanceState if any data was passed in, retrieve it through this
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         lens_spinner = view.findViewById(R.id.spinner1);
         arrayAdapterString = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1, favouritesString);
-        //arrayAdapter = new ArrayAdapter<ListItemLens>(view.getContext(), android.R.layout.simple_list_item_1,favourites);
         lens_spinner.setAdapter(arrayAdapterString);
         updateArrayAdapter();
         recyclerView = (RecyclerView) view.findViewById(R.id.lens_rv);
@@ -160,23 +171,24 @@ public class Lens extends Fragment {
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Log.d("ppp", "onClick: Lens Done Button");
-                if(favourites.size()>0)
-                {
+                if (favourites.size() > 0) {
                     BodySelector.addSlot(currentSlot, slot);
                     MainActivity.fragmentStack.pop();
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fl, new BodySelector()).commit();
                 }
-
             }
         });
 
-
+        /**
+         * Instantiating the recycler view apdapter class RecyclerAdapterListItem
+         * passes in an onItemClick which is used to handle what happens with
+         * a click of a list item in the recycler view through RecyclerViewOnClickListener
+         * interface. it passes back an instance of what is clicked and then its used
+         * to instantiate Lens when ready.
+         */
         ra = new RecyclerAdapterListItem(getContext(), arrayToSort, new RecyclerViewOnClickListener() {
             @Override
             public void onItemClick(ListItem item) {
-
                 doneButton.setVisibility(View.VISIBLE);
                 addLensToArrays(item);
                 updateArrayAdapter();
@@ -191,7 +203,6 @@ public class Lens extends Fragment {
         lens_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 currentPosSelcted = position;
-                System.out.println(" THE CURRENT ITEEM" + favourites.get(position).toString());
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
@@ -205,6 +216,13 @@ public class Lens extends Fragment {
     }
 
 
+    /**
+     * this object handles the menu options, which is used for the
+     * seach function.
+     *
+     * @param menu an instance of menu passed in from super
+     * @param inflater instance of MenuInflater passed in from super
+     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 

@@ -17,34 +17,41 @@ import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 
+/**
+ * this is a custom class which handles the gps location of the phone being used.
+ * It is a Service so it will run in the background thread, so we must be careful
+ * about only using it when we need.
+ */
 public class GPS extends Service implements LocationListener {
 
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;
     private final Context mContext;
-
-
+    protected LocationManager locationManager;
     boolean checkGPS = false;
-    int hello;
-
-
     boolean checkNetwork = false;
-
     boolean canGetLocation = false;
-
     Location loc;
     double latitude;
     double longitude;
 
 
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
-
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;
-    protected LocationManager locationManager;
-
-
+    /**
+     * constructor which builds class.
+     * @param mContext provides context for our GPS.
+     */
     public GPS(Context mContext) {
         this.mContext = mContext;
         getLocation();
     }
+
+    /**
+     * This class tries to get the phones location by first getting the systems
+     * services and seeing if they are both active. if it is possible then it will
+     * return the phones.
+     * @return a Location object which contains latitude and longitude of phones current
+     *          location
+     */
 
     private Location getLocation() {
 
@@ -91,7 +98,7 @@ public class GPS extends Service implements LocationListener {
                         }
                     }
                 }
-           }
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -100,20 +107,32 @@ public class GPS extends Service implements LocationListener {
         return loc;
     }
 
+    /**
+     * gets longitude of phone from location object.
+     * @return double longitude (if not null)
+     */
     public double getLongitude() {
-            if (loc != null) {
-                longitude = loc.getLongitude();
-            }
-            return longitude;
+        if (loc != null) {
+            longitude = loc.getLongitude();
         }
+        return longitude;
+    }
 
-        public double getLatitude() {
-            if (loc != null) {
-                latitude = loc.getLatitude();
-            }
+    /**
+     * gets latitude of phone from location object.
+     * @return double latitude (if not null)
+     */
+    public double getLatitude() {
+        if (loc != null) {
+            latitude = loc.getLatitude();
+        }
         return latitude;
     }
 
+    /**
+     * gets if the phone is able to find location
+     * @return boolean canGetLocation.
+     */
     public boolean canGetLocation() {
         return this.canGetLocation;
     }
@@ -146,7 +165,11 @@ public class GPS extends Service implements LocationListener {
     }
 
 
-    public  void stopListener() {
+    /**
+     * if location is no longer needed, we stop it from refreshing location.
+     *
+     */
+    public void stopListener() {
         if (locationManager != null) {
 
             if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -162,6 +185,10 @@ public class GPS extends Service implements LocationListener {
             locationManager.removeUpdates(GPS.this);
         }
     }
+
+    /**
+     * required overrides by the LocationListener Interface
+     */
 
     @Override
     public IBinder onBind(Intent intent) {

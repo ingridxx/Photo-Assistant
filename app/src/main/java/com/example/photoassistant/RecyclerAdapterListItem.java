@@ -14,14 +14,35 @@ import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 
+/**
+ * This class is a custom version of a RecyclerView adapter which takes in
+ * an instance of a list item, and adapts it to display to the user through
+ * the RecyclerView. This class uses polymorphism to achieve this as how it
+ * displays the objects will be dependent on which object is passed in.
+ * A searchView function is also implemented within this class which allows
+ * the user to look for their specified item without searching through thousands
+ * of items.
+ */
+
 public class RecyclerAdapterListItem extends androidx.recyclerview.widget.RecyclerView.Adapter<RecyclerAdapterListItem.ViewHolder> implements Filterable{
 
     private ArrayList<ListItem> list_item;
+    // contains what to display
     private ArrayList<ListItem> copyList;
+    //contains a copy of the whole list.
     private Context context;
     private final RecyclerViewOnClickListener listener;
+    // interface which handles the on Click Event.
 
 
+    /**
+     * constructor which creates an instance of this class.
+     *
+     * @param context is the context in which this class was called from.
+     * @param init_list_array is the items we need to display in arraylist format
+     * @param rvocl is the recyclerViewOnClickListener passed in which we use
+     *                to allow a custom onClick for each different object of this class.
+     */
     public RecyclerAdapterListItem(Context context, ArrayList<ListItem> init_list_array, RecyclerViewOnClickListener rvocl) {
         this.context = context;
         list_item = init_list_array;
@@ -30,13 +51,26 @@ public class RecyclerAdapterListItem extends androidx.recyclerview.widget.Recycl
         listener = rvocl;
     }
 
+    /**
+     *
+     * @return an object of Filter exampleFilter.
+     */
     @Override
     public Filter getFilter() {
         return exampleFilter;
     }
 
+    /**
+     * Actual filtering of the items for searching purposes.
+     */
     boolean containsAll = true;
     private Filter exampleFilter = new Filter() {
+        /**
+         * filtering using the interface, and constraint to help users perform filtering.
+         *
+         * @param constraint is the constraint or word you are searching for
+         * @return the filtered list of results to publish
+         */
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
 
@@ -68,6 +102,13 @@ public class RecyclerAdapterListItem extends androidx.recyclerview.widget.Recycl
             return results;
         }
 
+        /**
+         * this sets the arrays to display the results
+         *
+         * @param constraint was the constraint used in perform filtering
+         * @param results is the results from perform filtering occuring.
+         */
+
         protected void publishResults(CharSequence constraint, FilterResults results) {
 
             list_item.clear();
@@ -79,6 +120,14 @@ public class RecyclerAdapterListItem extends androidx.recyclerview.widget.Recycl
 
     };
 
+    /**
+     * needed by the RecyclerView.Adapter class
+     *
+     * @param viewGroup is the viewgroup which holds the context of our itemView to inflate our context.
+     * @param i is the position of the viewHolder being inflated
+     *
+     * @return an inflated instance of our viewHolder to pass to onBindViewHolder
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -88,13 +137,17 @@ public class RecyclerAdapterListItem extends androidx.recyclerview.widget.Recycl
 
     }
 
-
-
+    /**
+     * This method binds the data from the passed in array to the ui viewholder.
+     * it changes depending on if a Lens or a Body is being displayed.
+     *
+     * @param viewHolder is the infalted viewHolder returned from onCreateViewHolder
+     * @param i is the position of the viewHolder being inflated
+     */
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
-        //binds the data to the view.*
-        viewHolder.bind(list_item.get(i), listener);
 
+        viewHolder.bind(list_item.get(i), listener);
         viewHolder.TitleLine.setText(list_item.get(i).TopLineText().trim());
 
         if (list_item.get(i).MiddleLineText().trim() == ""){
@@ -106,36 +159,22 @@ public class RecyclerAdapterListItem extends androidx.recyclerview.widget.Recycl
         viewHolder.DescriptionLine.setText(list_item.get(i).MiddleLineText().trim());
         viewHolder.BottomLine.setText(list_item.get(i).BottomLineText().trim());
 
-//        viewHolder.Parent_Layout.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//
-//            int adapterPos = viewHolder.getAdapterPosition();
-//            currentBody = list_item.get(adapterPos);
-//            TextView tv = v.getRootView().findViewById(R.id.tv_selected_slot);
-//            tv.setText(currentBody.getPartName());
-//
-//            }
-//        });
-//        viewHolder.TitleLine.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//            int adapterPos = viewHolder.getAdapterPosition();
-//            currentBody = list_item.get(adapterPos);
-//
-//            TextView tv = v.getRootView().findViewById(R.id.tv_selected_slot);
-//            tv.setText(currentBody.getPartName());
-//
-//            }
-//        });
-
     }
 
-
+    /**
+     *
+     * @return the amount of items being displayed
+     */
     @Override
     public int getItemCount() {
         return list_item.size();
     }
 
-
+    /**
+     * custom class which is used by recycler view as a blueprint of the ui elements in which
+     * we are using to display the data.
+     *
+     */
     public class ViewHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder{
         TextView TitleLine;
         TextView DescriptionLine;
@@ -151,25 +190,19 @@ public class RecyclerAdapterListItem extends androidx.recyclerview.widget.Recycl
             click_view = itemView.findViewById(R.id.click_view);
         }
 
+        /**
+         * this method handles the onClick of a particular item.
+         *
+         * @param item is the item which is passed in from recyclerViewAdapter
+         * @param listener is an overriden instance of the RecyclerViewOnClickListener
+         */
         public void bind(final ListItem item, final RecyclerViewOnClickListener listener){
-
-//            TitleLine.setOnClickListener(new View.OnClickListener() {
-//                @Override public void onClick(View v) {
-//                    listener.onItemClick(item);
-//                }
-//            });
 
             Parent_Layout.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
                     listener.onItemClick(item);
                 }
             });
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override public void onClick(View v) {
-//                    listener.onItemClick(item);
-//                }
-//            });
         }
     }
-
 }

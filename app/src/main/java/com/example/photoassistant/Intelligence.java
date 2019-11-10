@@ -25,6 +25,12 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+/**
+ * Static class which is used to define formulas and help with calculations.
+ * Within this class data to help display is also defined such as steps for
+ * each field in calculator and handlers for said steps.
+ */
+
 
 public class Intelligence{
 

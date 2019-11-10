@@ -30,6 +30,11 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
+/**
+ * Body is a fragment in which is swapped into the main activity screen
+ * which controls the body handling UI and selections.
+ *
+ */
 
 public class Body extends Fragment {
     private Button LensButton;
@@ -72,6 +77,15 @@ public class Body extends Fragment {
 
         RecyclerView recyclerView = view.findViewById(R.id.body_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        /**
+         * Instantiating the recycler view apdapter class RecyclerAdapterListItem
+         * passes in an onItemClick which is used to handle what happens with
+         * a click of a list item in the recycler view through RecyclerViewOnClickListener
+         * interface. it passes back an instance of what is clicked and then its used
+         * to instantiate Lens when ready.
+         */
+
         adapter = new RecyclerAdapterListItem(getContext(), MainActivity.body_al,  new RecyclerViewOnClickListener() {
             @Override
             public void onItemClick(ListItem item) {
@@ -152,7 +166,7 @@ public class Body extends Fragment {
             String temp_line;
             String[] temp_arr;
             try {
-                InputStream is = getResources().openRawResource(ListItemCombination.resourceID);
+                InputStream is = getResources().openRawResource(R.raw.combination);
                 BufferedReader br = new BufferedReader(
                         new InputStreamReader(is, Charset.forName("UTF-8"))
                 );

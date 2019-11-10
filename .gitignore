@@ -12,3 +12,9 @@
 /captures
 .externalNativeBuild
 .cxx
+javadoc/package-list
+javadoc/overview-tree.html
+javadoc/index.html
+*.html
+*.js
+javadoc/stylesheet.css
