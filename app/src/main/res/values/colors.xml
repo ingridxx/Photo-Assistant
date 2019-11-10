@@ -7,9 +7,10 @@
     <color name="lightGray">#F1F1F1</color>
     <color name="white">#FFFFFF</color>
     <color name="gray">#FCFAFA</color>
-    <color name="nautical">#eeaf61</color>
+
+    <color name="horizon">#eeaf61</color>
     <color name="civil">#fb9062</color>
-    <color name="astronomical">	#ee5d6c</color>
-    <color name="sunset">#ce4993</color>
+    <color name="nautical">	#ee5d6c</color>
+    <color name="astronomical">#ce4993</color>
 
 </resources>

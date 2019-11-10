@@ -176,19 +176,19 @@ public class Sun extends Fragment {
                             temp=extract.getString("sunrise");
                             lt = time(temp);
                             sr=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunrise+="<font color="+ getResources().getColor(R.color.civil) + ">"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
+                            sunrise+="<font color="+ getResources().getColor(R.color.horizon) + ">"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
                             temp=extract.getString("civil_twilight_begin");
                             lt = time(temp);
                             csr=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunrise+="<font color="+ getResources().getColor(R.color.nautical) + ">"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
+                            sunrise+="<font color="+ getResources().getColor(R.color.civil) + ">"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
                             temp=extract.getString("nautical_twilight_begin");
                             lt = time(temp);
                             nsr=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunrise+="<font color="+ getResources().getColor(R.color.astronomical) + ">"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
+                            sunrise+="<font color="+ getResources().getColor(R.color.nautical) + ">"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
                             temp=extract.getString("astronomical_twilight_begin");
                             lt = time(temp);
                             asr = lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunrise+="<font color="+ getResources().getColor(R.color.sunset) + ">"+lt.format(dateTimeFormatter)+"</font>"+"";
+                            sunrise+="<font color="+ getResources().getColor(R.color.astronomical) + ">"+lt.format(dateTimeFormatter)+"</font>"+"";
 
 
 
@@ -196,19 +196,19 @@ public class Sun extends Fragment {
                             temp=extract.getString("sunset");
                             lt = time(temp);
                             ss=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunset+="<font color="+ getResources().getColor(R.color.civil) + ">"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
+                            sunset+="<font color="+ getResources().getColor(R.color.horizon) + ">"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
                             temp=extract.getString("civil_twilight_end");
                             lt = time(temp);
                             css=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunset+="<font color="+ getResources().getColor(R.color.nautical) + ">"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
+                            sunset+="<font color="+ getResources().getColor(R.color.civil) + ">"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
                             temp=extract.getString("nautical_twilight_end");
                             lt = time(temp);
                             nss=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunset+="<font color="+ getResources().getColor(R.color.astronomical) + ">"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
+                            sunset+="<font color="+ getResources().getColor(R.color.nautical) + ">"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
                             temp=extract.getString("astronomical_twilight_end");
                             lt = time(temp);
                             ass=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunset+="<font color="+ getResources().getColor(R.color.sunset) + ">"+lt.format(dateTimeFormatter)+"</font>"+"";
+                            sunset+="<font color="+ getResources().getColor(R.color.astronomical) + ">"+lt.format(dateTimeFormatter)+"</font>"+"";
 
 
 
@@ -225,18 +225,24 @@ public class Sun extends Fragment {
                                     int mWidth= circle.getBounds().width()/2;
                                     int mHeight= circle.getBounds().height()/2;
 
+                                    int horizon = getResources().getColor(R.color.horizon);
+                                    int civil = getResources().getColor(R.color.civil);
+                                    int natuical = getResources().getColor(R.color.nautical);
+                                    int astronomical = getResources().getColor(R.color.astronomical);
+
+
                                     long offSet = TimeUnit.HOURS.convert(TimeZone.getDefault().getRawOffset(), TimeUnit.MILLISECONDS);
                                     SweepGradient sweepGradient = new SweepGradient(mWidth,mHeight,
                                             new int[]{
-                                                    0xFF40284A,
-                                                    0xFF73434B,
-                                                    0xFFB34D25,
-                                                    0xFFF07E07,
-                                                    0xFFF07E07,
-                                                    0xFFB34D25,
-                                                    0xFF73434B,
-                                                    0xFF40284A,
-                                                    0xFF40284A,
+                                                    0xFF+astronomical,
+                                                    0xFF+natuical,
+                                                    0xFF+civil,
+                                                    0xFFF+horizon,
+                                                    0xFF+horizon,
+                                                    0xFF+civil,
+                                                    0xFF+natuical,
+                                                    0xFF+astronomical,
+                                                    0xFF+astronomical,
                                             }, //substitute the correct colors for these
                                             new float[]{
                                                     (float)(1-ass), (float)(1-nss), (float)(1-css), (float)(1-ss), (float)(1-sr), (float)(1-csr), (float)(1-nsr), (float)(1-asr),1});
@@ -252,29 +258,34 @@ public class Sun extends Fragment {
                             Canvas canvas = new Canvas(bitmap);
                             Paint paint = new Paint();
                             paint.setStyle(Paint.Style.STROKE);
-                            paint.setColor(0xFF40284A);
+                            paint.setColor(getResources().getColor(R.color.astronomical));
                             paint.setStrokeWidth(3);
                             canvas.drawBitmap(bitmap,0,0,null);
                             Date currentTime = Calendar.getInstance().getTime();
+
                             double nowAngle = currentTime.getHours()/24.0+ currentTime.getMinutes()/1440.0;
+
                             canvas.drawLine((float)getCircleX(asr, length,length)
                                     ,(float)getCircleY(asr,length,length),(float)(length/2.0),(float)(length/2.0),paint);
                             canvas.drawLine((float)getCircleX(ass, length,length)
                                     ,(float)getCircleY(ass,length,length),(float)(length/2.0),(float)(length/2.0),paint);
-                            paint.setColor(0xFF73434B);
+
+                            paint.setColor(getResources().getColor(R.color.nautical));
                             canvas.drawLine((float)getCircleX(nsr, length,length)
                                     ,(float)getCircleY(nsr,length,length),(float)(length/2.0),(float)(length/2.0),paint);
                             canvas.drawLine((float)getCircleX(nss, length,length)
                                     ,(float)getCircleY(nss,length,length),(float)(length/2.0),(float)(length/2.0),paint);
-                            paint.setColor(0xFFB34D25);
 
+                            paint.setColor(getResources().getColor(R.color.civil));
                             canvas.drawLine((float)getCircleX(csr, length,length)
                                     ,(float)getCircleY(csr,length,length),(float)(length/2.0),(float)(length/2.0),paint);
                             canvas.drawLine((float)getCircleX(css, length,length)
                                     ,(float)getCircleY(css,length,length),(float)(length/2.0),(float)(length/2.0),paint);
-                            paint.setColor(0xFFF07E07);
+
+                            paint.setColor(getResources().getColor(R.color.horizon));
                             canvas.drawLine((float)getCircleX(sr, length,length)
                                     ,(float)getCircleY(sr,length,length),(float)(length/2.0),(float)(length/2.0),paint);
+
                             canvas.drawLine((float)getCircleX(ss, length,length)
                                     ,(float)getCircleY(ss,length,length),(float)(length/2.0),(float)(length/2.0),paint);
                             paint.setColor(0xFFFF0000);
@@ -299,6 +310,8 @@ public class Sun extends Fragment {
         queue.add(stringRequest);
         return rootView;
 }
+
+
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
