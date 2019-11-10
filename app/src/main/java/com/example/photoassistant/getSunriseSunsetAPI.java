@@ -17,7 +17,19 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import androidx.fragment.app.Fragment;
 
+/**
+ * static class used to establish connnection with the sunrise sunset api.
+ */
+
 public class getSunriseSunsetAPI extends Fragment {
+
+    /**
+     * static method which gets the weather data from the API
+     *
+     * @param longitude location data which is used to interface with the API
+     * @param latitude location data which is used to interface with the API
+     * @return
+     */
     public static JSONObject  getSunriseSunset(double longitude, double  latitude) {
         String url = "https://api.sunrise-sunset.org/json?" + "lat=" + latitude + "&lng=" + longitude + "&date=today";
         Log.e("getWeatherAPI", "url "+url);

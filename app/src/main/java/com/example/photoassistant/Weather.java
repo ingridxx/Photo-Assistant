@@ -46,6 +46,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * The weather fragment handles the weather screens UI and manages the API
+ * from the sg.gov.
+ */
 
 public class Weather extends Fragment {
     Spinner location;
@@ -75,6 +79,10 @@ public class Weather extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * binds all the ui elements to the java code, also checks for internet
+     * and returns response.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -126,6 +134,10 @@ public class Weather extends Fragment {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
+    /**
+     * interface with api using json to get the air temperature, as well as the 24 hr forecast.
+     *
+     */
     private void updateWeather(){
         new Thread(){
             public void run(){

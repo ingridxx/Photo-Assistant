@@ -8,6 +8,9 @@ import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.view.View;
 
+/**
+ *
+ */
 public class LineView extends View
 {
     private Paint paint = new Paint();

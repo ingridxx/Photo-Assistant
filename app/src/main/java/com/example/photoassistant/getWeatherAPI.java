@@ -12,8 +12,16 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-
-public class getWeatherAPI extends Fragment {
+/**
+ * static class used to establish connnection with gov.sg.
+ */
+public class getWeatherAPI{
+    /**
+     * static method which gets the weather data from the API
+     *
+     * @param dataset is the extension
+     * @return a json object captured from querying the API data/
+     */
     public static JSONObject getWeather(String dataset) {
         String NEA_weather = "https://api.data.gov.sg/v1/environment/" + dataset;
         try {
