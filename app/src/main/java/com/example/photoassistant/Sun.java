@@ -93,6 +93,7 @@ import static android.content.ContentValues.TAG;
 
 public class Sun extends Fragment {
 
+    static double asr, nsr, csr, sr, ss, css, nss, ass,nt,nte;
 
     public Sun() {
         // Required empty public constructor
@@ -134,7 +135,6 @@ public class Sun extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
 
         final RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        //String url="https://api.sunrise-sunset.org/json?lat=37.421&lng=-122.084&date=today";
         String url="https://api.sunrise-sunset.org/json?";
         GPS gps=new GPS(getActivity().getApplicationContext());
         //check network connectivity
@@ -172,7 +172,7 @@ public class Sun extends Fragment {
                             JSONObject extract = reader.getJSONObject("results");
 
                             Log.d(TAG, "onResponse: ");
-                            
+
                             temp=extract.getString("sunrise");
                             lt = time(temp);
                             sr=lt.getHour()/24.0+lt.getMinute()/1440.0;
@@ -229,11 +229,13 @@ public class Sun extends Fragment {
                                     int civil = getResources().getColor(R.color.civil);
                                     int natuical = getResources().getColor(R.color.nautical);
                                     int astronomical = getResources().getColor(R.color.astronomical);
+                                    int night = getResources().getColor(R.color.night);
 
 
                                     long offSet = TimeUnit.HOURS.convert(TimeZone.getDefault().getRawOffset(), TimeUnit.MILLISECONDS);
                                     SweepGradient sweepGradient = new SweepGradient(mWidth,mHeight,
                                             new int[]{
+                                                    0xFF000000+night,
                                                     0xFF+astronomical,
                                                     0xFF+natuical,
                                                     0xFF+civil,
@@ -242,10 +244,12 @@ public class Sun extends Fragment {
                                                     0xFF+civil,
                                                     0xFF+natuical,
                                                     0xFF+astronomical,
-                                                    0xFF+astronomical,
+                                                    0xFF000000+night,
+                                                    0xFF000000+night,
+
                                             }, //substitute the correct colors for these
                                             new float[]{
-                                                    (float)(1-ass), (float)(1-nss), (float)(1-css), (float)(1-ss), (float)(1-sr), (float)(1-csr), (float)(1-nsr), (float)(1-asr),1});
+                                                    (float) (1-ass-0.0208),(float)(1-ass), (float)(1-nss), (float)(1-css), (float)(1-ss), (float)(1-sr), (float)(1-csr), (float)(1-nsr), (float)(1-asr),(float) (1-asr+0.0208),1});
                                     //(float)asr, (float)nsr, (float)csr, (float)sr, (float)ss, (float)css,(float)nss,(float)ass,1});
 
                                     return sweepGradient;
@@ -340,7 +344,8 @@ public class Sun extends Fragment {
         double yy = percentageAngle*2* Math.PI;
         return height/2.0 - height*Math.cos(yy)/2.0;
     }
-    static double asr, nsr, csr, sr, ss, css, nss, ass;
+
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

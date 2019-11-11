@@ -33,7 +33,6 @@ import java.util.ArrayList;
 /**
  * Body is a fragment in which is swapped into the main activity screen
  * which controls the body handling UI and selections.
- *
  */
 
 public class Body extends Fragment {
@@ -175,6 +174,7 @@ public class Body extends Fragment {
                         temp_arr = temp_line.split(",");
                         returnArray.add(ListItemFactoryClass.getListItemInstance("Combo", temp_arr));
                     }
+
                 }
 
             } catch (IOException e) {
