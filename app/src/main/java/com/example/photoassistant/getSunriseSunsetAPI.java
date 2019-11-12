@@ -50,7 +50,7 @@ public class getSunriseSunsetAPI extends Fragment {
 
             JSONObject data = new JSONObject(response.toString());
 
-            if(con.getResponseCode() == 200){
+            if(con.getResponseCode() != 200){
                 Log.e("getSunAPI", "Error in getting data.");
             }
             return data;

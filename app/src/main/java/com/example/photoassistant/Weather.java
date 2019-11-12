@@ -193,7 +193,13 @@ public class Weather extends Fragment {
             // Initialize data streams
             //JSONArray currentTempData = currentTemp.getJSONArray("items").getJSONObject(0).getJSONArray("readings");
             JSONArray metadata = currentTemp.getJSONObject("metadata").getJSONArray("stations");
-            if(metadata.length()<=0) return;
+            if(metadata.length()<=0)
+            {
+
+                Log.e("weather", "updateWeather(): Error retrieving data.");
+                Toast.makeText(getActivity(), "Error in getting data from NEA.", Toast.LENGTH_SHORT).show();
+                return;
+            }
             for (int i=0;i<metadata.length();i++) {
                 double latitude = metadata.getJSONObject(i).getJSONObject("location").getDouble("latitude");
                 double longitude = metadata.getJSONObject(i).getJSONObject("location").getDouble("longitude");
