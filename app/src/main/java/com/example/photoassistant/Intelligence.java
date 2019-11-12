@@ -149,10 +149,14 @@ public class Intelligence{
         return (getFocalLength()*getFocalLength()/(CoCCalculator()*getAperture())+getFocalLength())/1000;
     }
     protected static double DofNearCalculator(){
-        return (getDistance()*(HyperfocalCalculator())/(HyperfocalCalculator()+getDistance()));
+        return (getDistance()*1000*(HyperfocalCalculator()*1000-getFocalLength())
+                /(HyperfocalCalculator()*1000+getDistance()*1000-2*getFocalLength())
+        )/1000;
     }
     protected static double DofFarCalculator(){
-        return (getDistance()*(HyperfocalCalculator())/(HyperfocalCalculator()-getDistance()));
+        return (getDistance()*1000*(HyperfocalCalculator()*1000-getFocalLength())
+                /(HyperfocalCalculator()*1000-getDistance()*1000+0*getFocalLength())
+        )/1000;
     }
     public static double ExposureCalculator(){
         return (1/0.4345)*Math.log10((1.0/getAperture())*(1.0/getAperture())*getShutterSpeed()*getISO())/Math.log(2)
