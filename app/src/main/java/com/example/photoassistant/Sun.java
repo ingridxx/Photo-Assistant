@@ -4,10 +4,7 @@ import android.content.Context;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
-import android.graphics.PointF;
 import android.graphics.Shader;
 import android.graphics.SweepGradient;
 import android.graphics.drawable.BitmapDrawable;
@@ -18,43 +15,26 @@ import android.content.pm.ActivityInfo;
 
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 
-import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Bundle;
-import android.view.View;
-import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,41 +45,36 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 
-import org.apache.commons.lang3.time.DateUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.ArrayList;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 
-import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
-import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.content.ContentValues.TAG;
 
 public class Sun extends Fragment {
 
-    static double asr, nsr, csr, sr, ss, css, nss, ass,nt,nte;
-
+    private static double asr, nsr, csr, sr, ss, css, nss, ass;
+    private int length;
+    private Canvas canvas;
+    private Paint paint;
     public Sun() {
         // Required empty public constructor
     }
-
-    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+    private JSONObject reader;
+    private JSONObject extract;
+    private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm");
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -107,10 +82,9 @@ public class Sun extends Fragment {
         setHasOptionsMenu(true);
         final View rootView = inflater.inflate(R.layout.fragment_sun, container, false);
 
-
-
         //CIRCLE PARAMETERS
         final int margin = 50,thickness = 75, topMargin = 25;
+
         //POSITION CIRCLE
         final ImageView blackCircle = rootView.findViewById(R.id.black_circle);
         ImageView sunCircle = rootView.findViewById(R.id.gradientRing);
@@ -150,7 +124,7 @@ public class Sun extends Fragment {
 
             url=url+"lat="+latitude+"&lng="+longitude+"&date=today";
             // Add the request to the RequestQueue.
-
+            Log.d("drawingLines", "onCreateView: can get Location");
 
         } else {
             Toast.makeText(getActivity(), "Please check your GPS settings and try again.", Toast.LENGTH_LONG).show();
@@ -168,141 +142,36 @@ public class Sun extends Fragment {
                         LocalTime lt;
 
                         try{
-                            JSONObject reader = new JSONObject(response);
-                            JSONObject extract = reader.getJSONObject("results");
+                             reader = new JSONObject(response);
+                             extract = reader.getJSONObject("results");
 
-                            Log.d(TAG, "onResponse: ");
+                            Log.d(TAG, "onResponse:");
+                            sunrise+=setSrSsLabel(R.color.horizon, "sunrise","sr");
 
-                            temp=extract.getString("sunrise");
-                            lt = time(temp);
-                            sr=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunrise+="<font color="+ getResources().getColor(R.color.horizon) + ">"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
-                            temp=extract.getString("civil_twilight_begin");
-                            lt = time(temp);
-                            csr=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunrise+="<font color="+ getResources().getColor(R.color.civil) + ">"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
-                            temp=extract.getString("nautical_twilight_begin");
-                            lt = time(temp);
-                            nsr=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunrise+="<font color="+ getResources().getColor(R.color.nautical) + ">"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
-                            temp=extract.getString("astronomical_twilight_begin");
-                            lt = time(temp);
-                            asr = lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunrise+="<font color="+ getResources().getColor(R.color.astronomical) + ">"+lt.format(dateTimeFormatter)+"</font>"+"";
+                            sunrise+=setSrSsLabel(R.color.civil, "civil_twilight_begin","csr");
 
+                            sunrise+=setSrSsLabel(R.color.nautical, "nautical_twilight_begin","nsr");
 
+                            sunrise+=setSrSsLabel(R.color.astronomical,"astronomical_twilight_begin","asr");
 
+                            sunset+=setSrSsLabel(R.color.horizon,"sunset","ss");
 
-                            temp=extract.getString("sunset");
-                            lt = time(temp);
-                            ss=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunset+="<font color="+ getResources().getColor(R.color.horizon) + ">"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
-                            temp=extract.getString("civil_twilight_end");
-                            lt = time(temp);
-                            css=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunset+="<font color="+ getResources().getColor(R.color.civil) + ">"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
-                            temp=extract.getString("nautical_twilight_end");
-                            lt = time(temp);
-                            nss=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunset+="<font color="+ getResources().getColor(R.color.nautical) + ">"+lt.format(dateTimeFormatter)+"</font>"+"<br>";
-                            temp=extract.getString("astronomical_twilight_end");
-                            lt = time(temp);
-                            ass=lt.getHour()/24.0+lt.getMinute()/1440.0;
-                            sunset+="<font color="+ getResources().getColor(R.color.astronomical) + ">"+lt.format(dateTimeFormatter)+"</font>"+"";
+                            sunset+=setSrSsLabel(R.color.civil,"civil_twilight_end","css");
 
+                            sunset+=setSrSsLabel(R.color.nautical,"nautical_twilight_end","nss");
 
+                            sunset+=setSrSsLabel(R.color.astronomical,"astronomical_twilight_end","ass");
 
-                        }catch (Exception e){e.printStackTrace();
-                        }finally {
-
-
-                            final ShapeDrawable circle = new ShapeDrawable(new OvalShape());
-
-                            ShapeDrawable.ShaderFactory shaderFactory = new ShapeDrawable.ShaderFactory() {
-
-                                @Override
-                                public Shader resize(int width, int height) {
-                                    int mWidth= circle.getBounds().width()/2;
-                                    int mHeight= circle.getBounds().height()/2;
-
-                                    int horizon = getResources().getColor(R.color.horizon);
-                                    int civil = getResources().getColor(R.color.civil);
-                                    int natuical = getResources().getColor(R.color.nautical);
-                                    int astronomical = getResources().getColor(R.color.astronomical);
-                                    int night = getResources().getColor(R.color.night);
-
-
-                                    long offSet = TimeUnit.HOURS.convert(TimeZone.getDefault().getRawOffset(), TimeUnit.MILLISECONDS);
-                                    SweepGradient sweepGradient = new SweepGradient(mWidth,mHeight,
-                                            new int[]{
-                                                    0xFF000000+night,
-                                                    0xFF+astronomical,
-                                                    0xFF+natuical,
-                                                    0xFF+civil,
-                                                    0xFFF+horizon,
-                                                    0xFF+horizon,
-                                                    0xFF+civil,
-                                                    0xFF+natuical,
-                                                    0xFF+astronomical,
-                                                    0xFF000000+night,
-                                                    0xFF000000+night,
-
-                                            }, //substitute the correct colors for these
-                                            new float[]{
-                                                    (float) (1-ass-0.0208),(float)(1-ass), (float)(1-nss), (float)(1-css), (float)(1-ss), (float)(1-sr), (float)(1-csr), (float)(1-nsr), (float)(1-asr),(float) (1-asr+0.0208),1});
-                                    //(float)asr, (float)nsr, (float)csr, (float)sr, (float)ss, (float)css,(float)nss,(float)ass,1});
-
-                                    return sweepGradient;
-                                }
-                            };circle.setShaderFactory(shaderFactory);
-                            ImageView iv = (ImageView)(rootView.findViewById(R.id.gradientRing));
-
-                            int length = blackCircle.getHeight();
-                            final Bitmap bitmap = Bitmap.createBitmap(length, length, Bitmap.Config.ARGB_8888);
-                            Canvas canvas = new Canvas(bitmap);
-                            Paint paint = new Paint();
-                            paint.setStyle(Paint.Style.STROKE);
-                            paint.setColor(getResources().getColor(R.color.astronomical));
-                            paint.setStrokeWidth(3);
-                            canvas.drawBitmap(bitmap,0,0,null);
-                            Date currentTime = Calendar.getInstance().getTime();
-
-                            double nowAngle = currentTime.getHours()/24.0+ currentTime.getMinutes()/1440.0;
-
-                            canvas.drawLine((float)getCircleX(asr, length,length)
-                                    ,(float)getCircleY(asr,length,length),(float)(length/2.0),(float)(length/2.0),paint);
-                            canvas.drawLine((float)getCircleX(ass, length,length)
-                                    ,(float)getCircleY(ass,length,length),(float)(length/2.0),(float)(length/2.0),paint);
-
-                            paint.setColor(getResources().getColor(R.color.nautical));
-                            canvas.drawLine((float)getCircleX(nsr, length,length)
-                                    ,(float)getCircleY(nsr,length,length),(float)(length/2.0),(float)(length/2.0),paint);
-                            canvas.drawLine((float)getCircleX(nss, length,length)
-                                    ,(float)getCircleY(nss,length,length),(float)(length/2.0),(float)(length/2.0),paint);
-
-                            paint.setColor(getResources().getColor(R.color.civil));
-                            canvas.drawLine((float)getCircleX(csr, length,length)
-                                    ,(float)getCircleY(csr,length,length),(float)(length/2.0),(float)(length/2.0),paint);
-                            canvas.drawLine((float)getCircleX(css, length,length)
-                                    ,(float)getCircleY(css,length,length),(float)(length/2.0),(float)(length/2.0),paint);
-
-                            paint.setColor(getResources().getColor(R.color.horizon));
-                            canvas.drawLine((float)getCircleX(sr, length,length)
-                                    ,(float)getCircleY(sr,length,length),(float)(length/2.0),(float)(length/2.0),paint);
-
-                            canvas.drawLine((float)getCircleX(ss, length,length)
-                                    ,(float)getCircleY(ss,length,length),(float)(length/2.0),(float)(length/2.0),paint);
-                            paint.setColor(0xFFFF0000);
-
-                            canvas.drawLine((float)getCircleX(nowAngle, length,length)
-                                    ,(float)getCircleY(nowAngle,length,length),(float)(length/2.0),(float)(length/2.0),paint);
-                            iv.setBackground(circle);
-                            iv.setRotation(90);
-                            blackCircle.setImageDrawable(new BitmapDrawable(getContext().getResources(),bitmap));
                             sunriseTextView.setText(Html.fromHtml("<br><br>Sunrise<br>" + sunrise));
                             sunsetTextView.setText(Html.fromHtml("<br><br>Sunset<br>" + sunset));
                             fourTimesTextView.setText(Html.fromHtml("<font color=#FF0000>Now<br>"
                                     +LocalTime.now().format(dateTimeFormatter)+"</font><br><br>Horizon<br>Civil<br>Nautical<br>Astronomical"));
+
+                            drawShapes(rootView,blackCircle);
+
+                        }catch (Exception e){e.printStackTrace();
+
+                        }finally {
 
                         }
                     }
@@ -314,6 +183,93 @@ public class Sun extends Fragment {
         queue.add(stringRequest);
         return rootView;
 }
+
+
+    private void drawShapes(View rootView,ImageView blackCircle) {
+
+        final ShapeDrawable circle = new ShapeDrawable(new OvalShape());
+
+        final int horizon = getResources().getColor(R.color.horizon);
+        final int civil = getResources().getColor(R.color.civil);
+        final int nautical = getResources().getColor(R.color.nautical);
+        final int astronomical = getResources().getColor(R.color.astronomical);
+        final int night = getResources().getColor(R.color.night);
+
+        ShapeDrawable.ShaderFactory shaderFactory = new ShapeDrawable.ShaderFactory() {
+
+            @Override
+            public Shader resize(int width, int height) {
+                int mWidth= circle.getBounds().width()/2;
+                int mHeight= circle.getBounds().height()/2;
+                double halfHour = 0.0208;
+
+                SweepGradient sweepGradient = new SweepGradient(mWidth,mHeight,
+                        new int[]{
+                                0xFF000000+night,
+                                0xFF000000+astronomical,
+                                0xFF000000+nautical,
+                                0xFF000000+civil,
+                                0xFF000000+horizon,
+                                0xFF000000+horizon,
+                                0xFF000000+civil,
+                                0xFF000000+nautical,
+                                0xFF000000+astronomical,
+                                0xFF000000+night,
+                                0xFF000000+night,
+
+                        }, //substitute the correct colors for these
+                        new float[]{
+                                (float) (1-ass-halfHour),(float)(1-ass), (float)(1-nss), (float)(1-css), (float)(1-ss), (float)(1-sr), (float)(1-csr), (float)(1-nsr), (float)(1-asr),(float) (1-asr+halfHour),1});
+
+                return sweepGradient;
+            }
+        };
+        circle.setShaderFactory(shaderFactory);
+        ImageView iv = (ImageView)(rootView.findViewById(R.id.gradientRing));
+
+        length = blackCircle.getHeight();
+        final Bitmap bitmap = Bitmap.createBitmap(length, length, Bitmap.Config.ARGB_8888);
+        canvas = new Canvas(bitmap);
+        paint = new Paint();
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(3);
+        canvas.drawBitmap(bitmap,0,0,null);
+        Date currentTime = Calendar.getInstance().getTime();
+
+        double nowAngle = currentTime.getHours()/24.0+ currentTime.getMinutes()/1440.0;
+
+        drawLinesOnCanvas(asr,R.color.astronomical);
+
+        drawLinesOnCanvas(ass,R.color.astronomical);
+
+        drawLinesOnCanvas(nsr,R.color.nautical);
+
+        drawLinesOnCanvas(nss,R.color.nautical);
+
+        drawLinesOnCanvas(csr,R.color.civil);
+
+        drawLinesOnCanvas(css,R.color.civil);
+
+        drawLinesOnCanvas(sr,R.color.horizon);
+
+        drawLinesOnCanvas(ss,R.color.horizon);
+
+        drawLinesOnCanvas(nowAngle,R.color.nowColour);
+
+        iv.setBackground(circle);
+        iv.setRotation(90);
+        blackCircle.setImageDrawable(new BitmapDrawable(getContext().getResources(),bitmap));
+
+    }
+
+    private void drawLinesOnCanvas(double srDouble, int whichColour) {
+
+        paint.setColor(getResources().getColor(whichColour));
+
+        canvas.drawLine((float)getCircleX(srDouble, this.length, this.length)
+                ,(float)getCircleY(srDouble, this.length, this.length),(float)(this.length /2.0),(float)(this.length /2.0),paint);
+
+    }
 
 
     private boolean isNetworkAvailable() {
@@ -360,6 +316,63 @@ public class Sun extends Fragment {
         date.setTime(date.getTime()+add);
         //ZoneId.systemDefault();
         return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()).toLocalTime();
+    }
+
+
+
+    public String setSrSsLabel(int colour, String extractString,String doubleName){
+        String temp = "";
+        try {
+            temp =extract.getString(extractString);
+            LocalTime lt = time(temp);
+            setStaticDoubles(doubleName,lt.getHour()/24.0+ lt.getMinute()/1440.0);
+            return "<font color="+ getResources().getColor(colour) + ">"+ lt.format(dateTimeFormatter)+"</font>"+"<br>";
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
+    public void setStaticDoubles(String staticDoubles,double value){
+
+        switch (staticDoubles){
+
+            case "sr":
+                sr = value;
+                break;
+            case "asr":
+                asr = value;
+                break;
+            case "nsr":
+                nsr = value;
+                break;
+            case "csr":
+                csr = value;
+                break;
+
+            case "ss":
+                ss = value;
+                break;
+            case "ass":
+                ass = value;
+                break;
+            case "nss":
+                nss = value;
+                break;
+            case "css":
+                css = value;
+                break;
+
+
+        }
+
+
+
+
     }
 }
 

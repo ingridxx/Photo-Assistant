@@ -217,12 +217,10 @@ public class MainActivity extends AppCompatActivity {
 
             body_al.clear();
             body_al.addAll(ProcessArrays(body, ListItemBody.resourceID, "Body"));
-
             lens_al.clear();
             lens_al.addAll(ProcessArrays(lens, ListItemLens.resourceID, "Lens"));
 
             return lens_al;
-
 
         }
 

@@ -12,6 +12,10 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
+/**
+ * this class is an instance of a view pager, which would contain our tutorial photos.
+ * I didnt have time to fully implement but all the parts which work are in here.
+ */
 
 public class ImageAdapter extends PagerAdapter {
 

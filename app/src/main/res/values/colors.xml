@@ -13,5 +13,7 @@
     <color name="nautical">	#ee5d6c</color>
     <color name="astronomical">#ce4993</color>
     <color name="night">#5f0b75</color>
+    <color name="nowColour">#FFFF0000</color>
+
 
 </resources>
