@@ -151,6 +151,7 @@ public class Weather extends Fragment {
                     handler.post(new Runnable() {
                         public void run() {
                             Log.e("weather", "updateWeather(): Error retrieving data.");
+                            Toast.makeText(getActivity(), "Error in getting data from NEA.", Toast.LENGTH_SHORT).show();
                         }
                     });
                 } else {

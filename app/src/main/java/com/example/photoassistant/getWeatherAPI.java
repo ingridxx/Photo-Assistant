@@ -40,8 +40,9 @@ public class getWeatherAPI{
 
             JSONObject data = new JSONObject(response.toString());
 
-            if(con.getResponseCode() != 200){
+            if(con.getResponseCode() == 200){
                 Log.e("getWeatherAPI", "getWeather(): Error in getting data from NEA.");
+                return null;
             }
             return data;
         } catch(Exception e) {

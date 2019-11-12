@@ -32,7 +32,7 @@ public class getSunriseSunsetAPI extends Fragment {
      */
     public static JSONObject  getSunriseSunset(double longitude, double  latitude) {
         String url = "https://api.sunrise-sunset.org/json?" + "lat=" + latitude + "&lng=" + longitude + "&date=today";
-        Log.e("getWeatherAPI", "url "+url);
+        Log.e("getSunAPI", "url "+url);
 
         try {
             URL obj = new URL(url);
@@ -50,8 +50,8 @@ public class getSunriseSunsetAPI extends Fragment {
 
             JSONObject data = new JSONObject(response.toString());
 
-            if(con.getResponseCode() != 200){
-                Log.e("getWeatherAPI", "getWeather(): Error in getting data from NEA.");
+            if(con.getResponseCode() == 200){
+                Log.e("getSunAPI", "Error in getting data.");
             }
             return data;
         } catch(Exception e) {
