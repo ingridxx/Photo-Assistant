@@ -144,7 +144,11 @@ public class Sun extends Fragment {
                         try{
                              reader = new JSONObject(response);
                              extract = reader.getJSONObject("results");
-
+                            if(extract.length()<=0) {
+                                Log.e("sun", "Sun: Error retrieving data.");
+                                Toast.makeText(getActivity(), "Error retrieving data.", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
                             Log.d(TAG, "onResponse:");
                             sunrise+=setSrSsLabel(R.color.horizon, "sunrise","sr");
 
