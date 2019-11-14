@@ -23,6 +23,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -69,24 +70,56 @@ public class Sun extends Fragment {
     private int length;
     private Canvas canvas;
     private Paint paint;
+    ImageView blackCircle;
+    Handler handler;
     public Sun() {
         // Required empty public constructor
     }
     private JSONObject reader;
     private JSONObject extract;
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+    View rootView;
+    private void updateSun(final double longitude, final double latitude){
+        new Thread(){
+            public void run(){
+                final JSONObject response =getSunriseSunsetAPI.getSunriseSunset(longitude,latitude);
+                if (response == null) {
+                    handler.post(new Runnable() {
+                        public void run() {
+                            Log.e("sun", "sun error");
+                            Toast.makeText(getActivity(), "Error in getting data from API.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    handler.post(new Runnable() {
+                        public void run() {
+                            updateUI(response);
+                        }
+                    });
+                }
+
+            }
+
+        }.start();
+    }
+
+    TextView sunriseTextView;
+    TextView sunsetTextView;
+    TextView fourTimesTextView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        setHasOptionsMenu(true);
-        final View rootView = inflater.inflate(R.layout.fragment_sun, container, false);
+        setHasOptionsMenu(true); handler = new Handler();
 
+        final View rootView = inflater.inflate(R.layout.fragment_sun, container, false);
+        this.rootView = rootView;
         //CIRCLE PARAMETERS
         final int margin = 50,thickness = 75, topMargin = 25;
 
         //POSITION CIRCLE
-        final ImageView blackCircle = rootView.findViewById(R.id.black_circle);
+        blackCircle = rootView.findViewById(R.id.black_circle);
         ImageView sunCircle = rootView.findViewById(R.id.gradientRing);
         Display display = ((Activity)getContext()).getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics ();
@@ -99,16 +132,15 @@ public class Sun extends Fragment {
         layoutParams = new RelativeLayout.LayoutParams((int)(layoutParams.width-convertDpToPixel(thickness,getContext())), (int)(layoutParams.height-convertDpToPixel(thickness,getContext())));
         layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
         layoutParams.setMargins(0,(int)convertDpToPixel(topMargin+thickness/2.0f,getContext()),0,0);
-
+        sunriseTextView = rootView.findViewById(R.id.sunriseTextView);
+        sunsetTextView = rootView.findViewById(R.id.sunsetTextView);
+        fourTimesTextView = rootView.findViewById(R.id.fourTimesTextView);
         blackCircle.setLayoutParams(layoutParams);
-
-        final TextView sunriseTextView = rootView.findViewById(R.id.sunriseTextView);
-        final TextView sunsetTextView = rootView.findViewById(R.id.sunsetTextView);
-        final TextView fourTimesTextView = rootView.findViewById(R.id.fourTimesTextView);
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
 
         final RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        double longitude, latitude;
         String url="https://api.sunrise-sunset.org/json?";
         GPS gps=new GPS(getActivity().getApplicationContext());
         //check network connectivity
@@ -119,8 +151,8 @@ public class Sun extends Fragment {
         if (gps.canGetLocation()) {
 
 
-            double longitude = gps.getLongitude();
-            double latitude = gps.getLatitude();
+            longitude = gps.getLongitude();
+            latitude = gps.getLatitude();
 
             url=url+"lat="+latitude+"&lng="+longitude+"&date=today";
             // Add the request to the RequestQueue.
@@ -130,65 +162,57 @@ public class Sun extends Fragment {
             Toast.makeText(getActivity(), "Please check your GPS settings and try again.", Toast.LENGTH_LONG).show();
             return rootView;
         }
-        // Request a string response from the provided URL.
-        final StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @RequiresApi(api = Build.VERSION_CODES.O)
-                    @Override
-                    public void onResponse(String response) {
-                        String sunrise="";
-                        String sunset="";
-                        String temp="";
-                        LocalTime lt;
 
-                        try{
-                             reader = new JSONObject(response);
-                             extract = reader.getJSONObject("results");
-                            if(extract.length()<=0) {
-                                Log.e("sun", "Sun: Error retrieving data.");
-                                Toast.makeText(getActivity(), "Error retrieving data.", Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-                            Log.d(TAG, "onResponse:");
-                            sunrise+=setSrSsLabel(R.color.horizon, "sunrise","sr");
 
-                            sunrise+=setSrSsLabel(R.color.civil, "civil_twilight_begin","csr");
-
-                            sunrise+=setSrSsLabel(R.color.nautical, "nautical_twilight_begin","nsr");
-
-                            sunrise+=setSrSsLabel(R.color.astronomical,"astronomical_twilight_begin","asr");
-
-                            sunset+=setSrSsLabel(R.color.horizon,"sunset","ss");
-
-                            sunset+=setSrSsLabel(R.color.civil,"civil_twilight_end","css");
-
-                            sunset+=setSrSsLabel(R.color.nautical,"nautical_twilight_end","nss");
-
-                            sunset+=setSrSsLabel(R.color.astronomical,"astronomical_twilight_end","ass");
-
-                            sunriseTextView.setText(Html.fromHtml("<br><br>Sunrise<br>" + sunrise));
-                            sunsetTextView.setText(Html.fromHtml("<br><br>Sunset<br>" + sunset));
-                            fourTimesTextView.setText(Html.fromHtml("<font color=#FF0000>Now<br>"
-                                    +LocalTime.now().format(dateTimeFormatter)+"</font><br><br>Horizon<br>Civil<br>Nautical<br>Astronomical"));
-
-                            drawShapes(rootView,blackCircle);
-
-                        }catch (Exception e){e.printStackTrace();
-
-                        }finally {
-
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-            }
-        });
-        queue.add(stringRequest);
+        updateSun(longitude, latitude);
         return rootView;
 }
 
+    public void updateUI(JSONObject response)
+    {
+        String sunrise="";
+        String sunset="";
+        String temp="";
+        LocalTime lt;
 
+        try{
+            reader = response;
+            extract = reader.getJSONObject("results");
+            if(extract.length()<=0) {
+                Log.e("sun", "Sun: Error retrieving data.");
+                Toast.makeText(getActivity(), "Error retrieving data.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Log.d(TAG, "onResponse:");
+            sunrise+=setSrSsLabel(R.color.horizon, "sunrise","sr");
+
+            sunrise+=setSrSsLabel(R.color.civil, "civil_twilight_begin","csr");
+
+            sunrise+=setSrSsLabel(R.color.nautical, "nautical_twilight_begin","nsr");
+
+            sunrise+=setSrSsLabel(R.color.astronomical,"astronomical_twilight_begin","asr");
+
+            sunset+=setSrSsLabel(R.color.horizon,"sunset","ss");
+
+            sunset+=setSrSsLabel(R.color.civil,"civil_twilight_end","css");
+
+            sunset+=setSrSsLabel(R.color.nautical,"nautical_twilight_end","nss");
+
+            sunset+=setSrSsLabel(R.color.astronomical,"astronomical_twilight_end","ass");
+
+            sunriseTextView.setText(Html.fromHtml("<br><br>Sunrise<br>" + sunrise));
+            sunsetTextView.setText(Html.fromHtml("<br><br>Sunset<br>" + sunset));
+            fourTimesTextView.setText(Html.fromHtml("<font color=#FF0000>Now<br>"
+                    +LocalTime.now().format(dateTimeFormatter)+"</font><br><br>Horizon<br>Civil<br>Nautical<br>Astronomical"));
+
+            drawShapes(rootView,blackCircle);
+
+        }catch (Exception e){e.printStackTrace();
+
+        }finally {
+
+        }
+    }
     private void drawShapes(View rootView,ImageView blackCircle) {
 
         final ShapeDrawable circle = new ShapeDrawable(new OvalShape());
