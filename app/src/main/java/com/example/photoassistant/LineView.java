@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 /**
- *
+ * unused class for potential future upgrades
  */
 public class LineView extends View
 {

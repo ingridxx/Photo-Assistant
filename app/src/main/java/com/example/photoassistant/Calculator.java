@@ -50,7 +50,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-
+/**
+ * Calculator UI control class
+ * Contains camera2 API calls as well as main updateUI loop.
+ * Methods regarding camera2 api were done with the help of youtube tutorials, and hence will not be documented
+ *
+ */
 public class Calculator extends Fragment {
 
     private static final int REQUEST_CAMERA_PERMISSION_RESULT = 0;
@@ -160,6 +165,7 @@ public class Calculator extends Fragment {
             }
         }, 1000);
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -890,6 +896,11 @@ public class Calculator extends Fragment {
         mTextureView.setTransform(matrix);
     }
 
+
+    /**
+     * run the recommendations depending on mode
+     * @param mode mode selected
+     */
     public void runRecommenations(int mode) {
         isoRecommendationTextView.setText("");
         apertureRecommendationTextView.setText("");
@@ -916,6 +927,11 @@ public class Calculator extends Fragment {
         focalLengthRecommendationTextView.setBackgroundColor(redGreenColorTranslator(recommendationCalculator(mode, 4, Intelligence.getFocalLength(), Intelligence.getCropFactor())));
     }
 
+    /**
+     * colour processor to convert values to red and green
+     * @param value value from negative infinity to positive 1
+     * @return red, green or white with varying levels of saturation
+     */
     public int redGreenColorTranslator(double value) {
         int red, green, color;
 //        if(value>=1)
@@ -948,6 +964,14 @@ public class Calculator extends Fragment {
 
     }
 
+    /**
+     * calculates recommendations for the modes
+     * @param mode what mode the user is in
+     * @param typeOfValue aperture, shutter speed, etc
+     * @param value value of typeOfValue
+     * @param cropFactor crop factor of camera body
+     * @return value to be passed to colour processor
+     */
     public double recommendationCalculator(int mode, int typeOfValue, double value, double cropFactor) {
         double calc = 1, returnValue = 0;
         double pivotLeftStart = 0, pivotLeftEnd = 1, pivotTarget = 2, pivotRightStart = 3, pivotRightEnd = 4, scale = 0;

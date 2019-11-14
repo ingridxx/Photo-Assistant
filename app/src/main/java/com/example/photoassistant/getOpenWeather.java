@@ -13,6 +13,10 @@ import java.net.URL;
 
 public class getOpenWeather extends Fragment {
 
+    /**
+     * OpenWeather API call
+     * @return weather data in json
+     */
     public static JSONObject getForecast(){
         try {
             URL OpenWeatherAPI = new URL("https://api.openweathermap.org/data/2.5/forecast?q=Singapore&units=metric&appid=ce57d5369816e2ed09de4a6545992df5");

@@ -45,21 +45,11 @@ public class BodySelector extends Fragment {
      */
     public static void addSlot(int whichSlot, ListItem[] li) {
 
-        switch (whichSlot) {
-            case 1:
-                Slots[0] = li;
-                break;
-            case 2:
-                Slots[1] = li;
-                break;
-            case 3:
-                Slots[2] = li;
-                break;
-            case 4:
-                Slots[3] = li;
-                break;
-        }
+        if(whichSlot>0 && whichSlot< howManySlots+1)
+        {
+            Slots[whichSlot-1] = li;
 
+        }
     }
 
     /**
@@ -118,8 +108,8 @@ public class BodySelector extends Fragment {
      */
     public static void setWhichSlot(int i) {
         WhichSlot = i;
-        if (WhichSlot > 4) WhichSlot = 1;
-        if (WhichSlot < 1) WhichSlot = 4;
+        if (WhichSlot > howManySlots) WhichSlot = 1;
+        if (WhichSlot < 1) WhichSlot = howManySlots;
     }
 
     /**
@@ -193,19 +183,14 @@ public class BodySelector extends Fragment {
      */
 
     public static ListItem[] getDataOfSlot(int whichSlot) {
-
-        switch (whichSlot % 5) {
-            case 1:
-                return Slots[0];
-            case 2:
-                return Slots[1];
-            case 3:
-                return Slots[2];
-            case 4:
-                return Slots[3];
+        if(whichSlot>0 && whichSlot< howManySlots+1)
+        {
+            return Slots[whichSlot-1];
         }
-        return null;
-
+        else
+        {
+            return null;
+        }
     }
 
     @Override
